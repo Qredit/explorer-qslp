@@ -1,6 +1,6 @@
 
 
-# XQR Web Tools
+# Qredit Explorer V2 @ https://qreditportal.com
 
 Requires:
 
@@ -20,14 +20,9 @@ Install packages
 npm install
 ```
 
-Make DB folder
-```
-mkdir db
-```
 
 Start the program:
 ```
 pm2 start app.js
 ```
-# qredit-web-portal
-# explorer-v2
+
