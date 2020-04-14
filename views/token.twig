@@ -1,0 +1,80 @@
+{% extends 'layout_main.twig' %}
+
+{% block body %}
+
+	<div class="breadcrumb">
+		<h1>Token Info</h1>
+	</div>
+	<p class="text-small text-muted text-left">Text</p>
+	<div class="separator-breadcrumb border-top"></div>
+
+
+
+	<div class="separator-breadcrumb border-top"></div>
+	<p class="text-small text-muted left">{{ tokenid }}</p>
+	<div class="card">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-sm table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Data</th>
+							<th scope="col">Output</th>
+						</tr>
+					</thead>
+					<tbody id='maintable'>
+					
+					
+					
+					
+					</tbody>
+
+				</table>
+				
+			</div>
+		</div>
+	</div>
+
+	{{ tokenid }}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+
+<script>
+
+$(document).ready(function() {
+
+	var socket = io();
+	
+	socket.emit('gettokeninfo', {tokenid: '{{ tokenid }}'} );
+	
+  	socket.on('showtokeninfo', function (data) { 
+  	
+  		var mainTable = document.getElementById("maintable");
+  		var tr, td;
+
+  		data.forEach(function(row) {
+  		
+  			tr = document.createElement("tr");
+  			
+  			td = document.createElement("td");
+  			td.innerHTML = row.symbol;
+			tr.appendChild(td);
+			  
+  		  	td = document.createElement("td");
+  			td.innerHTML = row.paused;
+  			tr.appendChild(td);
+  			
+  			maintable.appendChild(tr);
+  		
+  		});
+
+  	});
+
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends 'layout_main.twig' %}
+
+{% block body %}
+<div class="card">
+<div class="card-body">
+	<div class="header-title">
+		<h1>Delegate Monitor</h1>
+	</div>	
+	<div class="separator-breadcrumb border-top"></div>
+
+	<div class="card">
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped mb-4"><br>
+					<thead>
+						<tr>
+							<th scope="col">Rank</th>
+							<th scope="col">Username</th>
+							<th scope="col">Blocks Produced</th>
+							<th scope="col">Last Forged</th>
+							<th scope="col">Status</th>
+							<th scope="col">Votes</th>
+						</tr>
+					</thead>
+					<tbody id='delegates'></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+
+
+	<script>
+
+		$(document).ready(function () {
+
+var socket = io();
+
+socket.emit('getdelegates', {});
+
+socket.on('showdelegates', function (data) {
+
+var mainTable = document.getElementById("delegates");
+
+var tr,
+td;
+
+data.forEach(function (row) {
+
+tr = document.createElement("tr");
+
+td = document.createElement("td");
+td.innerHTML = row.rank;
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = row.username;
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = row.blocks;
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = timeDifference(row.timestamp);
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = getStatus(row.timestamp);
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = row.approval + ' % ';
+tr.appendChild(td);
+
+
+delegates.appendChild(tr);
+
+});
+
+});
+
+});
+
+
+function timeDifference(datetime) {
+
+var d = new Date();
+var current = d.getTime();
+var previous = Date.parse(datetime);
+
+var msPerMinute = 60 * 1000;
+var msPerHour = msPerMinute * 60;
+var msPerDay = msPerHour * 24;
+var msPerMonth = msPerDay * 30;
+var msPerYear = msPerDay * 365;
+
+var elapsed = current - previous;
+
+if (elapsed < msPerMinute) {
+return Math.round(elapsed / 1000) + ' seconds ago';
+} else if (elapsed < msPerHour) {
+return Math.round(elapsed / msPerMinute) + ' minutes ago';
+} else if (elapsed < msPerDay) {
+return Math.round(elapsed / msPerHour) + ' hours ago';
+} else if (elapsed < msPerMonth) {
+return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
+} else if (elapsed < msPerYear) {
+return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
+} else {
+return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
+}
+}
+
+function getStatus(datetime) {
+
+var d = new Date();
+var current = d.getTime();
+var previous = Date.parse(datetime);
+
+var msPerMinute = 60 * 1000;
+var msPerHour = msPerMinute * 60;
+var msPerDay = msPerHour * 24;
+var msPerMonth = msPerDay * 30;
+var msPerYear = msPerDay * 365;
+
+var elapsed = (current - previous) / 1000;
+
+if (elapsed < (16 * 60)) {
+return '<img alt="ok" src="/img/ok-24.png">';
+} else if (elapsed < (24 * 60)) {
+return '<img alt="ok" src="/img/missed-24.png">';
+} else {
+return '<img alt="ok" src="/img/offline-24.png">';
+}
+
+}
+	</script>
+
+
+{% endblock %}

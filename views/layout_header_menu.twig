@@ -1,0 +1,215 @@
+<div class="main-header">
+<div class="header-container">
+<body class="alt-menu sidebar-noneoverflow"></body>
+        <header class="header navbar navbar-expand-sm">
+
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+
+            <div class="nav-logo align-self-center">
+                <a class="" href="{{ routename=='home' ? 'open' : '/' }}"><img alt="logo" src="/img/logo.png"> <span class="navbar-brand-name"></span></a>
+            </div>
+            <ul class="navbar-item flex-row mr-auto">
+                <li class="nav-item align-self-center search-animated">
+                    <form class="form-inline search-full form-inline search" role="search">
+                        <div class="search-bar">
+                          <input type="text"
+                              id="searchinput"
+                            placeholder="Type here"
+                              class="search-input form-control search-form-control  ml-lg-auto"
+                              autofocus />
+                        <div class="search-title" id="aftersearch"></div>
+                        </div>
+                    </form>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </li>
+            </ul>
+  
+            <ul class="navbar-item flex-row nav-dropdowns">
+                <li class="nav-item dropdown language-dropdown more-dropdown">
+                    <div class="dropdown custom-dropdown-icon">
+                        <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/ca.png" class="flag-width" alt="flag"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+
+                        <div class="dropdown-menu dropdown-menu-right animated fadeInUp" aria-labelledby="customDropdown">
+                            <a class="dropdown-item" data-img-value="ca" data-value="en" href="javascript:void(0);"><img src="img/ca.png" class="flag-width" alt="flag"> English</a>
+                        </div>
+                    </div>
+                </li>                
+            </ul>
+        </header>
+    </div>
+
+<div class="topbar-nav header navbar" role="banner">
+    <nav id="topbar" class="">
+                    
+                <ul class="list-unstyled menu-categories" id="topAccordion">
+
+                    <li class="menu single-menu active">
+                        <a class="{{ routename=='transactions' ? 'open' : '' }}" href="/transactions">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                <span>Transactions</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu active">
+                        <a class="{{ routename=='topwallets' ? 'open' : '' }}" href="/topwallets">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                <span>Top Wallets</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu active">
+                         <a class="{{ routename=='delegatemonitor' ? 'open' : '' }}" href="/delegatemonitor">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <span>Delegate Monitor</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu active">
+                        <a class="{{ routename=='peers' ? 'open' : '' }}" href="/peers">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                <span>Peers</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu single-menu active">
+                        <a class="{{ routename=='tokenlist' ? 'open' : '' }}" href="/tokenlist">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                <span>QAE Tokens</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    <hr>
+</div>
+
+<script>
+
+
+function createHref(url, param, title){
+    var a = document.createElement('a');  
+    var link = document.createTextNode(title); 
+    a.appendChild(link);  
+    a.title = title;  
+    a.href = url + "/" + param;  
+    return a;        
+}
+
+function createTable(tableType ,objectArray, fields, fieldTitles) {
+  let tbl = document.createElement('table');
+  tbl.setAttribute("class","table")
+  let thead = document.createElement('thead');
+  let thr = document.createElement('tr');
+  fieldTitles.forEach((fieldTitle) => {
+    let th = document.createElement('th');
+    th.appendChild(document.createTextNode(fieldTitle));
+    thr.appendChild(th);
+  });
+  thead.appendChild(thr);
+  tbl.appendChild(thead);
+
+  var title = document.createElement("h1")        
+  var urlToRedirect = '';
+  switch(tableType){
+      case 'block':
+        urlToRedirect= '/BLOCK/'
+        break;   
+
+        case 'wallet': 
+        urlToRedirect = '/wallet'
+        break;
+  }
+
+  tbl.before(title)
+
+
+  let tbdy = document.createElement('tbody');
+
+
+    let tr = document.createElement('tr');
+    fields.forEach((field) => {
+      var td = document.createElement('td');
+      td.appendChild(createHref(urlToRedirect,objectArray[field],objectArray[field]));
+      tr.appendChild(td);
+    });
+    tbdy.appendChild(tr);    
+
+  tbl.appendChild(tbdy);
+  return tbl;
+}
+
+
+  var socket = io();
+
+  socket.on('showsearch', function (data) { 
+    const resultsNode = document.getElementById("results");
+    resultsNode.textContent = '';
+
+      if(data.blocks){
+        var title = document.createElement("h1")        
+        title.appendChild(document.createTextNode("Found block:"));     
+
+        results.appendChild(title)
+        results.appendChild(createTable('block',data.blocks, ['id', 'height'], ['Id', 'Height']))
+      }
+
+
+    if(data.wallets){
+        var title = document.createElement("h1")        
+        title.appendChild(document.createTextNode("Found wallet:"));     
+
+        results.appendChild(title)
+        results.appendChild(createTable('wallet',data.wallets, ['address', 'balance'], ['Address', 'Balance']))
+      }
+
+
+      if(data.transactions){
+        var title = document.createElement("h1")        
+        title.appendChild(document.createTextNode("Found transaction:"));     
+
+        results.appendChild(title)
+        results.appendChild(createTable('transaction',data.transactions, ['sender', 'recipient', 'vendorField'], ['From', 'To', 'Smartbridge']))
+      }
+
+      if(data.tokenTransactions){
+        var title = document.createElement("h1")        
+        title.appendChild(document.createTextNode("Found token transaction:"));     
+
+        results.appendChild(title)
+        results.appendChild(createTable('tokentransaction',data.tokenTransactions, ['sender', 'recipient', 'vendorField'], ['From', 'To', 'Token Transfer Data']))
+      }
+
+
+      if(data.delegates){
+        var title = document.createElement("h1")        
+        title.appendChild(document.createTextNode("Found delegate:"));     
+
+        results.appendChild(title)
+        results.appendChild(createTable('delegate',data.delegates, ['address', 'balance'], ['Address', 'Balance']))
+      }
+
+
+      if(data.tokens){
+        var title = document.createElement("h1")        
+        title.appendChild(document.createTextNode("Found token:"));     
+
+        results.appendChild(title)
+        results.appendChild(createTable('token',data.tokens, ['type', 'lastUpdatedBlock'], ['Type', 'Last Block']))
+      }
+
+      console.log(data) 
+      });
+
+  searchinput.oninput = function() { 
+      var searchString = searchinput.value;
+
+    socket.emit('search', searchString); 
+  }
+</script>
+<!-- header top menu end -->

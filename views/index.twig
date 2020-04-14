@@ -1,0 +1,34 @@
+{% extends 'layout_main.twig' %}
+
+
+{% block body %}
+
+<div class="card">
+<div class="card-body">
+	<div class="header-title">
+		<h1>Welcome to the Qredit Explorer</h1>
+	</div>	
+	<div class="separator-breadcrumb border-top"></div>
+</div>
+
+<div class="card-body">
+                                            <div class="icon-svg">
+                                
+                                            </div>
+                                            <h5 class="card-title" style="color:red;">Attention!</h5>
+                                            <p class="card-text">The official Qredit Explorer is currently under maintenance.</p>
+											<p class="card-text">Please use our back-up explorer.</p>
+											<button class="btn btn-primary mb-2">Click here to use the back-up explorer</button>
+                                        </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="{{asset('assets/js/vendor/echarts.min.js')}}"></script>
+<script src="{{asset('assets/js/es5/echart.options.min.js')}}"></script>
+<script src="{{asset('assets/js/es5/dashboard.v1.script.js')}}"></script>
+
+
+
+{% endblock %}

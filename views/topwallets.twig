@@ -1,0 +1,81 @@
+{% extends 'layout_main.twig' %}
+
+{% block body %}
+
+<div class="card">
+<div class="card-body">
+	<div class="header-title">
+		<h1>Top Wallets</h1>
+	</div>	
+	<div class="separator-breadcrumb border-top"></div>
+
+	<div class="card">
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped mb-4"><br>
+					<thead>
+						<tr>
+							<th scope="col">Rank</th>
+							<th scope="col">is Delegate?</th>
+							<th scope="col">Address</th>
+							<th scope="col">Balance</th>
+						</tr>
+					</thead>
+					<tbody id='topwallet'></tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+	<script>
+
+		$(document).ready(function () {
+
+var socket = io();
+
+socket.emit('gettopwallets', {});
+
+socket.on('showtopwallets', function (data) {
+
+var mainTable = document.getElementById("topwallet");
+
+
+var tr,
+td;
+
+data.forEach(function (row) {
+
+tr = document.createElement("tr");
+
+td = document.createElement("td");
+td.innerHTML = row.rank;
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = row.isdelegate;
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = row.address;
+tr.appendChild(td);
+
+td = document.createElement("td");
+td.innerHTML = (parseFloat(row.balance) / 100000000).toFixed(0) + ' XQR' ;
+tr.appendChild(td);
+
+topwallet.appendChild(tr);
+
+});
+
+});
+
+});
+	</script>
+
+
+{% endblock %}
