@@ -93,7 +93,7 @@ $(function(){
 				'stroke-opacity': 0.4
 			},
 		},
-		enableZoom: true,
+		enableZoom: false,
 		hoverColor: '#060818',
 		hoverOpacity: null,
 		normalizeFunction: 'linear',

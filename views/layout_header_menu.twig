@@ -40,7 +40,6 @@
     <nav id="topbar" class="">
                     
                 <ul class="list-unstyled menu-categories" id="topAccordion">
-
                     <li class="menu single-menu active">
                         <a class="{{ routename=='transactions' ? 'open' : '' }}" href="/transactions">
                             <div class="">
@@ -117,7 +116,7 @@ function createTable(tableType ,objectArray, fields, fieldTitles) {
   var urlToRedirect = '';
   switch(tableType){
       case 'block':
-        urlToRedirect= '/BLOCK/'
+        urlToRedirect= '/block/'
         break;   
 
         case 'wallet': 
