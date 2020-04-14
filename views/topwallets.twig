@@ -14,7 +14,7 @@
     <table class="table table-bordered table-hover table-striped mb-4"><br>
 					<thead>
 						<tr>
-							<th scope="col">Rank</th>
+							<th scope="col">#</th>
 							<th scope="col">is Delegate?</th>
 							<th scope="col">Address</th>
 							<th scope="col">Balance</th>
@@ -61,7 +61,7 @@ td.innerHTML = row.isdelegate;
 tr.appendChild(td);
 
 td = document.createElement("td");
-td.innerHTML = row.address;
+td.innerHTML = '<a href="/wallet/' + row.address + '">' + row.address + '</a>';
 tr.appendChild(td);
 
 td = document.createElement("td");
