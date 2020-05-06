@@ -5,11 +5,11 @@
 		<div id="particles-bg">
 			<canvas class="particles-js-canvas-el" width="2033" height="1017" style="width: 100%; height: 100%;"></canvas>
 		</div>
-		
+
 
 	</div>
 
-	
+
 	<!-- Fixed navbar -->
 	<nav id="coodiv-navbar-header" class="navbar navbar-expand-md fixed-header-layout">
 		<div class="container main-header-coodiv-s">
@@ -153,170 +153,185 @@
 	</nav>
 	<div class="mt-auto header-top-height"></div>
 
-<main class="container mb-auto">
-            <div class="row"> <div class="col-md-6">
-		<h3 class="mt-3 main-header-text-title">
-			<span>Explore the Qredit Blockchain</span>Block Explorer</h3>
-		<div class="row justify-content-center">
-			<form class="form-inline search-full form-inline search" role="search">
-			<div class="search-bar">
-				
-				<input type="text" id="searchinput" placeholder="Search transactions, blocks, wallets.." class="search-input form-control search-form-control  ml-lg-auto" autofocus>
-					<div class="search-title" id="aftersearch"></div>
-				 </div>
-			</form>
-		</div></div>
-                <div class="col-md-6">
-                    <div class="breadcrumb-hosting-pages row">
-                        <a class="col-md-3 active" href="/transactions">
-                            <img src="img/svgs/hosting.svg" alt="">
-                            <span class="sub-breadcrumb-host-title">transactions</span>
-                        </a>
+	<main class="container mb-auto">
+		<div class="row">
+			<div class="col-md-6">
+				<h3 class="mt-3 main-header-text-title">
+					<span>Explore the Qredit Blockchain</span>Block Explorer</h3>
+				<div class="row justify-content-center">
+					<form class="form-inline search-full form-inline search" role="search">
+						<div class="search-bar">
 
-                        <a class="col-md-3" href="/topwallets">
-                            <img src="img/svgs/servers.svg" alt="#">
-                            <span class="sub-breadcrumb-host-title">top wallets</span>
-                        </a>
+							<input type="text" id="searchinput" placeholder="Search transactions, blocks, wallets.." class="search-input form-control search-form-control  ml-lg-auto" autofocus>
 
-                        <a class="col-md-3" href="/peers">
-                            <img src="img/svgs/dedicated.svg" alt="">
-                            <span class="sub-breadcrumb-host-title">peers</span>
-                        </a>
-						<a class="col-md-3" href="/tokenlist">
-                            <img src="img/svgs/dedicated.svg" alt="">
-                            <span class="sub-breadcrumb-host-title">QAE Tokens</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+						</div>
+					</form>
+				</div>
+			</div>
 
-        </main>
 
+			<div class="col-md-6">
+				<div class="breadcrumb-hosting-pages row">
+					<a class="col-md-3 active" href="/transactions">
+						<img src="img/svgs/hosting.svg" alt="">
+						<span class="sub-breadcrumb-host-title">transactions</span>
+					</a>
+
+					<a class="col-md-3" href="/topwallets">
+						<img src="img/svgs/servers.svg" alt="#">
+						<span class="sub-breadcrumb-host-title">top wallets</span>
+					</a>
+
+					<a class="col-md-3" href="/peers">
+						<img src="img/svgs/dedicated.svg" alt="">
+						<span class="sub-breadcrumb-host-title">peers</span>
+					</a>
+					<a class="col-md-3" href="/tokenlist">
+						<img src="img/svgs/dedicated.svg" alt="">
+						<span class="sub-breadcrumb-host-title">QAE Tokens</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="container search-title" id="aftersearch"></div>
+
+	</main>
 
 
 	<div class="mt-auto"></div>
 </div>
 
+
 <script>
 
 
-function createHref(url, param, title){
-    var a = document.createElement('a');  
-    var link = document.createTextNode(title); 
-    a.appendChild(link);  
-    a.title = title;  
-    a.href = url + "/" + param;  
-    return a;        
+	function createHref(url, param, title) {
+var a = document.createElement('a');
+var link = document.createTextNode(title);
+a.appendChild(link);
+a.title = title;
+a.href = url + "/" + param;
+return a;
 }
 
-function createTable(tableType ,objectArray, fields, fieldTitles) {
-  let tbl = document.createElement('table');
-  tbl.setAttribute("class","table")
-  let thead = document.createElement('thead');
-  let thr = document.createElement('tr');
-  fieldTitles.forEach((fieldTitle) => {
-    let th = document.createElement('th');
-    th.appendChild(document.createTextNode(fieldTitle));
-    thr.appendChild(th);
-  });
-  thead.appendChild(thr);
-  tbl.appendChild(thead);
+function createTable(tableType, objectArray, fields, fieldTitles) {
+let tbl = document.createElement('table');
+tbl.setAttribute("class", "table")
+let thead = document.createElement('thead');
+let thr = document.createElement('tr');
+fieldTitles.forEach((fieldTitle) => {
+let th = document.createElement('th');
+th.appendChild(document.createTextNode(fieldTitle));
+thr.appendChild(th);
+});
+thead.appendChild(thr);
+tbl.appendChild(thead);
 
-  var title = document.createElement("h1")        
-  var urlToRedirect = '';
-  switch(tableType){
-      case 'block':
-        urlToRedirect= '/block/'
-        break;   
+var title = document.createElement("h1")
+var urlToRedirect = '';
+switch (tableType) {
+case 'block': urlToRedirect = '/block/'
+break;
 
-        case 'wallet': 
-        urlToRedirect = '/wallet'
-        break;
-  }
+case 'wallet': urlToRedirect = '/wallet'
+break;
+}
 
-  tbl.before(title)
+tbl.before(title)
 
 
-  let tbdy = document.createElement('tbody');
+let tbdy = document.createElement('tbody');
 
 
-    let tr = document.createElement('tr');
-    fields.forEach((field) => {
-      var td = document.createElement('td');
-      td.appendChild(createHref(urlToRedirect,objectArray[field],objectArray[field]));
-      tr.appendChild(td);
-    });
-    tbdy.appendChild(tr);    
+let tr = document.createElement('tr');
+fields.forEach((field) => {
+var td = document.createElement('td');
+td.appendChild(createHref(urlToRedirect, objectArray[field], objectArray[field]));
+tr.appendChild(td);
+});
+tbdy.appendChild(tr);
 
-  tbl.appendChild(tbdy);
-  return tbl;
+tbl.appendChild(tbdy);
+return tbl;
 }
 
 
-  var socket = io();
+var socket = io();
 
-  socket.on('showsearch', function (data) { 
-    const resultsNode = document.getElementById("results");
-    resultsNode.textContent = '';
+socket.on('showsearch', function (data) {
+const results = document.createElement("div");
+results.textContent = '';
 
-      if(data.blocks){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found block:"));     
+if (data.blocks) {
+var title = document.createElement("h1")
+title.appendChild(document.createTextNode("Found block:"));
 
-        results.appendChild(title)
-        results.appendChild(createTable('block',data.blocks, ['id', 'height'], ['Id', 'Height']))
-      }
-
-
-    if(data.wallets){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found wallet:"));     
-
-        results.appendChild(title)
-        results.appendChild(createTable('wallet',data.wallets, ['address', 'balance'], ['Address', 'Balance']))
-      }
+results.appendChild(title)
+results.appendChild(createTable('block', data.blocks, [
+'id', 'height'
+], ['Id', 'Height']))
+}
 
 
-      if(data.transactions){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found transaction:"));     
+if (data.wallets) {
+var title = document.createElement("h1")
+title.appendChild(document.createTextNode("Found wallet:"));
 
-        results.appendChild(title)
-        results.appendChild(createTable('transaction',data.transactions, ['sender', 'recipient', 'vendorField'], ['From', 'To', 'Smartbridge']))
-      }
-
-      if(data.tokenTransactions){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found token transaction:"));     
-
-        results.appendChild(title)
-        results.appendChild(createTable('tokentransaction',data.tokenTransactions, ['sender', 'recipient', 'vendorField'], ['From', 'To', 'Token Transfer Data']))
-      }
+results.appendChild(title)
+results.appendChild(createTable('wallet', data.wallets, [
+'address', 'balance'
+], ['Address', 'Balance']))
+}
 
 
-      if(data.delegates){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found delegate:"));     
+if (data.transactions) {
+var title = document.createElement("h1")
+title.appendChild(document.createTextNode("Found transaction:"));
 
-        results.appendChild(title)
-        results.appendChild(createTable('delegate',data.delegates, ['address', 'balance'], ['Address', 'Balance']))
-      }
+results.appendChild(title)
+results.appendChild(createTable('transaction', data.transactions, [
+'sender', 'recipient', 'vendorField'
+], ['From', 'To', 'Smartbridge']))
+}
+
+if (data.tokenTransactions) {
+var title = document.createElement("h1")
+title.appendChild(document.createTextNode("Found token transaction:"));
+
+results.appendChild(title)
+results.appendChild(createTable('tokentransaction', data.tokenTransactions, [
+'sender', 'recipient', 'vendorField'
+], ['From', 'To', 'Token Transfer Data']))
+}
 
 
-      if(data.tokens){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found token:"));     
+if (data.delegates) {
+var title = document.createElement("h1")
+title.appendChild(document.createTextNode("Found delegate:"));
 
-        results.appendChild(title)
-        results.appendChild(createTable('token',data.tokens, ['type', 'lastUpdatedBlock'], ['Type', 'Last Block']))
-      }
+results.appendChild(title)
+results.appendChild(createTable('delegate', data.delegates, [
+'address', 'balance'
+], ['Address', 'Balance']))
+}
 
-      console.log(data) 
-      });
 
-  searchinput.oninput = function() { 
-      var searchString = searchinput.value;
+if (data.tokens) {
+var title = document.createElement("h1")
+title.appendChild(document.createTextNode("Found token:"));
 
-    socket.emit('search', searchString); 
-  }
+results.appendChild(title)
+results.appendChild(createTable('token', data.tokens, [
+'type', 'lastUpdatedBlock'
+], ['Type', 'Last Block']))
+}
+
+console.log(data)
+});
+
+searchinput.oninput = function () {
+var searchString = searchinput.value;
+
+socket.emit('search', searchString);
+}
 </script>
