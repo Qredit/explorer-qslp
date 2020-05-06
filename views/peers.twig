@@ -2,36 +2,35 @@
 
 {% block body %}
 	{% include 'layout_header_explorer.twig' %}
+
 	<div class="container" style="margin-top:50px;margin-bottom:50px;">
-			<div class="header-title">
-				<h1>Peers</h1>
+		<div class="container">
+			<div class="container search-title" id="aftersearch"></div>
+			<div class="banner-servers-box">
+				<div class="counter-placeholder"></div>
+				<div class="banner-text-left">
+					<h4 style="color:#fff;">
+						<strong>Peers</strong>
+					</h4>
+					<p>Peers on the Qredit Blockchain</p>
+				</div>
 			</div>
 
-
-	<div class="card">
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover table-striped mb-4"><br>
-				<table class="table table-sm table-striped">
-					<thead>
-						<tr>
-							<th scope="col">IP</th>
-							<th scope="col">P2P-Port</th>
-							<th scope="col">Version</th>
-							<th scope="col">Height</th>
-							<th scope="col">Latency</th>
-						</tr>
-					</thead>
-					<tbody id='peers'></tbody>
-				</table>
-			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="server-tabls-head" scope="col">IP</th>
+						<th class="server-tabls-head" scope="col">P2P-Port</th>
+						<th class="server-tabls-head" scope="col">Version</th>
+						<th class="server-tabls-head" scope="col">Height</th>
+						<th class="server-tabls-head" scope="col">Latency</th>
+					</tr>
+				</thead>
+				<tbody id='peers'></tbody>
+			</table>
 		</div>
 	</div>
-	</div>
-</div>{% endblock %}{% block javascripts %}
-
-<script>
-
-	$(document).ready(function () {
+</div></div></div></div>{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
 
 var socket = io();
 
@@ -75,6 +74,4 @@ peers.appendChild(tr);
 
 });
 
-});
-</script>
-<script src="/plugins/jvector/jvector_script.js"></script>{% endblock %}
+});</script><script src="/plugins/jvector/jvector_script.js"></script>{% endblock %}

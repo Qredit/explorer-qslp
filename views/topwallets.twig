@@ -3,37 +3,32 @@
 {% block body %}
 	{% include 'layout_header_explorer.twig' %}
 	<div class="container" style="margin-top:50px;margin-bottom:50px;">
-			<div class="header-title">
-				<h1>Top Wallets</h1>
+		<div class="container">
+			<div class="container search-title" id="aftersearch"></div>
+			<div class="banner-servers-box">
+				<div class="counter-placeholder"></div>
+				<div class="banner-text-left">
+					<h4 style="color:#fff;">
+						<strong>Top Wallets</strong>
+					</h4>
+					<p>View the top wallets on the Qredit Blockchain.</p>
+				</div>
 			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="server-tabls-head" scope="col">#</th>
+						<th class="server-tabls-head" scope="col">is Delegate?</th>
+						<th class="server-tabls-head" scope="col">Address</th>
+						<th class="server-tabls-head" scope="col">Balance</th>
+					</tr>
+				</thead>
+				<tbody id='topwallet'></tbody>
 
-
-	<div class="card">
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped mb-4"><br>
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">is Delegate?</th>
-							<th scope="col">Address</th>
-							<th scope="col">Balance</th>
-						</tr>
-					</thead>
-					<tbody id='topwallet'></tbody>
-
-				</table>
-			</div>
+			</table>
 		</div>
 	</div>
-</div>
-</div>
-{% endblock %}
-
-{% block javascripts %}
-
-	<script>
-
-		$(document).ready(function () {
+</div></div></div></div>{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
 
 var socket = io();
 
@@ -64,7 +59,7 @@ td.innerHTML = '<a href="/wallet/' + row.address + '">' + row.address + '</a>';
 tr.appendChild(td);
 
 td = document.createElement("td");
-td.innerHTML = (parseFloat(row.balance) / 100000000).toFixed(0) + ' XQR' ;
+td.innerHTML = (parseFloat(row.balance) / 100000000).toFixed(0) + ' XQR';
 tr.appendChild(td);
 
 topwallet.appendChild(tr);
@@ -73,8 +68,4 @@ topwallet.appendChild(tr);
 
 });
 
-});
-	</script>
-
-
-{% endblock %}
+});</script>{% endblock %}

@@ -153,26 +153,24 @@
 	</nav>
 	<div class="mt-auto header-top-height"></div>
 
-	<main class="container mb-auto">
+	<main class="container mb-auto" style="margin-top:50px;">
 		<div class="row">
-			<div class="col-md-6">
+
+
+			<div class="col-md-6 justify-content-center">
 				<h3 class="mt-3 main-header-text-title">
-					<span>Explore the Qredit Blockchain</span>Block Explorer</h3>
-				<div class="row justify-content-center">
-					<form class="form-inline search-full form-inline search" role="search">
-						<div class="search-bar">
+					<span>Explore the Qredit Blockchain</span>
+					BLOCK EXPLORER</h3>
 
-							<input type="text" id="searchinput" placeholder="Search transactions, blocks, wallets.." class="search-input form-control search-form-control  ml-lg-auto" autofocus>
-
-						</div>
-					</form>
-				</div>
+				<form id="domain-search-header" style="text-align:center;">
+					<input type="text" placeholder="Search blocks, transactions, wallets.." id="searchinput" name="domains">
+				</form>
 			</div>
 
 
 			<div class="col-md-6">
 				<div class="breadcrumb-hosting-pages row">
-					<a class="col-md-3 active" href="/transactions">
+					<a class="col-md-3" href="/transactions">
 						<img src="img/svgs/hosting.svg" alt="">
 						<span class="sub-breadcrumb-host-title">transactions</span>
 					</a>
@@ -193,15 +191,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="container search-title" id="aftersearch"></div>
+
 
 	</main>
 
 
 	<div class="mt-auto"></div>
 </div>
-
-
 <script>
 
 
@@ -259,12 +255,12 @@ return tbl;
 var socket = io();
 
 socket.on('showsearch', function (data) {
-const results = document.createElement("div");
+const results = document.getElementById("aftersearch");
 results.textContent = '';
 
 if (data.blocks) {
 var title = document.createElement("h1")
-title.appendChild(document.createTextNode("Found block:"));
+title.appendChild(document.createTextNode("Search results: block:"));
 
 results.appendChild(title)
 results.appendChild(createTable('block', data.blocks, [
@@ -275,7 +271,8 @@ results.appendChild(createTable('block', data.blocks, [
 
 if (data.wallets) {
 var title = document.createElement("h1")
-title.appendChild(document.createTextNode("Found wallet:"));
+title.appendChild(document.createTextNode("Search results: wallet:"));
+
 
 results.appendChild(title)
 results.appendChild(createTable('wallet', data.wallets, [
@@ -286,7 +283,8 @@ results.appendChild(createTable('wallet', data.wallets, [
 
 if (data.transactions) {
 var title = document.createElement("h1")
-title.appendChild(document.createTextNode("Found transaction:"));
+title.appendChild(document.createTextNode("Search results: transaction:"));
+
 
 results.appendChild(title)
 results.appendChild(createTable('transaction', data.transactions, [
@@ -296,7 +294,8 @@ results.appendChild(createTable('transaction', data.transactions, [
 
 if (data.tokenTransactions) {
 var title = document.createElement("h1")
-title.appendChild(document.createTextNode("Found token transaction:"));
+title.appendChild(document.createTextNode("Search results: token transaction:"));
+
 
 results.appendChild(title)
 results.appendChild(createTable('tokentransaction', data.tokenTransactions, [
@@ -307,7 +306,8 @@ results.appendChild(createTable('tokentransaction', data.tokenTransactions, [
 
 if (data.delegates) {
 var title = document.createElement("h1")
-title.appendChild(document.createTextNode("Found delegate:"));
+title.appendChild(document.createTextNode("Search results: delegate:"));
+
 
 results.appendChild(title)
 results.appendChild(createTable('delegate', data.delegates, [
@@ -318,7 +318,8 @@ results.appendChild(createTable('delegate', data.delegates, [
 
 if (data.tokens) {
 var title = document.createElement("h1")
-title.appendChild(document.createTextNode("Found token:"));
+title.appendChild(document.createTextNode("Search results: token:"));
+
 
 results.appendChild(title)
 results.appendChild(createTable('token', data.tokens, [
