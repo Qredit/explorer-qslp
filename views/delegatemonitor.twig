@@ -1,40 +1,38 @@
 {% extends 'layout_main.twig' %}
 
 {% block body %}
-<div class="card">
-<div class="card-body">
-	<div class="header-title">
-		<h1>Delegate Monitor</h1>
-	</div>	
-	<div class="separator-breadcrumb border-top"></div>
+	{% include 'layout_header_explorer.twig' %}
 
-	<div class="card">
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped mb-4"><br>
-					<thead>
-						<tr>
-							<th scope="col">Rank</th>
-							<th scope="col">Username</th>
-							<th scope="col">Blocks Produced</th>
-							<th scope="col">Last Forged</th>
-							<th scope="col">Status</th>
-							<th scope="col">Votes</th>
-						</tr>
-					</thead>
-					<tbody id='delegates'></tbody>
-				</table>
+	<div class="container" style="margin-top:50px;margin-bottom:50px;">
+		<div class="container">
+			<div class="container search-title" id="aftersearch"></div>
+			<div class="banner-servers-box">
+				<div class="counter-placeholder"></div>
+				<div class="banner-text-left">
+					<h4 style="color:#fff;">
+						<strong>Peers</strong>
+					</h4>
+					<p>Peers on the Qredit Blockchain</p>
+				</div>
 			</div>
+
+			<table class="table">
+
+				<thead>
+					<tr>
+						<th class="server-tabls-head" scope="col">Rank</th>
+						<th class="server-tabls-head" scope="col">Username</th>
+						<th class="server-tabls-head" scope="col">Last Forged</th>
+						<th class="server-tabls-head" scope="col">Status</th>
+						<th class="server-tabls-head" scope="col">Votes</th>
+					</tr>
+				</thead>
+				<tbody id='delegates' class="server-tabls-row"></tbody>
+
+			</table>
 		</div>
 	</div>
-	</div>
-{% endblock %}
-
-{% block javascripts %}
-
-
-	<script>
-
-		$(document).ready(function () {
+</div></div></div></div>{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
 
 var socket = io();
 
@@ -57,10 +55,6 @@ tr.appendChild(td);
 
 td = document.createElement("td");
 td.innerHTML = row.username;
-tr.appendChild(td);
-
-td = document.createElement("td");
-td.innerHTML = row.blocks;
 tr.appendChild(td);
 
 td = document.createElement("td");
@@ -136,8 +130,4 @@ return '<img alt="ok" src="/img/missed-24.png">';
 return '<img alt="ok" src="/img/offline-24.png">';
 }
 
-}
-	</script>
-
-
-{% endblock %}
+}</script>{% endblock %}
