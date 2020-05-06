@@ -29,7 +29,7 @@ const qaeapi = new qaeApi.default();
 
 var indexRouter = require('./routes/index');
 
-var serverPort = 8081;
+var serverPort = 8080;
 
 var app = express();
 
