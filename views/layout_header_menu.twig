@@ -1,213 +1,304 @@
-<div class="main-header">
-<div class="header-container">
-<body class="alt-menu sidebar-noneoverflow"></body>
-        <header class="header navbar navbar-expand-sm">
-            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
-            <div class="nav-logo align-self-center">
-                <a class="" href="{{ routename=='home' ? 'open' : '/' }}"><img alt="logo" src="/img/logo.png"> <span class="navbar-brand-name"></span></a>
-            </div>
-            <ul class="navbar-item flex-row mr-auto">
-                <li class="nav-item align-self-center search-animated">
-                    <form class="form-inline search-full form-inline search" role="search">
-                        <div class="search-bar">
-                          <input type="text"
-                              id="searchinput"
-                            placeholder="Type here"
-                              class="search-input form-control search-form-control  ml-lg-auto"
-                              autofocus />
-                        <div class="search-title" id="aftersearch"></div>
-                        </div>
-                    </form>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </li>
-            </ul>
-  
-            <ul class="navbar-item flex-row nav-dropdowns">
-                <li class="nav-item dropdown language-dropdown more-dropdown">
-                    <div class="dropdown custom-dropdown-icon">
-                        <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/ca.png" class="flag-width" alt="flag"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+<div
+	id="coodiv-header" class="d-flex mx-auto flex-column moon-edition" style="height: 949px;">
+	<!-- start header -->
+	<div class="bg_overlay_header">
+		<div id="particles-bg">
+			<canvas class="particles-js-canvas-el" width="2033" height="1017" style="width: 100%; height: 100%;"></canvas>
+		</div>
+		<img src="img/header/h_bg_02.svg" alt="img-bg">
 
-                        <div class="dropdown-menu dropdown-menu-right animated fadeInUp" aria-labelledby="customDropdown">
-                            <a class="dropdown-item" data-img-value="ca" data-value="en" href="javascript:void(0);"><img src="img/ca.png" class="flag-width" alt="flag"> English</a>
-                        </div>
-                    </div>
-                </li>                
-            </ul>
-        </header>
-    </div>
-
-<div class="topbar-nav header navbar" role="banner">
-    <nav id="topbar" class="">
-                    
-                <ul class="list-unstyled menu-categories" id="topAccordion">
-                    <li class="menu single-menu active">
-                        <a class="{{ routename=='transactions' ? 'open' : '' }}" href="/transactions">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                                <span>Transactions</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu single-menu active">
-                        <a class="{{ routename=='topwallets' ? 'open' : '' }}" href="/topwallets">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                                <span>Top Wallets</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu single-menu active">
-                         <a class="{{ routename=='delegatemonitor' ? 'open' : '' }}" href="/delegatemonitor">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                <span>Delegate Monitor</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu single-menu active">
-                        <a class="{{ routename=='peers' ? 'open' : '' }}" href="/peers">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                                <span>Peers</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu single-menu active">
-                        <a class="{{ routename=='tokenlist' ? 'open' : '' }}" href="/tokenlist">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                                <span>QAE Tokens</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                
-            </nav>
-        </div>
-    <hr>
-    <div id='results'></div>
-</div>
-<script>
+	</div>
+	<!-- Fixed navbar -->
+	<nav id="coodiv-navbar-header" class="navbar navbar-expand-md fixed-header-layout">
+		<div class="container main-header-coodiv-s">
+			<a class="navbar-brand" href="index.html">
+				<img class="w-logo" src="img/header/logo-navbar-light.png" alt="">
+				<img class="b-logo" src="img/header/logo-navbar-dark.png" alt="">
+			</a>
+			<button class="navbar-toggle offcanvas-toggle menu-btn-span-bar ml-auto js-offcanvas-has-events" data-toggle="offcanvas" data-target="#offcanvas-menu-home">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+			<div class="collapse navbar-collapse navbar-offcanvas offcanvas-transform js-offcanvas-done" id="offcanvas-menu-home">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/">Home</a>
+					</li>
 
 
-function createHref(url, param, title){
-    var a = document.createElement('a');  
-    var link = document.createTextNode(title); 
-    a.appendChild(link);  
-    a.title = title;  
-    a.href = url + "/" + param;  
-    return a;        
-}
+					<li class="nav-item megamenu dropdown">
+						<a class="nav-link" href="#" role="button" id="services-megamenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products & Services
+							<span class="megamenu-toggle"></span>
+						</a>
+						<div class="dropdown-menu coodiv-dropdown-megamnu default-megamenu" aria-labelledby="services-megamenu">
+							<div class="d-flex justify-content-center bd-highlight mb-3 megamenu-items-header">
+								<div class="p-2 bd-highlight">
+									<a href="#">
+										<i class="bredhicon-sun"></i>
+										<h5>Persona</h5>
+										<p>The all-in-one KYC toolkit for software implementation.</p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+                                    
+								</div>
 
-function createTable(tableType ,objectArray, fields, fieldTitles) {
-  let tbl = document.createElement('table');
-  tbl.setAttribute("class","table")
-  let thead = document.createElement('thead');
-  let thr = document.createElement('tr');
-  fieldTitles.forEach((fieldTitle) => {
-    let th = document.createElement('th');
-    th.appendChild(document.createTextNode(fieldTitle));
-    thr.appendChild(th);
-  });
-  thead.appendChild(thr);
-  tbl.appendChild(thead);
+								<div class="p-2 bd-highlight">
+									<a href="#">
+										<i class="bredhicon-sun"></i>
+										<h5>Qredit Motion</h5>
+										<p>A multicurrency fiat and crypto wallet with QAE functionalities.</p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+								</div>
 
-  var title = document.createElement("h1")        
-  var urlToRedirect = '';
-  switch(tableType){
-      case 'block':
-        urlToRedirect= '/block/'
-        break;   
+								<div class="p-2 bd-highlight">
+									<a href="https://altilly.com">
+										<i class="bredhicon-sun"></i>
+										<h5>Altilly</h5>
+										<p>Digital Asset Exchange with Qredit as the base currency.</p>
+                                        <p style="background-color:green;border-radius:15px;color:#fff;"><strong>Altilly V1</strong></p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>V2 Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+								</div>
 
-        case 'wallet': 
-        urlToRedirect = '/wallet'
-        break;
-  }
+								<div class="p-2 bd-highlight">
+									<a href="/wallets">
+										<i class="bredhicon-sun"></i>
+										<h5>Crypto Wallets</h5>
+										<p>Qredit Native cryptocurrency wallets for multiple platforms.</p>
+                                        <p style="background-color:green;border-radius:15px;color:#fff;"><strong>Click to learn more!</strong></p>
+									</a>
+								</div>
 
-  tbl.before(title)
-
-
-  let tbdy = document.createElement('tbody');
-
-
-    let tr = document.createElement('tr');
-    fields.forEach((field) => {
-      var td = document.createElement('td');
-      td.appendChild(createHref(urlToRedirect,objectArray[field],objectArray[field]));
-      tr.appendChild(td);
-    });
-    tbdy.appendChild(tr);    
-
-  tbl.appendChild(tbdy);
-  return tbl;
-}
-
-
-  var socket = io();
-
-  socket.on('showsearch', function (data) { 
-    const resultsNode = document.getElementById("results");
-    resultsNode.textContent = '';
-
-      if(data.blocks){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found block:"));     
-
-        results.appendChild(title)
-        results.appendChild(createTable('block',data.blocks, ['id', 'height'], ['Id', 'Height']))
-      }
+								<div class="p-2 bd-highlight">
+									<a href="#">
+										<i class="bredhicon-sun"></i>
+										<h5>QAE Smart Contracts</h5>
+										<p>Create your dApps with QAE Smart Contracts.</p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+								</div>
 
 
-    if(data.wallets){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found wallet:"));     
+							</div>
+						</div>
+					</li>
+					<li class="nav-item megamenu dropdown">
+						<a class="nav-link" href="#" role="button" id="services-megamenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blockchain
+							<span class="megamenu-toggle"></span>
+						</a>
+						<div class="dropdown-menu coodiv-dropdown-megamnu default-megamenu" aria-labelledby="services-megamenu">
+							<div class="d-flex justify-content-center bd-highlight mb-3 megamenu-items-header">
+								<div class="p-2 bd-highlight">
+									<a href="#">
+										<i class="bredhicon-sun"></i>
+										<h5>Status</h5>
+										<p>Monitor the Qredit Blockchain</p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+								</div>
 
-        results.appendChild(title)
-        results.appendChild(createTable('wallet',data.wallets, ['address', 'balance'], ['Address', 'Balance']))
-      }
+								<div class="p-2 bd-highlight">
+									<a href="/transactions">
+										<i class="bredhicon-sun"></i>
+										<h5>Explorer</h5>
+										<p>Qredit Blockchain Explorer.</p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+								</div>
+
+								<div class="p-2 bd-highlight">
+									<a href="#">
+										<i class="bredhicon-sun"></i>
+										<h5>Tools & API</h5>
+										<p>Qredit Blockchain Tools and API Documentation.</p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+								</div>
+								<div class="p-2 bd-highlight">
+									<a href="#">
+										<i class="bredhicon-sun"></i>
+										<h5>Development</h5>
+										<p>View the Qredit roadmap and development.</p>
+                                        <p style="background-color:#d22d3d;border-radius:15px;color:#fff;"><strong>Coming Soon!</strong><br>ETA - Q2 2020</p>
+									</a>
+								</div>
+
+							</div>
+						</div>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="/contact">Contact us</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+	<div class="mt-auto header-top-height"></div>
+	<h3 class="mt-3 main-header-text-title">
+		<img class="w-logo" src="https://qredit.io/sync/2020/02/xqr-dark-wide-980x225.png" style="max-height: 100px;" alt="">
 
 
-      if(data.transactions){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found transaction:"));     
-
-        results.appendChild(title)
-        results.appendChild(createTable('transaction',data.transactions, ['sender', 'recipient', 'vendorField'], ['From', 'To', 'Smartbridge']))
-      }
-
-      if(data.tokenTransactions){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found token transaction:"));     
-
-        results.appendChild(title)
-        results.appendChild(createTable('tokentransaction',data.tokenTransactions, ['sender', 'recipient', 'vendorField'], ['From', 'To', 'Token Transfer Data']))
-      }
-
-
-      if(data.delegates){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found delegate:"));     
-
-        results.appendChild(title)
-        results.appendChild(createTable('delegate',data.delegates, ['address', 'balance'], ['Address', 'Balance']))
-      }
+		<span class="sub-page-breadcrumb">
+			The Enhanced Blockchain Suite
+		</h3>
+		<div style="text-align:center;" class="contact-us-social-icons">
+			<a class="fb" href="https://www.facebook.com/qredit.io/">
+				<i class="fab fa-facebook-f"></i>
+			</a>
+			<a class="tw" href="https://t.me/qredit">
+				<i class="fab fa-telegram"></i>
+			</a>
+			<a class="yb" href="https://twitter.com/Qredit_io">
+				<i class="fab fa-twitter"></i>
+			</a>
+            <a class="yb" href="https://discord.com/invite/k3m9Mgy">
+				<i class="fab fa-discord"></i>
+			</a>
+            <a class="yb" href="https://www.instagram.com/qredit_team/">
+				<i class="fab fa-instagram"></i>
+			</a>
+		</div>
 
 
-      if(data.tokens){
-        var title = document.createElement("h1")        
-        title.appendChild(document.createTextNode("Found token:"));     
+		<div class="mt-auto"></div>
+	</div>
 
-        results.appendChild(title)
-        results.appendChild(createTable('token',data.tokens, ['type', 'lastUpdatedBlock'], ['Type', 'Last Block']))
-      }
-
-      console.log(data) 
-      });
-
-  searchinput.oninput = function() { 
-      var searchString = searchinput.value;
-
-    socket.emit('search', searchString); 
-  }
-</script>
-<!-- header top menu end -->
+	<!--
+																						<script>
+																						
+																						
+																							function createHref(url, param, title) {
+																						var a = document.createElement('a');
+																						var link = document.createTextNode(title);
+																						a.appendChild(link);
+																						a.title = title;
+																						a.href = url + "/" + param;
+																						return a;
+																						}
+																						
+																						function createTable(tableType, objectArray, fields, fieldTitles) {
+																						let tbl = document.createElement('table');
+																						tbl.setAttribute("class", "table")
+																						let thead = document.createElement('thead');
+																						let thr = document.createElement('tr');
+																						fieldTitles.forEach((fieldTitle) => {
+																						let th = document.createElement('th');
+																						th.appendChild(document.createTextNode(fieldTitle));
+																						thr.appendChild(th);
+																						});
+																						thead.appendChild(thr);
+																						tbl.appendChild(thead);
+																						
+																						var title = document.createElement("h1")
+																						var urlToRedirect = '';
+																						switch (tableType) {
+																						case 'block': urlToRedirect = '/block/'
+																						break;
+																						
+																						case 'wallet': urlToRedirect = '/wallet'
+																						break;
+																						}
+																						
+																						tbl.before(title)
+																						
+																						
+																						let tbdy = document.createElement('tbody');
+																						
+																						
+																						let tr = document.createElement('tr');
+																						fields.forEach((field) => {
+																						var td = document.createElement('td');
+																						td.appendChild(createHref(urlToRedirect, objectArray[field], objectArray[field]));
+																						tr.appendChild(td);
+																						});
+																						tbdy.appendChild(tr);
+																						
+																						tbl.appendChild(tbdy);
+																						return tbl;
+																						}
+																						
+																						
+																						var socket = io();
+																						
+																						socket.on('showsearch', function (data) {
+																						const resultsNode = document.getElementById("results");
+																						resultsNode.textContent = '';
+																						
+																						if (data.blocks) {
+																						var title = document.createElement("h1")
+																						title.appendChild(document.createTextNode("Found block:"));
+																						
+																						results.appendChild(title)
+																						results.appendChild(createTable('block', data.blocks, [
+																						'id', 'height'
+																						], ['Id', 'Height']))
+																						}
+																						
+																						
+																						if (data.wallets) {
+																						var title = document.createElement("h1")
+																						title.appendChild(document.createTextNode("Found wallet:"));
+																						
+																						results.appendChild(title)
+																						results.appendChild(createTable('wallet', data.wallets, [
+																						'address', 'balance'
+																						], ['Address', 'Balance']))
+																						}
+																						
+																						
+																						if (data.transactions) {
+																						var title = document.createElement("h1")
+																						title.appendChild(document.createTextNode("Found transaction:"));
+																						
+																						results.appendChild(title)
+																						results.appendChild(createTable('transaction', data.transactions, [
+																						'sender', 'recipient', 'vendorField'
+																						], ['From', 'To', 'Smartbridge']))
+																						}
+																						
+																						if (data.tokenTransactions) {
+																						var title = document.createElement("h1")
+																						title.appendChild(document.createTextNode("Found token transaction:"));
+																						
+																						results.appendChild(title)
+																						results.appendChild(createTable('tokentransaction', data.tokenTransactions, [
+																						'sender', 'recipient', 'vendorField'
+																						], ['From', 'To', 'Token Transfer Data']))
+																						}
+																						
+																						
+																						if (data.delegates) {
+																						var title = document.createElement("h1")
+																						title.appendChild(document.createTextNode("Found delegate:"));
+																						
+																						results.appendChild(title)
+																						results.appendChild(createTable('delegate', data.delegates, [
+																						'address', 'balance'
+																						], ['Address', 'Balance']))
+																						}
+																						
+																						
+																						if (data.tokens) {
+																						var title = document.createElement("h1")
+																						title.appendChild(document.createTextNode("Found token:"));
+																						
+																						results.appendChild(title)
+																						results.appendChild(createTable('token', data.tokens, [
+																						'type', 'lastUpdatedBlock'
+																						], ['Type', 'Last Block']))
+																						}
+																						
+																						console.log(data)
+																						});
+																						
+																						searchinput.oninput = function () {
+																						var searchString = searchinput.value;
+																						
+																						socket.emit('search', searchString);
+																						}
+																						</script> -->
+	<!-- header top menu end -->

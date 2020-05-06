@@ -4,8 +4,17 @@ var router = express.Router();
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", {
-    title: "Qredit Explorer",
+    title: "Qredit",
     routename: "home",
+    csrfToken: req.csrfToken()
+  });
+});
+
+/* GET contact page. */
+router.get("/contact", function (req, res, next) {
+  res.render("contact", {
+    title: "Qredit",
+    routename: "contact",
     csrfToken: req.csrfToken()
   });
 });

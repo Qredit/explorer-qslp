@@ -1,35 +1,36 @@
 {% extends 'layout_main.twig' %}
 
 {% block body %}
-<div class="card">
-<div class="card-body">
-	<div class="header-title">
-		<h1>Latest Transactions and Blocks</h1>
-	</div>	
-	<div class="separator-breadcrumb border-top"></div>
-
-	<div class="card">
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped mb-4">
-					<thead>
-						<tr>
-							<th scope="col">TX ID</th>
-							<th scope="col">#</th>
-							<th scope="col">Timestamp</th>
-							<th scope="col">Sender</th>
-							<th scope="col">Recipient</th>
-							<th scope="col">Smartbridge</th>
-							<th scope="col">Amount</th>
-
-						</tr>
-					</thead>
-					<tbody id='transactions'></tbody>
-				</table>
-				
+	{% include 'layout_header_explorer.twig' %}
+	<div class="container" style="margin-top:50px;margin-bottom:50px;">
+		
+			<div class="">
+				<h2>Latest Transactions and Blocks</h2>
 			</div>
+			<div class="separator-breadcrumb border-top"></div>
+
+			<div class="container">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-striped mb-4">
+						<thead>
+							<tr>
+								<th scope="col">TX ID</th>
+								<th scope="col">#</th>
+								<th scope="col">Timestamp</th>
+								<th scope="col">Sender</th>
+								<th scope="col">Recipient</th>
+								<th scope="col">Smartbridge</th>
+								<th scope="col">Amount</th>
+
+							</tr>
+						</thead>
+						<tbody id='transactions'></tbody>
+					</table>
+
+				</div>
+			</div>
+		
 	</div>
-	</div>
-</div>
 
 {% endblock %}
 
@@ -192,5 +193,5 @@ return '<span style="color:red;"><i class="fas fa-circle"></i><i class="fas fa-c
 }
 	</script>
 
-	
+
 {% endblock %}
