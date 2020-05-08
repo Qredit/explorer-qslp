@@ -15,22 +15,24 @@
 					<p>Delegate Monitor</p>
 				</div>
 			</div>
+			<div class="table-responsive">
 
-			<table class="table table-responsive">
+				<table class="table">
 
-				<thead>
-					<tr>
-						<th class="server-tabls-head" scope="col">Rank</th>
-						<th class="server-tabls-head" scope="col">Username</th>
-						<th class="server-tabls-head" scope="col">Last Forged</th>
-						<th class="server-tabls-head" scope="col">Status</th>
-						<th class="server-tabls-head" scope="col">Votes</th>
-					</tr>
-				</thead>
-				<tbody id='delegates' class="server-tabls-row"></tbody>
+					<thead>
+						<tr>
+							<th class="server-tabls-head" scope="col">Status</th>
+							<th class="server-tabls-head" scope="col">Username</th>
+							<th class="server-tabls-head" scope="col">Last Forged</th>
+							<th class="server-tabls-head" scope="col">Rank</th>
+						</tr>
+					</thead>
+					<tbody id='delegates' class="server-tabls-row"></tbody>
 
-			</table>
+				</table>
+			</div>
 		</div>
+
 	</div>
 </div></div></div></div>{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
 
@@ -50,7 +52,7 @@ data.forEach(function (row) {
 tr = document.createElement("tr");
 
 td = document.createElement("td");
-td.innerHTML = row.rank;
+td.innerHTML = getStatus(row.timestamp);
 tr.appendChild(td);
 
 td = document.createElement("td");
@@ -62,13 +64,8 @@ td.innerHTML = timeDifference(row.timestamp);
 tr.appendChild(td);
 
 td = document.createElement("td");
-td.innerHTML = getStatus(row.timestamp);
+td.innerHTML = row.rank;
 tr.appendChild(td);
-
-td = document.createElement("td");
-td.innerHTML = row.approval + ' % ';
-tr.appendChild(td);
-
 
 delegates.appendChild(tr);
 

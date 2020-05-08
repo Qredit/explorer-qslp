@@ -158,6 +158,4 @@ router.get("/token/:tokenid", function (req, res, next) {
   });
 });
 
-
-
 module.exports = router;

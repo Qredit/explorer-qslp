@@ -1,39 +1,39 @@
 {% extends 'layout_main.twig' %}
 
 {% block body %}
+	{% include 'layout_header_explorer.twig' %}
+	<div class="container" style="margin-top:50px;margin-bottom:50px;">
+		<div class="container">
+			<div class="container search-title" id="aftersearch"></div>
+			<div class="banner-servers-box">
+				<div class="counter-placeholder"></div>
+				<div class="banner-text-left">
+					<h4 style="color:#fff;">
+						<strong>QAE Tokens</strong>
+					</h4>
+					<p>QAE tokens on the Qredit Blockchain</p>
+				</div>
+			</div>
 
-	<div class="breadcrumb">
-		<h1>Token Info</h1>
-	</div>
-	<p class="text-small text-muted text-left">Text</p>
-	<div class="separator-breadcrumb border-top"></div>
-
-
-
-	<div class="separator-breadcrumb border-top"></div>
-	<p class="text-small text-muted left">{{ tokenid }}</p>
-	<div class="card">
-		<div class="card-body">
 			<div class="table-responsive">
-				<table class="table table-sm table-striped">
+
+				<table class="table">
+
+
 					<thead>
 						<tr>
-							<th scope="col">Data</th>
-							<th scope="col">Output</th>
+							<th class="server-tabls-head" scope="col">Data</th>
+							<th class="server-tabls-head" scope="col">Output</th>
 						</tr>
 					</thead>
-					<tbody id='maintable'>
-					
-					
-					
-					
-					</tbody>
+					<tbody id='tokeninfo' class="server-tabls-row"></tbody>
+
 
 				</table>
-				
 			</div>
 		</div>
 	</div>
+</div></div></div></div
 
 	{{ tokenid }}
 
@@ -53,7 +53,7 @@ $(document).ready(function() {
 	
   	socket.on('showtokeninfo', function (data) { 
   	
-  		var mainTable = document.getElementById("maintable");
+  		var mainTable = document.getElementById("tokeninfo");
   		var tr, td;
 
   		data.forEach(function(row) {
@@ -68,7 +68,7 @@ $(document).ready(function() {
   			td.innerHTML = row.paused;
   			tr.appendChild(td);
   			
-  			maintable.appendChild(tr);
+  			tokeninfo.appendChild(tr);
   		
   		});
 
