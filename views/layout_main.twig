@@ -11,44 +11,69 @@
 
 
 		<!-- CSS FILES -->
-		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/main.min.css">
-
+		<link rel="stylesheet" href="css/main.css"> 
 		<link rel="stylesheet" href="css/bootstrap.min.css">
-
-		<link
-		href="css/loader.css" rel="stylesheet" type="text/css"/>
-
-		<!-- BEGIN GLOBAL MANDATORY STYLES -->
 		<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link href="css/plugins.css" rel="stylesheet" type="text/css"/><!-- END GLOBAL MANDATORY STYLES -->
+		<link href="css/plugins.css" rel="stylesheet" type="text/css"/>
+		<link href="css/loader.css" rel="stylesheet" type="text/css"/>
 
 		<!-- CSS FILES end -->
 
-		<!-- Scripts --><script src="js/libs/jquery.min.js"> </script>
+		<!-- Scripts -->
+		
+		
+		<script src="js/libs/jquery.min.js"> </script>
 		<script src="js/socket.io.slim.js"></script>
-		<script src="js/common-bundle-script.js"></script>
+
 
 		<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-		<script src="js/libs/jquery-3.1.1.min.js"></script>
-		<script src="js/popper.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-		<script src="js/app.js"></script>
-		<script src="js/jquery.min.js"></script>
-		<script src="js/popper.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+
+
 		<!-- template JavaScript -->
 
 		{% block javascripts %}{% endblock %}
 	</head>
-</html></body></html><script>$(document).ready(function () {
+</html>
+
+
+
+</script>
+<!-- END GLOBAL MANDATORY SCRIPTS -->
+<!-- Favicon--><link rel="icon" type="/image/png" href="/favicon.png"></head><body class="text-left">
+<!-- ============ header menu ============= -->
+
+<!-- ============ end of header menu ============= -->
+<!-- ============ Body content start ============= -->
+<div class="main-content-wrap sidenav-open d-flex flex-column"> 
+	<div class="main-content">
+{% block body %}
+{% endblock %}
+	</div>
+{% include 'layout_footer.twig' %}
+</div>
+
+
+<!-- ============ Scripts ============= -->		
+<!-- <script>$(document).ready(function () {
 App.init();
-});</script><script src="js/custom.js"></script><!-- END GLOBAL MANDATORY SCRIPTS --><!-- Favicon
---><link rel="icon" type="/image/png" href="/favicon.png"></head><body class="text-left">
-<!-- ============ header menu ============= --><!-- ============ end of header menu ============= --><!-- ============ Body content start ============= --><div class="main-content-wrap sidenav-open d-flex flex-column"> <div
-class="main-content">
-<!-- Primary Page Layout
-																																																																																																																																									–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-{% block body %}{% endblock %}</div>{% include 'layout_footer.twig' %}</div></body></html></div><!-- ============ Scripts ============= --><script src="js/template-scripts.js"></script><script src="js/flickity.pkgd.min.js"></script><script src="owlcarousel/owl.carousel.min.js"></script><script src="js/parallax.min.js"></script><script src="js/mailchamp.js"></script><script src="js/bootstrap.offcanvas.min.js"></script><script src="js/jquery.touchSwipe.min.js"></script><script src="js/particles-code.js"></script><script src="js/particles.js"></script><script src="js/smoothscroll.js"></script><script src="/js/script.js"></script>
+});</script> -->
+<!--<script src="js/libs/jquery-3.1.1.min.js"></script> -->
+<script src="js/bootstrap.min.js"></script>
+<script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/custom.js">
+
+<script src="js/popper.min.js"></script>
+<script src="js/template-scripts.js"></script>
+<script src="js/flickity.pkgd.min.js"></script>
+<script src="owlcarousel/owl.carousel.min.js"></script>
+<script src="js/parallax.min.js"></script>
+<script src="js/mailchamp.js"></script>
+<script src="js/bootstrap.offcanvas.min.js"></script>
+<script src="js/jquery.touchSwipe.min.js"></script>
+<script src="js/particles-code.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="/js/script.js"></script>

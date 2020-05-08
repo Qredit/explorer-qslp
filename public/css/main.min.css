@@ -6577,7 +6577,13 @@ a:hover {
 }
 
 .header-top-height {
-    min-height: 50px;
+    min-height: 100px !important;
+}
+
+@media (max-width: 1000px) {
+    .header-top-height {
+        min-height: auto !important;
+    }
 }
 
 #coodiv-header .navbar.fixed-header-layout.top-header-fixed {
@@ -15962,4 +15968,24 @@ section#main-body #order-standard_cart .empty-cart .btn {
     background-color: #F44336;
     border-radius: 4px;
     margin-top: 10px
+}
+
+.header-logo {
+    max-width: 400px;
+}
+
+@media (max-width: 768px) {
+    .header-logo {
+        max-width: 200px;
+    }
+}
+
+
+.mh {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.text-center {
+    text-align: center;
 }

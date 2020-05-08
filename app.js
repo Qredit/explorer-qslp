@@ -18,6 +18,8 @@ const {
 const sqlite3 = require('sqlite3');
 const asyncv3 = require('async');
 
+// Altilly Libs
+const altillyApi = require("nodeAltillyApi");
 
 // Qredit Libs
 const qreditjs = require("qreditjs");
@@ -110,8 +112,8 @@ io.on('connection', function (socket) {
 					owneraddress: data[i].tokenDetails.ownerAddress,
 					tokenid: data[i].tokenDetails.tokenIdHex,
 					circsupply: Big(data[i].tokenStats.qty_token_circulating_supply).div(Big(10).pow(data[i].tokenDetails.decimals)).toFixed(data[i].tokenDetails.decimals),
-					pausable: data[i].tokenDetails.pausable == true ? '<i class="nav-icon i-Yes font-weight-bold"style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
-					mintable: data[i].tokenDetails.mintable == true ? '<i class="nav-icon i-Yes font-weight-bold" style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>'
+					pausable: data[i].tokenDetails.pausable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">',
+					mintable: data[i].tokenDetails.mintable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">'
 
 				};
 				flatJson.push(tempJson);

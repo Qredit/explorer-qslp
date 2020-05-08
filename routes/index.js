@@ -10,7 +10,7 @@ router.get("/", function (req, res, next) {
   });
 });
 
-/* GET contact page. */
+/* GET menu pages. */
 router.get("/contact", function (req, res, next) {
   res.render("contact", {
     title: "Qredit",
@@ -18,6 +18,71 @@ router.get("/contact", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
+
+router.get("/altilly", function (req, res, next) {
+  res.render("altilly", {
+    title: "Qredit",
+    routename: "altilly",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/development", function (req, res, next) {
+  res.render("development", {
+    title: "Qredit",
+    routename: "development",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/persona", function (req, res, next) {
+  res.render("persona", {
+    title: "Qredit",
+    routename: "persona",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/privacypolicy", function (req, res, next) {
+  res.render("privacypolicy", {
+    title: "Qredit",
+    routename: "privacypolicy",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/qae", function (req, res, next) {
+  res.render("qae", {
+    title: "Qredit",
+    routename: "qae",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/terms", function (req, res, next) {
+  res.render("terms", {
+    title: "Qredit",
+    routename: "terms",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/tools-api", function (req, res, next) {
+  res.render("tools-api", {
+    title: "Qredit",
+    routename: "tools-api",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/wallets", function (req, res, next) {
+  res.render("wallets", {
+    title: "Qredit",
+    routename: "wallets",
+    csrfToken: req.csrfToken()
+  });
+});
+
 
 /* GET explorer page. */
 router.get("/transactions", function (req, res, next) {

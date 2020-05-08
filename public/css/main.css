@@ -6343,7 +6343,13 @@ a:hover {
 }
 
 .header-top-height {
-    min-height: 50px;
+    min-height: 100px !important;
+}
+
+@media (max-width: 1000px) {
+    .header-top-height {
+        min-height: auto !important;
+    }
 }
 
 #coodiv-header .navbar.fixed-header-layout.top-header-fixed {
@@ -9702,7 +9708,7 @@ a:hover {
     height: 2px;
     display: block;
     width: 20px;
-    background: #2f3538;
+    background: #fff;
     border-radius: 4px;
 }
 
@@ -9711,7 +9717,7 @@ a:hover {
     height: 2px;
     display: block;
     width: 20px;
-    background: #2f3538;
+    background: #fff;
     border-radius: 4px;
     margin-top: 5px;
 }
@@ -9720,7 +9726,7 @@ a:hover {
     height: 2px;
     display: block;
     width: 13px;
-    background: #2f3538;
+    background: #fff;
     border-radius: 4px;
     margin-top: 5px;
     float: right;
@@ -13588,4 +13594,28 @@ body.fourth-color-styles #coodiv-header {
     .our-services-coresol-box {
         width: 230px;
     }
+}
+
+.bg_overlay_header img {
+    position: absolute;
+    bottom: -100px;
+}
+
+.header-logo {
+    max-width: 400px;
+}
+
+@media (max-width: 768px) {
+    .header-logo {
+        max-width: 200px;
+    }
+}
+
+.mh {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.text-center {
+    text-align: center;
 }

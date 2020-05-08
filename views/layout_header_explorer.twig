@@ -1,4 +1,23 @@
+<!-- start preloader -->
+<div class="preloader">
+	<div class="preloader-container">
+		<svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+			<circle fill="#675cda" stroke="none" cx="6" cy="50" r="6">
+				<animateTransform attributename="transform" dur="1s" type="translate" values="0 15 ; 0 -15; 0 15" repeatcount="indefinite" begin="0.1"/>
+			</circle>
+			<circle fill="#675cda" stroke="none" cx="30" cy="50" r="6">
+				<animateTransform attributename="transform" dur="1s" type="translate" values="0 10 ; 0 -10; 0 10" repeatcount="indefinite" begin="0.2"/>
+			</circle>
+			<circle fill="#675cda" stroke="none" cx="54" cy="50" r="6">
+				<animateTransform attributename="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatcount="indefinite" begin="0.3"/>
+			</circle>
+		</svg>
+		<span>loading</span>
+	</div>
+</div>
+<!-- end preloader -->
 <div
+
 	id="coodiv-header" class="d-flex mx-auto flex-column subpages-header  moon-edition" style="height: 949px;">
 	<!-- start header -->
 	<div class="bg_overlay_header">
@@ -17,12 +36,12 @@
 				<img class="w-logo" src="img/header/logo-navbar-light.png" alt="">
 				<img class="b-logo" src="img/header/logo-navbar-dark.png" alt="">
 			</a>
-			<button class="navbar-toggle offcanvas-toggle menu-btn-span-bar ml-auto js-offcanvas-has-events" data-toggle="offcanvas" data-target="#offcanvas-menu-home">
+			<button class="navbar-toggle offcanvas-toggle menu-btn-span-bar ml-auto" data-toggle="offcanvas" data-target="#offcanvas-menu-home">
 				<span></span>
 				<span></span>
 				<span></span>
 			</button>
-			<div class="collapse navbar-collapse navbar-offcanvas offcanvas-transform js-offcanvas-done" id="offcanvas-menu-home">
+			<div class="collapse navbar-collapse navbar-offcanvas" id="offcanvas-menu-home">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="/">Home</a>
@@ -36,7 +55,7 @@
 						<div class="dropdown-menu coodiv-dropdown-megamnu default-megamenu" aria-labelledby="services-megamenu">
 							<div class="d-flex justify-content-center bd-highlight mb-3 megamenu-items-header">
 								<div class="p-2 bd-highlight">
-									<a href="#">
+									<a href="/persona">
 										<i class="bredhicon-sun"></i>
 										<h5>Persona</h5>
 										<p>The all-in-one KYC toolkit for software implementation.</p>
@@ -47,7 +66,7 @@
 								</div>
 
 								<div class="p-2 bd-highlight">
-									<a href="#">
+									<a href="https://motion.qredit.cloud">
 										<i class="bredhicon-sun"></i>
 										<h5>Qredit Motion</h5>
 										<p>A multicurrency fiat and crypto wallet with QAE functionalities.</p>
@@ -57,7 +76,7 @@
 								</div>
 
 								<div class="p-2 bd-highlight">
-									<a href="https://altilly.com">
+									<a href="/altilly">
 										<i class="bredhicon-sun"></i>
 										<h5>Altilly</h5>
 										<p>Digital Asset Exchange with Qredit as the base currency.</p>
@@ -70,7 +89,7 @@
 								</div>
 
 								<div class="p-2 bd-highlight">
-									<a href="https://qredit.io/wallets/">
+									<a href="/wallets">
 										<i class="bredhicon-sun"></i>
 										<h5>Crypto Wallets</h5>
 										<p>Qredit Native cryptocurrency wallets for multiple platforms.</p>
@@ -81,7 +100,7 @@
 								</div>
 
 								<div class="p-2 bd-highlight">
-									<a href="#">
+									<a href="/qae">
 										<i class="bredhicon-sun"></i>
 										<h5>QAE Smart Contracts</h5>
 										<p>Create your dApps with QAE Smart Contracts.</p>
@@ -133,7 +152,7 @@
 									</a>
 								</div>
 								<div class="p-2 bd-highlight">
-									<a href="#">
+									<a href="/tools-api">
 										<i class="bredhicon-sun"></i>
 										<h5>Tools & API</h5>
 										<p>Qredit Blockchain Tools and API Documentation.</p>
@@ -142,7 +161,7 @@
 									</a>
 								</div>
 								<div class="p-2 bd-highlight">
-									<a href="#">
+									<a href="/development">
 										<i class="bredhicon-sun"></i>
 										<h5>Development</h5>
 										<p>View the Qredit roadmap and development.</p>
