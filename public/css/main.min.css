@@ -6586,6 +6586,16 @@ a:hover {
     }
 }
 
+.header-top-height-explorer {
+    min-height: 70px !important;
+}
+
+@media (max-width: 1000px) {
+    .header-top-height-explorer {
+        min-height: auto !important;
+    }
+}
+
 #coodiv-header .navbar.fixed-header-layout.top-header-fixed {
     position: fixed;
     width: 100%;
@@ -9505,7 +9515,7 @@ a:hover {
 }
 
 .footer-area-under .footer-logo-blue {
-    width: 200px;
+    width: 150px;
 }
 
 .footer-social-icons {
@@ -15988,4 +15998,8 @@ section#main-body #order-standard_cart .empty-cart .btn {
 
 .text-center {
     text-align: center;
+}
+
+.made-with-love {
+    color: #969cc1;
 }

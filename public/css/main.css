@@ -6346,8 +6346,19 @@ a:hover {
     min-height: 100px !important;
 }
 
+
 @media (max-width: 1000px) {
     .header-top-height {
+        min-height: auto !important;
+    }
+}
+
+.header-top-height-explorer {
+    min-height: 70px !important;
+}
+
+@media (max-width: 1000px) {
+    .header-top-height-explorer {
         min-height: auto !important;
     }
 }
@@ -9421,7 +9432,7 @@ a:hover {
 }
 
 .footer-area-under .footer-logo-blue {
-    width: 200px;
+    width: 150px;
 }
 
 .footer-social-icons {
@@ -13618,4 +13629,8 @@ body.fourth-color-styles #coodiv-header {
 
 .text-center {
     text-align: center;
+}
+
+.made-with-love {
+    color: #969cc1;
 }

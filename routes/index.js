@@ -19,6 +19,14 @@ router.get("/contact", function (req, res, next) {
   });
 });
 
+router.get("/motion", function (req, res, next) {
+  res.render("motion", {
+    title: "Qredit",
+    routename: "motion",
+    csrfToken: req.csrfToken()
+  });
+});
+
 router.get("/altilly", function (req, res, next) {
   res.render("altilly", {
     title: "Qredit",
