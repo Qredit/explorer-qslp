@@ -6870,7 +6870,7 @@ a:hover {
     height: 60px;
     border-radius: 25px;
     outline: none;
-    padding-left: 60px;
+    padding-left: 25px;
     line-height: 61px;
     box-shadow: 12px 12px 30px 0 rgba(77, 77, 119, .10);
     font-weight: 500;
@@ -13660,7 +13660,7 @@ body.fourth-color-styles #coodiv-header {
         height: 60px;
         border-radius: 25px;
         outline: none;
-        padding-left: 60px;
+        padding-left: 25px;
         line-height: 61px;
         box-shadow: 12px 12px 30px 0 rgba(77, 77, 119, .10);
         font-weight: 500;
