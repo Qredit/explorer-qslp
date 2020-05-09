@@ -19,8 +19,7 @@
 				<table class="table">
 
 					<thead>
-						<tr></tr>
-					</thead>
+	
 
 					<th class="server-tabls-head" scope="col">ID</th>
 					<th class="server-tabls-head" scope="col">Timestamp</th>
@@ -35,15 +34,19 @@
 			<tbody id='walletId' class="server-tabls-row"></tbody>
 		</table>
 	</div>
-</div></div>{% include 'layout_footer_sub.twig' %}{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
+</div></div>{% include 'layout_footer_sub.twig' %}
+{% endblock %}
+{% block javascripts %}
 
+
+
+<script>
+
+$(document).ready(function () {
 
 var socket = io();
-
 socket.emit('gettransactiondetails', {walletId: '{{ walletId }}'});
-
 socket.on('showtransactiondetails', function (data) {
-
 var mainTable = document.getElementById("transactiondetails");
 var tr,
 td;
@@ -67,9 +70,9 @@ transactiondetails.appendChild(tr);
 
 });
 
-});</script><script>function goBack() {
-window.history.back();
-}</script><script type="text/javascript">$(document).ready(function () {
+});</script>
+
+<script type="text/javascript">$(document).ready(function () {
 	$("button-txid").click(function (event) {
 	event.preventDefault();
 	CopyToClipboard("{{ transactionId }}", true, "Value copied");
