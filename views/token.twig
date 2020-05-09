@@ -1,7 +1,7 @@
-{% extends 'layout_main.twig' %}
+{% extends 'layout_sub.twig' %}
 
 {% block body %}
-	{% include 'layout_header_explorer.twig' %}
+	{% include 'layout_header_sub.twig' %}
 	<div class="container" style="margin-top:50px;margin-bottom:50px;">
 		<div class="container">
 			<div class="container search-title" id="aftersearch"></div>
@@ -33,48 +33,33 @@
 			</div>
 		</div>
 	</div>
-</div></div></div></div
-
-	{{ tokenid }}
-
-{% endblock %}
-
-
-{% block javascripts %}
-
-
-<script>
-
-$(document).ready(function() {
-
-	var socket = io();
-	
-	socket.emit('gettokeninfo', {tokenid: '{{ tokenid }}'} );
-	
-  	socket.on('showtokeninfo', function (data) { 
-  	
-  		var mainTable = document.getElementById("tokeninfo");
-  		var tr, td;
-
-  		data.forEach(function(row) {
-  		
-  			tr = document.createElement("tr");
-  			
-  			td = document.createElement("td");
-  			td.innerHTML = row.symbol;
-			tr.appendChild(td);
-			  
-  		  	td = document.createElement("td");
-  			td.innerHTML = row.paused;
-  			tr.appendChild(td);
-  			
-  			tokeninfo.appendChild(tr);
-  		
-  		});
-
-  	});
-
-});
-
-</script>
-{% endblock %}
+</div></div></div></div{{tokenid}}<script>{% include 'layout_footer_sub.twig' %}{% endblock %}{% block javascripts %}$(document).ready(function() {
+		
+			var socket = io();
+			
+			socket.emit('gettokeninfo', {tokenid: '{{ tokenid }}'} );
+			
+		  	socket.on('showtokeninfo', function (data) { 
+		  	
+		  		var mainTable = document.getElementById("tokeninfo");
+		  		var tr, td;
+		
+		  		data.forEach(function(row) {
+		  		
+		  			tr = document.createElement("tr");
+		  			
+		  			td = document.createElement("td");
+		  			td.innerHTML = row.symbol;
+					tr.appendChild(td);
+					  
+		  		  	td = document.createElement("td");
+		  			td.innerHTML = row.paused;
+		  			tr.appendChild(td);
+		  			
+		  			tokeninfo.appendChild(tr);
+		  		
+		  		});
+		
+		  	});
+		
+		});</script>{% endblock %}

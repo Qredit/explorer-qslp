@@ -13634,3 +13634,21 @@ body.fourth-color-styles #coodiv-header {
 .made-with-love {
     color: #969cc1;
 }
+
+@media (min-width:768px) {
+    .desktop-hidden {
+        display: none;
+    }
+}
+
+@media (max-width:768px) {
+    .mobile-hidden {
+        display: none;
+    }
+}
+
+@media (max-width:768px) {
+    .mobile-header {
+        margin-top: 100px;
+    }
+}

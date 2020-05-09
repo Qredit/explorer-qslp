@@ -15,24 +15,26 @@
 					<p>Peers on the Qredit Blockchain</p>
 				</div>
 			</div>
+			<div class="table-responsive">
+				<table class="table">
 
-			<table class="table table-responsive">
+					<thead>
+						<tr>
+							<th class="server-tabls-head" scope="col">IP</th>
+							<th class="server-tabls-head" scope="col">P2P-Port</th>
+							<th class="server-tabls-head" scope="col">Version</th>
+							<th class="server-tabls-head" scope="col">Height</th>
+							<th class="server-tabls-head" scope="col">Latency</th>
+						</tr>
+					</thead>
+					<tbody id='peers' class="server-tabls-row"></tbody>
 
-				<thead>
-					<tr>
-						<th class="server-tabls-head" scope="col">IP</th>
-						<th class="server-tabls-head" scope="col">P2P-Port</th>
-						<th class="server-tabls-head" scope="col">Version</th>
-						<th class="server-tabls-head" scope="col">Height</th>
-						<th class="server-tabls-head" scope="col">Latency</th>
-					</tr>
-				</thead>
-				<tbody id='peers' class="server-tabls-row"></tbody>
-
-			</table>
+				</table>
+			</div>
 		</div>
 	</div>
-</div></div></div></div>{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
+</div></div></div>{% include 'layout_footer.twig' %}{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
+
 
 var socket = io();
 

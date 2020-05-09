@@ -1,8 +1,8 @@
-{% extends 'layout_main.twig' %}
+{% extends 'layout_sub.twig' %}
 
 
 {% block body %}
-	{% include 'layout_header_small.twig' %}
+	{% include 'layout_header_sub.twig' %}
 
 	<div class="container">
 
@@ -14,6 +14,8 @@
 			<div class="mt-auto"></div>
 		</div>
 	</div>
+	{% include 'layout_footer_sub.twig' %}
+
 {% endblock %}
 {% block javascripts %}
 
