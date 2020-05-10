@@ -20,7 +20,7 @@ router.get("/contact", function (req, res, next) {
 });
 
 router.get("/motion", function (req, res, next) {
-  res.render("motion", {
+  res.render("https://motion.qredit.cloud", {
     title: "Qredit",
     routename: "motion",
     csrfToken: req.csrfToken()
