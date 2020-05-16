@@ -4,29 +4,43 @@
 {% block body %}
 	{% include 'layout_header_menu.twig' %}
 
-	<div class="container">
+	<div class="container" style="margin-top:50px;margin-bottom:50px;">
 
-		<div class="row justify-content-between" style="margin-top:50px;margin-bottom:50px;">
-
-			<div class="col-md-8" style="text-align:center!important;">
-				<img src="/img/finance.png" class="header-logo" alt="">
-			</div>
-
-			<div class="col-md-4 side-text-right-container d-flex mx-auto flex-column">
+		<div class="row justify-content-between">
+			<div class="col-md-12 side-text-right-container d-flex mx-auto flex-column" style="text-align:center;">
 				<div class="mb-auto"></div>
-				<h2 class="side-text-right-title f-size25">Fast. Reliable.<br>Efficient.</h2>
-				<p class="side-text-right-text f-size16">
-								<p class="side-text-right-text f-size16">
-Qredit is a complete enhanced blockchain suite for enterprises, developers and individuals.<br>
-Integrate Qredit in your business using our <b>Persona</b> toolkit for KYC verifications. <br>
-Create your own dApps with the<br><b>QAE Smart Contracts</b> toolkit<br> or use <b>Qredit Motion</b> as a payment gateway.
+				<h2 class="side-text-right-title f-size25">The Enhanced Blockchain Suite.</h2>
+
+				<p class="side-text-right-text f-size16" style="color:#000;">
+					Qredit is a complete enhanced blockchain suite for enterprises, developers and individuals.<br>
+					Integrate Qredit in your business using our
+					<b>Persona</b>
+					toolkit for KYC verifications.
+					<br>
+					Create your own dApps with the
+					<b>QAE Smart Contracts</b>
+					toolkit or use
+					<b>Qredit Motion</b>
+					as a payment gateway.
 				</p>
-				</p>
+
 				<div class="mt-auto"></div>
 			</div>
 		</div>
+		<div class="col-md-12 side-text-right-container d-flex mx-auto flex-column" style="text-align:center;margin-top:40px;">
+			<div class="mb-auto"></div>
+			<h2 class="side-text-right-title f-size25">Fast. Reliable. Efficient.</h2>
+
+			<p class="side-text-right-text f-size16" style="color:#000;">
+				With 8 seconds blocktime and +250 transactions per block, Qredit is one of the fastest decentralized blockchains.<br>
+				Qredit utilizes the Delegated Proof of Stake consensus, insuring a stable and reliable network for all users.<br>
+				With only 51 forging nodes, the Qredit blockchain is one of the most energy and cost-efficient blockchains in the world.<br>
+
+			</p>
+			<div class="mt-auto"></div>
+		</div>
 	</div>
-{% include 'layout_footer.twig' %}
+	{% include 'layout_footer.twig' %}
 
 {% endblock %}
 
