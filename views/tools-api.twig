@@ -2,19 +2,54 @@
 
 
 {% block body %}
-	{% include 'layout_header_small.twig' %}
 
-	<div class="container">
+<div class="custom-login-page">
+	<div class="login-left-side-custom">
+		<div id="particles-bg"></div>
+		<img class="custom-login-bg" src="/img/header/h_bg_02.svg" alt="img-bg">
+		<div style="text-align:left;">
+			<a class="navbar-brand" href="https://qredit.io">
+				<img class="w-logo" src="/img/logo.png" alt="Qredit"></a>
+		</div>
+		<div class="kt-grid" style="text-align:left;margin-left:20px;">
+<div class="row" style="margin-top:100px;">
+                <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">HTML</a></li>
+    <li><a href="#">CSS</a></li>
+    <li><a href="#">JavaScript</a></li>
+  </ul>
+</div>
+            </div>
+			
+			<div class="item-footer">
 
-		<div class="row mh">
-			<div class="col-md-12 text-center">
-				<h2>Coming Soon</h2>
+
+				<div class="login-info">
+					<div class="login-copyright">© 2020 - Qredit Technologies</div>
+				</div>
 			</div>
-
-			<div class="mt-auto"></div>
 		</div>
 	</div>
-	{% include 'layout_footer.twig' %}
+	<div class="login-right-side-custom" style="background:#fff;">
+
+		<div class="login-wrapper">
+
+			<div class="login-form-container register-special">
+				<div id="registration">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
 
 {% endblock %}
 {% block javascripts %}
