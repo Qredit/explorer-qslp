@@ -69,7 +69,7 @@ Waves
 /****************************/
 /** Imports **/
 /****************************/
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i|Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i|Quicksand:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
 /*Social Media Colors*/
 /*Theme Colors*/
 /*Lite color*/
@@ -152,7 +152,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Rubik", sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 400;
   line-height: 1.2;
 }
@@ -238,7 +238,7 @@ img {
 }
 
 .heading-font {
-  font-family: "Rubik", sans-serif !important;
+  font-family: "Quicksand", sans-serif !important;
 }
 
 .fs-0 {
@@ -27882,7 +27882,7 @@ Height property
   height: 115px;
   width: 115px;
   line-height: 115px;
-  font-family: "Rubik", sans-serif !important;
+  font-family: "Quicksand", sans-serif !important;
 }
 
 .icon i {
