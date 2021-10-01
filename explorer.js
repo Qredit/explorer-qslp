@@ -25,7 +25,7 @@ const qslpapi = new qslpApi.default();
 
 var indexRouter = require('./routes/index');
 
-var serverPort = 8080;
+var serverPort = 5200;
 
 var app = express();
 
