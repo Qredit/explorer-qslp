@@ -1,73 +1,77 @@
-{% extends 'layout_main.twig' %}
+{% extends '/blocks/main.twig' %}
 
 {% block body %}
-	{% include 'layout_header_explorer.twig' %}
-	<div class="container" style="margin-top:50px;margin-bottom:50px;">
-		<div class="container">
-			<div class="container search-title" id="aftersearch"></div>
-			<div class="banner-servers-box">
-				<div class="counter-placeholder"></div>
-				<div class="banner-text-left">
-					<h4 style="color:#fff;">
-						<strong>Top Wallets</strong>
-					</h4>
-					<p>View the top wallets on the Qredit Blockchain.</p>
-				</div>
-			</div>
-			<div class="table-responsive">
+{% include '/blocks/menu.twig' %}
+{% include '/cards/heading1.twig' %}
 
-				<table class="table">
+<div class="container" style="margin-top:50px;margin-bottom:50px;">
+	<div class="container">
 
-
-					<thead>
-						<tr>
-							<th class="server-tabls-head" scope="col">#</th>
-							<th class="server-tabls-head" scope="col">Address</th>
-							<th class="server-tabls-head" scope="col">Balance</th>
-						</tr>
-					</thead>
-					<tbody id='topwallet' class="server-tabls-row"></tbody>
-
-
-				</table>
+		<div class="banner-servers-box">
+			<div class="counter-placeholder"></div>
+			<div class="banner-text-left">
+				<h4 style="color:#fff;">
+					<strong>Top Wallets</strong>
+				</h4>
+				<p>View the top wallets on the Qredit Blockchain.</p>
 			</div>
 		</div>
+		<div class="table-responsive">
+
+			<table class="table">
+
+
+				<thead>
+					<tr>
+						<th class="server-tabls-head" scope="col">#</th>
+						<th class="server-tabls-head" scope="col">Address</th>
+						<th class="server-tabls-head" scope="col">Balance</th>
+					</tr>
+				</thead>
+				<tbody id='topwallet' class="server-tabls-row"></tbody>
+
+
+			</table>
+		</div>
 	</div>
-</div></div></div></div>{% include 'layout_footer.twig' %}{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
+</div>
+</div>
+</div>
+</div>
+</div>{% include '/cards/footer.twig' %}{% endblock %}{% block javascripts %}
+<script>$(document).ready(function () {
 
 
-var socket = io();
+		var socket = io();
 
-socket.emit('gettopwallets', {});
+		socket.emit('gettopwallets', {});
 
-socket.on('showtopwallets', function (data) {
+		socket.on('showtopwallets', function (data) {
 
-var mainTable = document.getElementById("topwallet");
+			var mainTable = document.getElementById("topwallet");
+			var tr,
+				td;
 
+			data.forEach(function (row) {
 
-var tr,
-td;
+				tr = document.createElement("tr");
 
-data.forEach(function (row) {
+				td = document.createElement("td");
+				td.innerHTML = row.rank;
+				tr.appendChild(td);
 
-tr = document.createElement("tr");
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.address + '">' + row.address + '</a>';
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.rank;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = (parseFloat(row.balance) / 100000000).toFixed(0) + ' XQR';
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = '<a href="/wallet/' + row.address + '">' + row.address + '</a>';
-tr.appendChild(td);
+				topwallet.appendChild(tr);
 
-td = document.createElement("td");
-td.innerHTML = (parseFloat(row.balance) / 100000000).toFixed(0) + ' XQR';
-tr.appendChild(td);
+			});
 
-topwallet.appendChild(tr);
+		});
 
-});
-
-});
-
-});</script>{% endblock %}
+	});</script>{% endblock %}

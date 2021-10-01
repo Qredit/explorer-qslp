@@ -1,17 +1,20 @@
-{% extends 'layout_sub.twig' %}
+{% extends '/subblocks/main.twig' %}
 
 {% block body %}
-{% include 'layout_header_sub.twig' %}
+{% include '/subblocks/menu.twig' %}
+{% include '/cards/heading1.twig' %}
+
+
 <div class="container" style="margin-top:50px;margin-bottom:50px;">
 	<div class="container">
-		<div class="container search-title" id="aftersearch"></div>
+
 		<div class="banner-servers-box">
 			<div class="counter-placeholder"></div>
 			<div class="banner-text-left">
 				<h4 style="color:#fff;">
-					<strong>QAE Tokens</strong>
+					<strong>QSLP Tokens</strong>
 				</h4>
-				<p>QAE tokens on the Qredit Blockchain</p>
+				<p>QSLP tokens on the Qredit Blockchain</p>
 			</div>
 		</div>
 
@@ -32,51 +35,42 @@
 			</table>
 		</div>
 	</div>
-</div></div></div></div></div{{tokenid}} 
+</div>
+</div>
+</div>
+</div>{% include '/subblocks/footer.twig' %}
+</div{{tokenid}} {% endblock %} {% block javascripts %} <script>
+	$(document).ready(function () {
 
-	{% include 'layout_footer_sub.twig' %}
+
+
+		var socket = io();
+
+		socket.emit('gettokeninfo', { tokenid: '{{ tokenid }}' });
+
+		socket.on('showtokeninfo', function (data) {
+
+			var mainTable = document.getElementById("tokeninfo");
+			var tr, td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = row.symbol;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.paused;
+				tr.appendChild(td);
+
+				tokeninfo.appendChild(tr);
+
+			});
+		});
+	});
+</script>
+
 
 {% endblock %}
-
-
-{% block javascripts %}
-
-
-<script>
-
-		$(document).ready(function () {
-
-
-				
-					var socket = io();
-					
-					socket.emit('gettokeninfo', {tokenid: '{{ tokenid }}'} );
-					
-				  	socket.on('showtokeninfo', function (data) { 
-				  	
-				  		var mainTable = document.getElementById("tokeninfo");
-				  		var tr, td;
-				
-				  		data.forEach(function(row) {
-				  		
-				  			tr = document.createElement("tr");
-				  			
-				  			td = document.createElement("td");
-				  			td.innerHTML = row.symbol;
-							tr.appendChild(td);
-							  
-				  		  	td = document.createElement("td");
-				  			td.innerHTML = row.paused;
-				  			tr.appendChild(td);
-				  			
-				  			tokeninfo.appendChild(tr);
-				  		
-				  		});
-				
-				  	});
-				
-				});
-</script>
-				
-				
-				{% endblock %}

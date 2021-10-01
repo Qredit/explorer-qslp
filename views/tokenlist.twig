@@ -1,103 +1,108 @@
-{% extends 'layout_main.twig' %}
+{% extends '/blocks/main.twig' %}
 
 {% block body %}
-	{% include 'layout_header_explorer.twig' %}
+{% include '/blocks/menu.twig' %}
+{% include '/cards/heading1.twig' %}
 
 
-	<div class="container mh">
-		<div class="container">
-			<div class="container search-title" id="aftersearch"></div>
-			<div class="banner-servers-box">
-				<div class="counter-placeholder"></div>
-				<div class="banner-text-left">
-					<h4 style="color:#fff;">
-						<strong>QAE Tokens</strong>
-					</h4>
-					<p>QAE tokens on the Qredit Blockchain</p>
-				</div>
-			</div>
+<div class="container mh">
+	<div class="container">
 
-			<div class="table-responsive">
-
-				<table class="table">
-
-
-					<thead>
-						<tr>
-							<th class="server-tabls-head" scope="col">QAE Version</th>
-							<th class="server-tabls-head" scope="col">Token Name</th>
-							<th class="server-tabls-head" scope="col">Symbol</th>
-							<th class="server-tabls-head" scope="col">Owner Address</th>
-							<th class="server-tabls-head" scope="col">TokenID</th>
-							<th class="server-tabls-head" scope="col">Circulating Supply</th>
-							<th class="server-tabls-head" scope="col">Pausable</th>
-							<th class="server-tabls-head" scope="col">Mintable</th>
-						</tr>
-					</thead>
-					<tbody id='maintable' class="server-tabls-row"></tbody>
-
-				</table>
+		<div class="banner-servers-box">
+			<div class="counter-placeholder"></div>
+			<div class="banner-text-left">
+				<h4 style="color:#fff;">
+					<strong>QSLP Tokens</strong>
+				</h4>
+				<p>QSLP tokens on the Qredit Blockchain</p>
 			</div>
 		</div>
+
+		<div class="table-responsive">
+
+			<table class="table">
+
+
+				<thead>
+					<tr>
+						<th class="server-tabls-head" scope="col">QSLP Version</th>
+						<th class="server-tabls-head" scope="col">Token Name</th>
+						<th class="server-tabls-head" scope="col">Symbol</th>
+						<th class="server-tabls-head" scope="col">Owner Address</th>
+						<th class="server-tabls-head" scope="col">TokenID</th>
+						<th class="server-tabls-head" scope="col">Circulating Supply</th>
+						<th class="server-tabls-head" scope="col">Pausable</th>
+						<th class="server-tabls-head" scope="col">Mintable</th>
+					</tr>
+				</thead>
+				<tbody id='maintable' class="server-tabls-row"></tbody>
+
+			</table>
+		</div>
 	</div>
-</></div></div></div>{% include 'layout_footer.twig' %}{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
+</div>
+</>
+</div>
+</div>
+</div>{% include '/cards/footer.twig' %}{% endblock %}{% block javascripts %}
+<script>$(document).ready(function () {
 
 
-var socket = io();
+		var socket = io();
 
-socket.emit('gettokenlist', {
-page: 1,
-limit: 100
-});
+		socket.emit('gettokenlist', {
+			page: 1,
+			limit: 100
+		});
 
-socket.on('qaetokenlist', function (data) {
+		socket.on('qslptokenlist', function (data) {
 
-var mainTable = document.getElementById("maintable");
+			var mainTable = document.getElementById("maintable");
 
-var tr,
-td;
+			var tr,
+				td;
 
-data.forEach(function (row) {
+			data.forEach(function (row) {
 
-tr = document.createElement("tr");
+				tr = document.createElement("tr");
 
-td = document.createElement("td");
-td.innerHTML = row.version;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.version;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.name;
-td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.name + '</a>';
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.name;
+				td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.name + '</a>';
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.symbol;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.symbol;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = '<a href="/wallets/' + row.owneraddress + '">' + row.owneraddress.substr(0, 5) + '...' + row.owneraddress.substr(-5) + '</a>';
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallets/' + row.owneraddress + '">' + row.owneraddress.substr(0, 5) + '...' + row.owneraddress.substr(-5) + '</a>';
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.tokenid.substr(0, 5) + '...' + row.tokenid.substr(-5) + '</a>';
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.tokenid.substr(0, 5) + '...' + row.tokenid.substr(-5) + '</a>';
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.circsupply + ' ' + row.symbol;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.circsupply + ' ' + row.symbol;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.pausable;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.pausable;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.mintable;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.mintable;
+				tr.appendChild(td);
 
-maintable.appendChild(tr);
+				maintable.appendChild(tr);
 
-});
+			});
 
-});
+		});
 
-});</script>{% endblock %}
+	});</script>{% endblock %}

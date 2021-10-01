@@ -1,81 +1,86 @@
-{% extends 'layout_main.twig' %}
+{% extends '/blocks/main.twig' %}
 
 {% block body %}
-	{% include 'layout_header_explorer.twig' %}
+{% include '/blocks/menu.twig' %}
+{% include '/cards/heading1.twig' %}
 
-	<div class="container" style="margin-top:50px;margin-bottom:50px;">
-		<div class="container">
-			<div class="container search-title" id="aftersearch"></div>
-			<div class="banner-servers-box">
-				<div class="counter-placeholder"></div>
-				<div class="banner-text-left">
-					<h4 style="color:#fff;">
-						<strong>Peers</strong>
-					</h4>
-					<p>Peers on the Qredit Blockchain</p>
-				</div>
-			</div>
-			<div class="table-responsive">
-				<table class="table">
 
-					<thead>
-						<tr>
-							<th class="server-tabls-head" scope="col">IP</th>
-							<th class="server-tabls-head" scope="col">P2P-Port</th>
-							<th class="server-tabls-head" scope="col">Version</th>
-							<th class="server-tabls-head" scope="col">Height</th>
-							<th class="server-tabls-head" scope="col">Latency</th>
-						</tr>
-					</thead>
-					<tbody id='peers' class="server-tabls-row"></tbody>
+<div class="container" style="margin-top:50px;margin-bottom:50px;">
+	<div class="container">
 
-				</table>
+		<div class="banner-servers-box">
+			<div class="counter-placeholder"></div>
+			<div class="banner-text-left">
+				<h4 style="color:#fff;">
+					<strong>Peers</strong>
+				</h4>
+				<p>Peers on the Qredit Blockchain</p>
 			</div>
 		</div>
+		<div class="table-responsive">
+			<table class="table">
+
+				<thead>
+					<tr>
+						<th class="server-tabls-head" scope="col">IP</th>
+						<th class="server-tabls-head" scope="col">P2P-Port</th>
+						<th class="server-tabls-head" scope="col">Version</th>
+						<th class="server-tabls-head" scope="col">Height</th>
+						<th class="server-tabls-head" scope="col">Latency</th>
+					</tr>
+				</thead>
+				<tbody id='peers' class="server-tabls-row"></tbody>
+
+			</table>
+		</div>
 	</div>
-</div></div></div>{% include 'layout_footer.twig' %}{% endblock %}{% block javascripts %}<script>$(document).ready(function () {
+</div>
+</div>
+</div>
+</div>{% include '/cards/footer.twig' %}{% endblock %}{% block javascripts %}
+<script>$(document).ready(function () {
 
 
-var socket = io();
+		var socket = io();
 
-socket.emit('getpeers', {});
+		socket.emit('getpeers', {});
 
-socket.on('showpeers', function (data) {
+		socket.on('showpeers', function (data) {
 
-var mainTable = document.getElementById("peers");
+			var mainTable = document.getElementById("peers");
 
-var tr,
-td;
+			var tr,
+				td;
 
-data.forEach(function (row) {
+			data.forEach(function (row) {
 
-tr = document.createElement("tr");
+				tr = document.createElement("tr");
 
-td = document.createElement("td");
-td.innerHTML = row.peerip;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.peerip;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.p2pport;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.p2pport;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.version;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.version;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.height;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.height;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = row.latency;
-tr.appendChild(td);
+				td = document.createElement("td");
+				td.innerHTML = row.latency;
+				tr.appendChild(td);
 
 
-peers.appendChild(tr);
+				peers.appendChild(tr);
 
-});
+			});
 
-});
+		});
 
-});</script><script src="/plugins/jvector/jvector_script.js"></script>{% endblock %}
+	});</script>{% endblock %}

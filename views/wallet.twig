@@ -1,113 +1,200 @@
-{% extends 'layout_sub.twig' %}
+{% extends '/subblocks/main.twig' %}
 
 {% block body %}
-	{% include 'layout_header_sub.twig' %}
+{% include '/subblocks/menu.twig' %}
+{% include '/cards/heading1.twig' %}
 
-	<div class="container" style="margin-top:50px;margin-bottom:50px;">
-		<div class="container">
-			<div class="container search-title" id="aftersearch"></div>
-			<div class="banner-servers-box">
-				<div class="counter-placeholder"></div>
-				<div class="banner-text-left">
-					<h4 style="color:#fff;">
-						<strong>Wallet</strong>
-					</h4>
-					<p>Wallet History</p>
-				</div>
+
+<div class="container" style="margin-top:50px;margin-bottom:50px;">
+	<div class="container">
+
+		<div class="banner-servers-box">
+			<div class="counter-placeholder"></div>
+			<div class="banner-text-left">
+				<h4 style="color:#fff;">
+					<strong onclick=CopyToClipboard>Wallet - {{walletId}}</strong>
+					<p>{{row.id}}</p>
+				</h4>
+				<p>Wallet History</p>
+
 			</div>
-			<div class="table-responsive">
-				<table class="table">
+		</div>
+		<div class="table-responsive">
+			<table class="table">
 
-					<thead>
-	
+				<thead>
 
-					<th class="server-tabls-head" scope="col">ID</th>
+
+					<th class="server-tabls-head" scope="col">TX ID</th>
 					<th class="server-tabls-head" scope="col">Timestamp</th>
 					<th class="server-tabls-head" scope="col">Sender</th>
 					<th class="server-tabls-head" scope="col">Recipient</th>
 					<th class="server-tabls-head" scope="col">Amount (XQR)</th>
-					<th class="server-tabls-head" scope="col">Amount (QAE Tokens)</th>
 					<th class="server-tabls-head" scope="col">Smartbridge</th>
 					<th class="server-tabls-head" scope="col">Confirmations</th>
-				</tr>
-			</thead>
-			<tbody id='walletId' class="server-tabls-row"></tbody>
-		</table>
+					</tr>
+				</thead>
+				<tbody id='wallettransactions' class="server-tabls-row"></tbody>
+			</table>
+		</div>
 	</div>
-</div></div>{% include 'layout_footer_sub.twig' %}
+</div>{% include '/cards/footer.twig' %}
 {% endblock %}
 {% block javascripts %}
 
-
-
-<script>
-
-$(document).ready(function () {
-
-var socket = io();
-socket.emit('gettransactiondetails', {walletId: '{{ walletId }}'});
-socket.on('showtransactiondetails', function (data) {
-var mainTable = document.getElementById("transactiondetails");
-var tr,
-td;
-
-for (var k in data) {
-
-tr = document.createElement("tr");
-
-td = document.createElement("td");
-td.innerHTML = k;
-tr.appendChild(td);
-
-td = document.createElement("td");
-td.innerHTML = data[k];
-tr.appendChild(td);
-
-transactiondetails.appendChild(tr);
-
-};
-
-
-});
-
-});</script>
-
+<!--
 <script type="text/javascript">$(document).ready(function () {
-	$("button-txid").click(function (event) {
-	event.preventDefault();
-	CopyToClipboard("{{ transactionId }}", true, "Value copied");
+
+
+		var socket = io();
+
+		socket.emit('getwallet', { walletId: '{{ walletId }}' });
+
+		socket.on('showwallet', function (data) {
+
+			var mainTable = document.getElementById("wallet");
+			var tr,
+				td;
+			/*var newdata = Object.keys(data);*/
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = row.address;
+				tr.appendChild(td);
+
+				mainTable.append(tr);
+
+			});
+
+		});
+
+	});</script>
+	-->
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('getwallettransactions', { walletId: '{{ walletId }}' });
+
+		socket.on('showwallettransactions', function (data) {
+
+			var mainTable = document.getElementById("wallettransactions");
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/transaction/' + row.id + '">' + row.id.substr(0, 4) + '...' + row.id.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+
+				td = document.createElement("td");
+				td.innerHTML = timeDifference(row.timestamp);
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.sender + '">' + row.sender.substr(0, 5) + '...' + row.sender.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.recipient + '">' + row.recipient.substr(0, 5) + '...' + row.recipient.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' XQR';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.smartbridge.substr(0, 15) + '...';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.confirmations;
+				tr.appendChild(td);
+
+				wallettransactions.appendChild(tr);
+
+			});
+
+		});
+
 	});
+	function timeDifference(datetime) {
+
+		var d = new Date();
+		var current = d.getTime();
+		var previous = Date.parse(datetime);
+
+		var msPerMinute = 60 * 1000;
+		var msPerHour = msPerMinute * 60;
+		var msPerDay = msPerHour * 24;
+		var msPerMonth = msPerDay * 30;
+		var msPerYear = msPerDay * 365;
+
+		var elapsed = current - previous;
+
+		if (elapsed < msPerMinute) {
+			return Math.round(elapsed / 1000) + ' seconds ago';
+		} else if (elapsed < msPerHour) {
+			return Math.round(elapsed / msPerMinute) + ' minutes ago';
+		} else if (elapsed < msPerDay) {
+			return Math.round(elapsed / msPerHour) + ' hours ago';
+		} else if (elapsed < msPerMonth) {
+			return '± ' + Math.round(elapsed / msPerDay) + ' days ago';
+		} else if (elapsed < msPerYear) {
+			return '± ' + Math.round(elapsed / msPerMonth) + ' months ago';
+		} else {
+			return '± ' + Math.round(elapsed / msPerYear) + ' years ago';
+		}
+	}
+
+</script>
+<script type="text/javascript">$(document).ready(function () {
+		$("button-txid").click(function (event) {
+			event.preventDefault();
+			CopyToClipboard("{{ walletId }}", true, "Value copied");
+		});
 	});
-	
+
 	function CopyToClipboard(value, showNotification, notificationText) {
-	var $temp = $("<input>");
-	$("body").append($temp);
-	$temp.val(value).select();
-	document.execCommand("copy");
-	$temp.remove();
-																																													
-	if (typeof showNotification === 'undefined') {
-	showNotification = true;
+		var $temp = $("<input>");
+		$("body").append($temp);
+		$temp.val(value).select();
+		document.execCommand("copy");
+		$temp.remove();
+
+		if (typeof showNotification === 'undefined') {
+			showNotification = true;
+		}
+		if (typeof notificationText === 'undefined') {
+			notificationText = "Copied to clipboard";
+		}
+
+		var notificationTag = $("div.copy-notification");
+		if (showNotification && notificationTag.length == 0) {
+			notificationTag = $("<div/>", {
+				"class": "copy-notification",
+				text: notificationText
+			});
+			$("body").append(notificationTag);
+
+			notificationTag.fadeIn("slow", function () {
+				setTimeout(function () {
+					notificationTag.fadeOut("slow", function () {
+						notificationTag.remove();
+					});
+				}, 1000);
+			});
+		}
 	}
-	if (typeof notificationText === 'undefined') {
-	notificationText = "Copied to clipboard";
-	}
-	
-	var notificationTag = $("div.copy-notification");
-	if (showNotification && notificationTag.length == 0) {
-	notificationTag = $("<div/>", {
-	"class": "copy-notification",
-	text: notificationText
-	});
-	$("body").append(notificationTag);
-	
-	notificationTag.fadeIn("slow", function () {
-	setTimeout(function () {
-	notificationTag.fadeOut("slow", function () {
-	notificationTag.remove();
-	});
-	}, 1000);
-	});
-	}
-	}
-	{% endblock %}
+</script>
+{% endblock %}

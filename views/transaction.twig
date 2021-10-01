@@ -1,127 +1,122 @@
-{% extends 'layout_sub.twig' %}
+{% extends '/subblocks/main.twig' %}
 
 {% block body %}
-	{% include 'layout_header_sub.twig' %}
-	<div class="container" style="margin-top:50px;margin-bottom:50px;">
-		<div class="container">
-			<div class="container search-title" id="aftersearch"></div>
-			<div class="banner-servers-box">
-				<div class="counter-placeholder"></div>
-				<div class="banner-text-left">
-					<h4 style="color:#fff;">
-						<strong>Transaction Details</strong>
-					</h4>
-					<p>{{transactionId}}</p>
-				</div>
-			</div>
-
-			<div class="table-responsive">
-
-				<table class="table">
+{% include '/subblocks/menu.twig' %}
+{% include '/cards/heading1.twig' %}
 
 
-					<thead>
-						<tr>
-							<th class="server-tabls-head" scope="col">Data</th>
-							<th class="server-tabls-head" scope="col">Output</th>
-						</tr>
-					</thead>
-					<tbody id='transactiondetails' class="server-tabls-row"></tbody>
-				</table>
+<div class="container" style="margin-top:50px;margin-bottom:50px;">
+	<div class="container">
 
-
+		<div class="banner-servers-box">
+			<div class="counter-placeholder"></div>
+			<div class="banner-text-left">
+				<h4 style="color:#fff;">
+					<strong>Transaction Details</strong>
+				</h4>
+				<p>{{transactionId}}</p>
+				<p>{{row.id}}</p>
 			</div>
 		</div>
 
+		<div class="table-responsive">
+
+			<table class="table">
+
+				<thead>
+					<tr>
+						<th class="server-tabls-head" scope="col">TX ID</th>
+					</tr>
+				</thead>
+				<tbody id='transactiondetails' class="server-tabls-row"></tbody>
+			</table>
+
+
+		</div>
 	</div>
-	{% include 'layout_footer_sub.twig' %}
+
+</div>
+{% include '/cards/footer.twig' %}
 
 {% endblock %}
 
 
 {% block javascripts %}
 
-	<script>
+<script type="text/javascript">
 
-		$(document).ready(function () {
+	$(document).ready(function () {
 
-var socket = io();
+		var socket = io();
 
-socket.emit('gettransactiondetails', {transactionId: '{{ transactionId }}'});
+		socket.emit('gettransactiondetails', { transactionId: '{{ transactionId }}' });
+		socket.on('showtransactiondetails', function (data) {
 
-socket.on('showtransactiondetails', function (data) {
+			var mainTable = document.getElementById("transactiondetails");
+			var tr,
+				td;
 
-var mainTable = document.getElementById("transactiondetails");
-var tr,
-td;
+			data.forEach(function (row) {
 
-for (var k in data) {
+				tr = document.createElement("tr");
 
-tr = document.createElement("tr");
+				td = document.createElement("td");
+				td.innerHTML = row.id;
+				tr.appendChild(td);
 
-td = document.createElement("td");
-td.innerHTML = k;
-tr.appendChild(td);
+				transactions.appendChild(tr);
 
-td = document.createElement("td");
-td.innerHTML = data[k];
-tr.appendChild(td);
+			});
 
-transactiondetails.appendChild(tr);
+		});
 
-};
+	});
+</script>
 
+<script>
+	function goBack() {
+		window.history.back();
+	}
+</script>
+<script type="text/javascript">
 
-});
+	$(document).ready(function () {
+		$("button-txid").click(function (event) {
+			event.preventDefault();
+			CopyToClipboard("{{ transactionId }}", true, "Value copied");
+		});
+	});
 
-});
-	</script>
+	function CopyToClipboard(value, showNotification, notificationText) {
+		var $temp = $("<input>");
+		$("body").append($temp);
+		$temp.val(value).select();
+		document.execCommand("copy");
+		$temp.remove();
 
-	<script>
-		function goBack() {
-window.history.back();
-}
-	</script>
-	<script type="text/javascript">
+		if (typeof showNotification === 'undefined') {
+			showNotification = true;
+		}
+		if (typeof notificationText === 'undefined') {
+			notificationText = "Copied to clipboard";
+		}
 
-		$(document).ready(function () {
-$("button-txid").click(function (event) {
-event.preventDefault();
-CopyToClipboard("{{ transactionId }}", true, "Value copied");
-});
-});
+		var notificationTag = $("div.copy-notification");
+		if (showNotification && notificationTag.length == 0) {
+			notificationTag = $("<div/>", {
+				"class": "copy-notification",
+				text: notificationText
+			});
+			$("body").append(notificationTag);
 
-function CopyToClipboard(value, showNotification, notificationText) {
-var $temp = $("<input>");
-$("body").append($temp);
-$temp.val(value).select();
-document.execCommand("copy");
-$temp.remove();
-
-if (typeof showNotification === 'undefined') {
-showNotification = true;
-}
-if (typeof notificationText === 'undefined') {
-notificationText = "Copied to clipboard";
-}
-
-var notificationTag = $("div.copy-notification");
-if (showNotification && notificationTag.length == 0) {
-notificationTag = $("<div/>", {
-"class": "copy-notification",
-text: notificationText
-});
-$("body").append(notificationTag);
-
-notificationTag.fadeIn("slow", function () {
-setTimeout(function () {
-notificationTag.fadeOut("slow", function () {
-notificationTag.remove();
-});
-}, 1000);
-});
-}
-}
-	</script>
-	<script src="/javascripts/tooltip.script.js"></script>
+			notificationTag.fadeIn("slow", function () {
+				setTimeout(function () {
+					notificationTag.fadeOut("slow", function () {
+						notificationTag.remove();
+					});
+				}, 1000);
+			});
+		}
+	}
+</script>
 {% endblock %}
