@@ -16,10 +16,10 @@
 					<table class="table no-margin table-hover">
 						<thead>
 							<tr>
-								<th class="server-tabls-head" scope="col">Status</th>
-								<th class="server-tabls-head" scope="col">Username</th>
-								<th class="server-tabls-head" scope="col">Last Forged</th>
 								<th class="server-tabls-head" scope="col">Rank</th>
+								<th class="server-tabls-head" scope="col">Username</th>
+								<th class="server-tabls-head" scope="col">Status</th>
+								<th class="server-tabls-head" scope="col">Last Forged</th>
 							</tr>
 						</thead>
 						<tbody id='delegates' class="server-tabls-row"></tbody>
@@ -50,7 +50,7 @@
 				tr = document.createElement("tr");
 
 				td = document.createElement("td");
-				td.innerHTML = getStatus(row.timestamp);
+				td.innerHTML = row.rank;
 				tr.appendChild(td);
 
 				td = document.createElement("td");
@@ -58,13 +58,12 @@
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = timeDifference(row.timestamp);
+				td.innerHTML = getStatus(row.timestamp);
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = row.rank;
+				td.innerHTML = timeDifference(row.timestamp);
 				tr.appendChild(td);
-
 				delegates.appendChild(tr);
 
 			});
