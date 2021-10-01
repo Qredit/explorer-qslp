@@ -1,6 +1,6 @@
 
 
-# Qredit Explorer V2 @ https://qreditportal.com
+# Qredit Explorer QSLP
 
 Requires:
 
