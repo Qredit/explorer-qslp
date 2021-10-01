@@ -5,38 +5,31 @@
 {% include '/cards/heading1.twig' %}
 
 
-<div class="container" style="margin-top:50px;margin-bottom:50px;">
-	<div class="container">
-
-		<div class="banner-servers-box">
-			<div class="counter-placeholder"></div>
-			<div class="banner-text-left">
-				<h4 style="color:#fff;">
-					<strong>Peers</strong>
-				</h4>
-				<p>Peers on the Qredit Blockchain</p>
+<div class="container mh">
+	<div class="col-lg-12 col-12">
+		<div class="box">
+			<div class="box-header with-border">
+				<h4 class="box-title">Peers</h4>
+			</div>
+			<div class="box-body">
+				<div class="table-responsive">
+					<table class="table no-margin table-hover">
+						<thead>
+							<tr>
+								<th class="server-tabls-head" scope="col">IP</th>
+								<th class="server-tabls-head" scope="col">P2P-Port</th>
+								<th class="server-tabls-head" scope="col">Version</th>
+								<th class="server-tabls-head" scope="col">Height</th>
+								<th class="server-tabls-head" scope="col">Latency</th>
+							</tr>
+						</thead>
+						<tbody id='peers' class="server-tabls-row"></tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-		<div class="table-responsive">
-			<table class="table">
-
-				<thead>
-					<tr>
-						<th class="server-tabls-head" scope="col">IP</th>
-						<th class="server-tabls-head" scope="col">P2P-Port</th>
-						<th class="server-tabls-head" scope="col">Version</th>
-						<th class="server-tabls-head" scope="col">Height</th>
-						<th class="server-tabls-head" scope="col">Latency</th>
-					</tr>
-				</thead>
-				<tbody id='peers' class="server-tabls-row"></tbody>
-
-			</table>
-		</div>
 	</div>
-</div>
-</div>
-</div>
+
 </div>{% include '/cards/footer.twig' %}{% endblock %}{% block javascripts %}
 <script>$(document).ready(function () {
 

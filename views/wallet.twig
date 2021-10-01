@@ -5,40 +5,34 @@
 {% include '/cards/heading1.twig' %}
 
 
-<div class="container" style="margin-top:50px;margin-bottom:50px;">
-	<div class="container">
-
-		<div class="banner-servers-box">
-			<div class="counter-placeholder"></div>
-			<div class="banner-text-left">
-				<h4 style="color:#fff;">
-					<strong onclick=CopyToClipboard>Wallet - {{walletId}}</strong>
-					<p>{{row.id}}</p>
-				</h4>
-				<p>Wallet History</p>
-
+<div class="container mh">
+	<div class="col-lg-12 col-12">
+		<div class="box">
+			<div class="box-header with-border">
+				<h4 class="box-title">Wallet History</h4>
+			</div>
+			<div class="box-body">
+				<div class="table-responsive">
+					<table class="table no-margin table-hover">
+						<thead>
+							<tr>
+								<th class="server-tabls-head" scope="col">TX ID</th>
+								<th class="server-tabls-head" scope="col">Timestamp</th>
+								<th class="server-tabls-head" scope="col">Sender</th>
+								<th class="server-tabls-head" scope="col">Recipient</th>
+								<th class="server-tabls-head" scope="col">Amount (XQR)</th>
+								<th class="server-tabls-head" scope="col">Smartbridge</th>
+								<th class="server-tabls-head" scope="col">Confirmations</th>
+							</tr>
+						</thead>
+						<tbody id='wallettransactions' class="server-tabls-row"></tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-		<div class="table-responsive">
-			<table class="table">
-
-				<thead>
-
-
-					<th class="server-tabls-head" scope="col">TX ID</th>
-					<th class="server-tabls-head" scope="col">Timestamp</th>
-					<th class="server-tabls-head" scope="col">Sender</th>
-					<th class="server-tabls-head" scope="col">Recipient</th>
-					<th class="server-tabls-head" scope="col">Amount (XQR)</th>
-					<th class="server-tabls-head" scope="col">Smartbridge</th>
-					<th class="server-tabls-head" scope="col">Confirmations</th>
-					</tr>
-				</thead>
-				<tbody id='wallettransactions' class="server-tabls-row"></tbody>
-			</table>
-		</div>
 	</div>
-</div>{% include '/cards/footer.twig' %}
+</div>
+{% include '/cards/footer.twig' %}
 {% endblock %}
 {% block javascripts %}
 

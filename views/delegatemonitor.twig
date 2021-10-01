@@ -5,39 +5,30 @@
 {% include '/cards/heading1.twig' %}
 
 
-<div class="container" style="margin-top:50px;margin-bottom:50px;">
-	<div class="container">
-
-		<div class="banner-servers-box">
-			<div class="counter-placeholder"></div>
-			<div class="banner-text-left">
-				<h4 style="color:#fff;">
-					<strong>Delegate Monitor</strong>
-				</h4>
-				<p>Delegate Monitor</p>
+<div class="container mh">
+	<div class="col-lg-12 col-12">
+		<div class="box">
+			<div class="box-header with-border">
+				<h4 class="box-title">Delegate Monitor</h4>
 			</div>
-		</div>
-		<div class="table-responsive">
-
-			<table class="table">
-
-				<thead>
-					<tr>
-						<th class="server-tabls-head" scope="col">Status</th>
-						<th class="server-tabls-head" scope="col">Username</th>
-						<th class="server-tabls-head" scope="col">Last Forged</th>
-						<th class="server-tabls-head" scope="col">Rank</th>
-					</tr>
-				</thead>
-				<tbody id='delegates' class="server-tabls-row"></tbody>
-
-			</table>
+			<div class="box-body">
+				<div class="table-responsive">
+					<table class="table no-margin table-hover">
+						<thead>
+							<tr>
+								<th class="server-tabls-head" scope="col">Status</th>
+								<th class="server-tabls-head" scope="col">Username</th>
+								<th class="server-tabls-head" scope="col">Last Forged</th>
+								<th class="server-tabls-head" scope="col">Rank</th>
+							</tr>
+						</thead>
+						<tbody id='delegates' class="server-tabls-row"></tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 
-</div>
-</div>
-</div>
 </div>
 </div>{% include '/cards/footer.twig' %}{% endblock %}{% block javascripts %}
 <script>$(document).ready(function () {
