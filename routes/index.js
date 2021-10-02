@@ -20,6 +20,14 @@ router.get("/tokenlist", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
+
+router.get("/latestblocks", function (req, res, next) {
+  res.render("latestblocks", {
+    title: "Latest Blocks",
+    routename: "latestblocks",
+    csrfToken: req.csrfToken()
+  });
+});
 router.get("/peers", function (req, res, next) {
   res.render("peers", {
     title: "Peers",

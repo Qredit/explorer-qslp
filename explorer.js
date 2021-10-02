@@ -155,21 +155,25 @@ io.on('connection', function (socket) {
 
 		(async () => {
 
-			var response = await qapi.listBlocks(1, 1);
+			var response = await qapi.listBlocks(1, 50);
 			var data = response.data;
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
-					height: data[i].height,
+
 					id: data[i].id,
+					height: data[i].height,
+					timestamp: data[i].timestamp.human,
 					rewardtotal: data[i].forged.total,
 					transactionsforged: data[i].transactions,
-					lastforgedusername: data[i].generator.username
+					lastforgedusername: data[i].generator.username,
+					address: data[i].generator.address,
+
 				};
 				flatJson.push(tempJson);
 			}
 			socket.emit('showblocks', flatJson);
-
+			console.log(flatJson)
 		})();
 
 	});
@@ -258,7 +262,6 @@ io.on('connection', function (socket) {
 
 			var response = await qapi.listTransactions();
 			var data = response.data;
-
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
