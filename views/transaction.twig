@@ -100,86 +100,87 @@
 			</div>
 		</section>
 	</div>
-	{% include '/cards/footer.twig' %}
+</div>
+{% include '/cards/footer.twig' %}
 
-	{% endblock %}
+{% endblock %}
 
 
-	{% block javascripts %}
+{% block javascripts %}
 
-	<script type="text/javascript">
+<script type="text/javascript">
 
-		$(document).ready(function () {
+	$(document).ready(function () {
 
-			var socket = io();
+		var socket = io();
 
-			socket.emit('gettransactiondetails', { transactionId: '{{ transactionId }}' });
-			socket.on('showtransactiondetails', function (data) {
+		socket.emit('gettransactiondetails', { transactionId: '{{ transactionId }}' });
+		socket.on('showtransactiondetails', function (data) {
 
-				$('#sender').html('<a href="/wallet/' + data.sender + '">' + data.sender + '</a>');
-				$('#senderto').html('<a href="/wallet/' + data.sender + '">' + data.sender + '</a>');
-				$('#recipient').html('<a href="/wallet/' + data.recipient + '">' + data.recipient + '</a>');
-				$('#recipientto').html('<a href="/wallet/' + data.recipient + '">' + data.recipient + '</a>');
-				$('#txid').html('<a href="/transaction/' + data.txid + '">' + data.txid + '</a>');
-				$('#blockid').html('<a href="/block/' + data.blockid + '">' + data.blockid + '</a>');
-				$('#amount').html(parseFloat(data.amount) / 100000000).toFixed(0);
-				$('#amountsummary').html(parseFloat(data.amountsummary) / 100000000).toFixed(0);
-				$('#confirmations').html(data.confirmations);
-				$('#fee').html(data.fee);
-				$('#smartbridge').html(data.smartbridge);
-				$('#timestamp').html(data.timestamp);
-				$('#nonce').html(data.nonce);
+			$('#sender').html('<a href="/wallet/' + data.sender + '">' + data.sender + '</a>');
+			$('#senderto').html('<a href="/wallet/' + data.sender + '">' + data.sender + '</a>');
+			$('#recipient').html('<a href="/wallet/' + data.recipient + '">' + data.recipient + '</a>');
+			$('#recipientto').html('<a href="/wallet/' + data.recipient + '">' + data.recipient + '</a>');
+			$('#txid').html('<a href="/transaction/' + data.txid + '">' + data.txid + '</a>');
+			$('#blockid').html('<a href="/block/' + data.blockid + '">' + data.blockid + '</a>');
+			$('#amount').html(parseFloat(data.amount) / 100000000).toFixed(0);
+			$('#amountsummary').html(parseFloat(data.amountsummary) / 100000000).toFixed(0);
+			$('#confirmations').html(data.confirmations);
+			$('#fee').html(data.fee);
+			$('#smartbridge').html(data.smartbridge);
+			$('#timestamp').html(data.timestamp);
+			$('#nonce').html(data.nonce);
 
-				$('#qslptransaction').html(data.qslptransaction);
-			});
-
-		});
-	</script>
-
-	<script>
-		function goBack() {
-			window.history.back();
-		}
-	</script>
-	<script type="text/javascript">
-
-		$(document).ready(function () {
-			$("button-txid").click(function (event) {
-				event.preventDefault();
-				CopyToClipboard("{{ transactionId }}", true, "Value copied");
-			});
+			$('#qslptransaction').html(data.qslptransaction);
 		});
 
-		function CopyToClipboard(value, showNotification, notificationText) {
-			var $temp = $("<input>");
-			$("body").append($temp);
-			$temp.val(value).select();
-			document.execCommand("copy");
-			$temp.remove();
+	});
+</script>
 
-			if (typeof showNotification === 'undefined') {
-				showNotification = true;
-			}
-			if (typeof notificationText === 'undefined') {
-				notificationText = "Copied to clipboard";
-			}
+<script>
+	function goBack() {
+		window.history.back();
+	}
+</script>
+<script type="text/javascript">
 
-			var notificationTag = $("div.copy-notification");
-			if (showNotification && notificationTag.length == 0) {
-				notificationTag = $("<div/>", {
-					"class": "copy-notification",
-					text: notificationText
-				});
-				$("body").append(notificationTag);
+	$(document).ready(function () {
+		$("button-txid").click(function (event) {
+			event.preventDefault();
+			CopyToClipboard("{{ transactionId }}", true, "Value copied");
+		});
+	});
 
-				notificationTag.fadeIn("slow", function () {
-					setTimeout(function () {
-						notificationTag.fadeOut("slow", function () {
-							notificationTag.remove();
-						});
-					}, 1000);
-				});
-			}
+	function CopyToClipboard(value, showNotification, notificationText) {
+		var $temp = $("<input>");
+		$("body").append($temp);
+		$temp.val(value).select();
+		document.execCommand("copy");
+		$temp.remove();
+
+		if (typeof showNotification === 'undefined') {
+			showNotification = true;
 		}
-	</script>
-	{% endblock %}
+		if (typeof notificationText === 'undefined') {
+			notificationText = "Copied to clipboard";
+		}
+
+		var notificationTag = $("div.copy-notification");
+		if (showNotification && notificationTag.length == 0) {
+			notificationTag = $("<div/>", {
+				"class": "copy-notification",
+				text: notificationText
+			});
+			$("body").append(notificationTag);
+
+			notificationTag.fadeIn("slow", function () {
+				setTimeout(function () {
+					notificationTag.fadeOut("slow", function () {
+						notificationTag.remove();
+					});
+				}, 1000);
+			});
+		}
+	}
+</script>
+{% endblock %}

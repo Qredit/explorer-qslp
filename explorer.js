@@ -397,17 +397,17 @@ io.on('connection', function (socket) {
 				signature: data.signature,
 
 				/* summary section */
-
-				amountsummary: data.amount,
-				blockheight: data['qslp.blockHeight'],
-				qslptransaction: data['qslp.valid'] == true ? '<i class="nav-icon i-Yes font-weight-bold"style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
-				'QSLP Invalid Reason': data['qslp.invalidReason'],
-				'QSLP Transaction Type': data['qslp.transactionDetails.transactionType'],
-				'QSLP Token ID': data['qslp.transactionDetails.tokenIdHex'],
-				'QSLP Token Symbol': data['qslp.transactionDetails.symbol'],
-				'QSLP Token Name': data['qslp.transactionDetails.name'],
-				'QSLP Document URL': data['qslp.transactionDetails.documentUri'],
-				'QSLP Decimals': data['qslp.transactionDetails.decimals'],
+				/*
+								amountsummary: data.amount,
+								blockheight: data['qslp.blockHeight'],
+								qslptransaction: data['qslp.valid'] == true ? '<i class="nav-icon i-Yes font-weight-bold"style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
+								'QSLP Invalid Reason': data['qslp.invalidReason'],
+								'QSLP Transaction Type': data['qslp.transactionDetails.transactionType'],
+								'QSLP Token ID': data['qslp.transactionDetails.tokenIdHex'],
+								'QSLP Token Symbol': data['qslp.transactionDetails.symbol'],
+								'QSLP Token Name': data['qslp.transactionDetails.name'],
+								'QSLP Document URL': data['qslp.transactionDetails.documentUri'],
+								'QSLP Decimals': data['qslp.transactionDetails.decimals'],*/
 				/*'QSLP Amount': Big(data['qslp.transactionDetails.sendOutput.amount']).div(Big(10).pow(data['qslp.transactionDetails.decimals'])).toFixed(data['qslp.transactionDetails.decimals'])*/
 			};
 
@@ -442,7 +442,7 @@ io.on('connection', function (socket) {
 				qslpversion: data.tokenDetails.versionType,
 				symbol: data.tokenDetails.symbol,
 				name: data.tokenDetails.name,
-				documentUri: data.tokenDetails.documentUri,
+				documenturi: data.tokenDetails.documentUri,
 				decimals: data.tokenDetails.decimals,
 				genesisquantity: data.tokenDetails.genesisQuantity,
 				pausable: data.tokenDetails.pausable,
@@ -464,7 +464,7 @@ io.on('connection', function (socket) {
 			};
 
 			socket.emit('showtokeninfo', tempJson);
-
+			console.log(tempJson)
 		})();
 
 	});
@@ -473,25 +473,24 @@ io.on('connection', function (socket) {
 	socket.on('gettokenmeta', function (input) {
 
 		(async () => {
-
 			var data = await qslpapi.getTokenWithMeta(input.tokenid);
-
-			console.log(data)
-			var data = response.data;
-
 			var flatJson = [];
+			var data = (data.metadata)
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
-					rank: data[i].rank,
-					isdelegate: data[i].isDelegate == true ? '<i class="nav-icon i-Yes font-weight-bold" style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
-					address: data[i].address,
-					balance: data[i].balance
+					metatxid: data[i].txid,
+					metablockid: data[i].blockId,
+					metablockheight: data[i].blockHeight,
+					posteraddress: data[i].metaDetails.posterAddress,
+					timestamp: data[i].metaDetails.timestamp,
+					metaname: data[i].metaDetails.metaName,
+					metachunk: data[i].metaDetails.metaChunk,
+					metadata: data[i].metaDetails.metaData,
+					void: data[i].void,
 				};
 				flatJson.push(tempJson);
 			}
-
-			console.log(tempJson)
-			socket.emit('showtokenmeta', tempJson);
+			socket.emit('showtokenmeta', flatJson);
 
 		})();
 
