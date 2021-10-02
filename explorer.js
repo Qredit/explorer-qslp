@@ -134,6 +134,7 @@ io.on('connection', function (socket) {
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
 					rank: data[i].rank,
+					address: data[i].address,
 					username: data[i].username,
 					blocks: data[i].blocks.produced,
 					timestamp: data[i].blocks.last.timestamp.human,
@@ -156,7 +157,6 @@ io.on('connection', function (socket) {
 
 			var response = await qapi.listBlocks(1, 1);
 			var data = response.data;
-
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
@@ -168,7 +168,6 @@ io.on('connection', function (socket) {
 				};
 				flatJson.push(tempJson);
 			}
-
 			socket.emit('showblocks', flatJson);
 
 		})();
@@ -197,7 +196,6 @@ io.on('connection', function (socket) {
 			}
 
 			socket.emit('showpeers', flatJson);
-			console.log(flatJson)
 		})();
 
 	});
@@ -288,7 +286,7 @@ io.on('connection', function (socket) {
 		(async () => {
 
 			response = await qapi.getWalletByID(input.walletId);
-			/*console.log(response)*/
+
 
 			var qslpdata = await qslpapi.getTokensByOwner(input.walletId);
 			console.log(qslpdata)
@@ -297,7 +295,6 @@ io.on('connection', function (socket) {
 					} */
 
 			var data = flatten(response.data);
-			/*console.log(response.data)*/
 			var tempJson = {
 				address: data.address,
 				publickey: data.publicKey,

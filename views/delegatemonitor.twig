@@ -54,8 +54,9 @@
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = row.username;
+				td.innerHTML = '<a href="/wallet/' + row.address + '">' + row.username + '</a>';
 				tr.appendChild(td);
+
 
 				td = document.createElement("td");
 				td.innerHTML = getStatus(row.timestamp);
