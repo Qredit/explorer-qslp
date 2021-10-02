@@ -135,7 +135,7 @@
 			</div>
 		</section>
 	</div>
-	<!--	<div class="container mh">
+	<div class="container mh">
 		<div class="col-lg-12 col-12">
 			<div class="box">
 				<div class="box-header with-border">
@@ -167,48 +167,47 @@
 	</div>
 </div>
 
--->
-	{% endblock %} {% block javascripts %}
+{% endblock %} {% block javascripts %}
 
-	<script type="text/javascript">
+<script type="text/javascript">
 
-		$(document).ready(function () {
+	$(document).ready(function () {
 
-			var socket = io();
+		var socket = io();
 
-			socket.emit('gettokeninfo', { tokenid: '{{ tokenid }}' });
-			socket.on('showtokeninfo', function (data) {
+		socket.emit('gettokeninfo', { tokenid: '{{ tokenid }}' });
+		socket.on('showtokeninfo', function (data) {
 
-				$('#documenturi').html('<img class="documenturi" src="' + data.documenturi + '"></img>');
+			$('#documenturi').html('<img class="documenturi" src="' + data.documenturi + '"></img>');
 
-				$('#type').html(data.type);
-				$('#paused').html(data.paused);
-				$('#lastupdatedblock').html('<a href="/block/' + data.lastupdatedblock + '">' + data.lastupdatedblock + '</a>');
-				$('#owneraddress').html('<a href="/wallet/' + data.owneraddress + '">' + data.owneraddress + '</a>');
-				$('#tokenidhex').html('<a href="/token/' + data.tokenidhex + '">' + data.tokenidhex + '</a>');
-				$('#timestamp').html(data.timestamp);
-				$('#qslpversion').html(data.qslpversion);
-				$('#symbol').html(data.symbol);
-				$('#name').html(data.name);
-				$('#decimals').html(data.decimals);
-				$('#genesisquantity').html(data.genesisquantity);
-				$('#pausable').html(data.pausable);
-				$('#mintable').html(data.mintable);
-				$('#blockcreatedheight').html(data.blockcreatedheight);
-				$('#blockcreatedid').html('<a href="/block/' + data.blockcreatedid + '">' + data.blockcreatedid + '</a>');
-				$('#blocklastactivesend').html(data.blocklastactivesend);
-				$('#blocklastactivemint').html(data.blocklastactivemint);
-				$('#creationtxid').html('<a href="/transaction/' + data.creationtxid + '">' + data.creationtxid + '</a>');
-				$('#qtyvalidtxnssincegenesis').html(data.qtyvalidtxnssincegenesis);
-				$('#qtyvalidtokenaddresses').html(data.qtyvalidtokenaddresses);
-				$('#qtytokenminted').html(data.qtytokenminted);
-				$('#qtytokenburned').html(data.qtytokenburned);
-				$('#qtytokencirculatingsupply').html(data.qtytokencirculatingsupply);
-				$('#qtyxqrspent').html(data.qtyxqrspent);
-			});
+			$('#type').html(data.type);
+			$('#paused').html(data.paused);
+			$('#lastupdatedblock').html('<a href="/block/' + data.lastupdatedblock + '">' + data.lastupdatedblock + '</a>');
+			$('#owneraddress').html('<a href="/wallet/' + data.owneraddress + '">' + data.owneraddress + '</a>');
+			$('#tokenidhex').html('<a href="/token/' + data.tokenidhex + '">' + data.tokenidhex + '</a>');
+			$('#timestamp').html(data.timestamp);
+			$('#qslpversion').html(data.qslpversion);
+			$('#symbol').html(data.symbol);
+			$('#name').html(data.name);
+			$('#decimals').html(data.decimals);
+			$('#genesisquantity').html(data.genesisquantity);
+			$('#pausable').html(data.pausable);
+			$('#mintable').html(data.mintable);
+			$('#blockcreatedheight').html(data.blockcreatedheight);
+			$('#blockcreatedid').html('<a href="/block/' + data.blockcreatedid + '">' + data.blockcreatedid + '</a>');
+			$('#blocklastactivesend').html(data.blocklastactivesend);
+			$('#blocklastactivemint').html(data.blocklastactivemint);
+			$('#creationtxid').html('<a href="/transaction/' + data.creationtxid + '">' + data.creationtxid + '</a>');
+			$('#qtyvalidtxnssincegenesis').html(data.qtyvalidtxnssincegenesis);
+			$('#qtyvalidtokenaddresses').html(data.qtyvalidtokenaddresses);
+			$('#qtytokenminted').html(data.qtytokenminted);
+			$('#qtytokenburned').html(data.qtytokenburned);
+			$('#qtytokencirculatingsupply').html(data.qtytokencirculatingsupply);
+			$('#qtyxqrspent').html(data.qtyxqrspent);
 		});
-	</script>
-	<!--
+	});
+</script>
+
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -268,6 +267,6 @@
 		});
 	});
 </script>
--->
 
-	{% endblock %}
+
+{% endblock %}
