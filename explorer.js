@@ -491,7 +491,7 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 			socket.emit('showtokenmeta', flatJson);
-
+			console.log(flatJson)
 		})();
 
 	});
