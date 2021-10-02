@@ -14,7 +14,6 @@ const { promisify } = require('util');
 const sqlite3 = require('sqlite3');
 const asyncv3 = require('async');
 
-
 // Qredit Libs
 const qreditjs = require("qreditjs");
 const qreditApi = require("nodeQreditApi");
@@ -79,7 +78,6 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-
 
 
 
@@ -199,7 +197,7 @@ io.on('connection', function (socket) {
 			}
 
 			socket.emit('showpeers', flatJson);
-
+			console.log(flatJson)
 		})();
 
 	});
@@ -383,24 +381,28 @@ io.on('connection', function (socket) {
 			if (qslpdata) {
 				response.data.qslp = qslpdata[0];
 			}
-			console.log(response.data.qslp)
-
-			var data = flatten(response.data);
+			var data = (response.data);
 			console.log(response.data)
-			var tempJson = {
-				'Transaction ID': data['id'],
-				'Block ID': data['blockId'],
+			var flatJson = {
+				txid: data.id,
+				blockid: data.blockId,
 				id: data.id,
-				Amount: data['amount'],
-				Fee: data['fee'],
-				Sender: data['sender'],
-				'Public Key': data['senderPublicKey'],
-				Recipient: data['recipient'],
-				Smartbridge: data['vendorField'],
-				Confirmations: data['confirmations'],
-				Timestamp: data['timestamp.human'],
-				'Block Height': data['qslp.blockHeight'],
-				'QSLP Valid Transaction': data['qslp.valid'] == true ? '<i class="nav-icon i-Yes font-weight-bold"style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
+				amount: data.amount,
+				fee: data.fee,
+				sender: data.sender,
+				publickey: data.senderPublicKey,
+				recipient: data.recipient,
+				smartbridge: data.vendorField,
+				confirmations: data.confirmations,
+				timestamp: data.timestamp.human,
+				nonce: data.nonce,
+				signature: data.signature,
+
+				/* summary section */
+
+				amountsummary: data.amount,
+				blockheight: data['qslp.blockHeight'],
+				qslptransaction: data['qslp.valid'] == true ? '<i class="nav-icon i-Yes font-weight-bold"style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
 				'QSLP Invalid Reason': data['qslp.invalidReason'],
 				'QSLP Transaction Type': data['qslp.transactionDetails.transactionType'],
 				'QSLP Token ID': data['qslp.transactionDetails.tokenIdHex'],
@@ -412,8 +414,8 @@ io.on('connection', function (socket) {
 			};
 
 
-			socket.emit('showtransactiondetails', tempJson);
-			console.log(tempJson)
+			socket.emit('showtransactiondetails', flatJson);
+			console.log(flatJson)
 		})();
 
 	});

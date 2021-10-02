@@ -4,7 +4,6 @@
 {% include '/subblocks/menu.twig' %}
 {% include '/cards/heading1.twig' %}
 
-
 <div class="container mh">
 	<div class="col-lg-12 col-12">
 		<div class="box">
@@ -16,16 +15,16 @@
 					<table class="table no-margin table-hover">
 						<thead>
 							<tr>
-								<th class="server-tabls-head" scope="col">TX ID</th>
-								<th class="server-tabls-head" scope="col">Timestamp</th>
-								<th class="server-tabls-head" scope="col">Sender</th>
-								<th class="server-tabls-head" scope="col">Recipient</th>
-								<th class="server-tabls-head" scope="col">Amount (XQR)</th>
-								<th class="server-tabls-head" scope="col">Smartbridge</th>
-								<th class="server-tabls-head" scope="col">Confirmations</th>
+								<th scope="col">TX ID</th>
+								<th scope="col">Timestamp</th>
+								<th scope="col">Sender</th>
+								<th scope="col">Recipient</th>
+								<th scope="col">Amount (XQR)</th>
+								<th scope="col">Smartbridge</th>
+								<th scope="col">Confirmations</th>
 							</tr>
 						</thead>
-						<tbody id='wallettransactions' class="server-tabls-row"></tbody>
+						<tbody id='wallettransactions'></tbody>
 					</table>
 				</div>
 			</div>
