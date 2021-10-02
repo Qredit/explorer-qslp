@@ -23,6 +23,7 @@ const qapi = new qreditApi.default();
 const qslpapi = new qslpApi.default();
 
 var indexRouter = require('./routes/index');
+const { paused } = require('browser-sync');
 
 var serverPort = 5200;
 
@@ -105,10 +106,9 @@ io.on('connection', function (socket) {
 					symbol: data[i].tokenDetails.symbol,
 					owneraddress: data[i].tokenDetails.ownerAddress,
 					tokenid: data[i].tokenDetails.tokenIdHex,
-					circsupply: Big(data[i].tokenStats.qty_token_circulating_supply).div(Big(10).pow(data[i].tokenDetails.decimals)).toFixed(data[i].tokenDetails.decimals),
+					circsupply: (data[i].tokenStats.qty_token_circulating_supply),
 					pausable: data[i].tokenDetails.pausable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">',
 					mintable: data[i].tokenDetails.mintable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">'
-
 				};
 				flatJson.push(tempJson);
 			}
@@ -173,7 +173,7 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 			socket.emit('showblocks', flatJson);
-			console.log(flatJson)
+
 		})();
 
 	});
@@ -345,7 +345,6 @@ io.on('connection', function (socket) {
 
 			response = await qapi.getWalletTransactions(input.walletId);
 			var data = (response.data);
-			console.log(response.data)
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
@@ -356,8 +355,6 @@ io.on('connection', function (socket) {
 					amount: data[i].amount,
 					smartbridge: data[i].vendorField,
 					confirmations: data[i].confirmations,
-
-
 				};
 				flatJson.push(tempJson);
 			}
@@ -381,6 +378,7 @@ io.on('connection', function (socket) {
 			if (qslpdata) {
 				response.data.qslp = qslpdata[0];
 			}
+			console.log(qslpdata)
 			var data = (response.data);
 			console.log(response.data)
 			var flatJson = {
@@ -420,32 +418,85 @@ io.on('connection', function (socket) {
 
 	});
 
+
+
 	// Socket IO gettokeninfo
 
 	socket.on('gettokeninfo', function (input) {
 
-		var page = input.page;
-		var limit = input.limit;
-
 		(async () => {
 
-			var data = await qslpapi.getTransaction(input.tokenid);
+			var data = await qslpapi.getToken(input.tokenid);
+			var data = (data);
+			var tempJson = {
 
-			var flatJson = [];
+				/* first */
+				type: data.type,
+				paused: data.paused,
+				lastupdatedblock: data.lastUpdatedBlock,
 
-			for (let i = 0; i < data.length; i++) {
-				let tempJson = {
-					symbol: data[i].symbol,
-					paused: data[i].paused,
-				};
-				flatJson.push(tempJson);
-			}
+				/* nested under tokenDetails */
+				owneraddress: data.tokenDetails.ownerAddress,
+				tokenidhex: data.tokenDetails.tokenIdHex,
+				timestamp: data.tokenDetails.genesis_timestamp,
+				qslpversion: data.tokenDetails.versionType,
+				symbol: data.tokenDetails.symbol,
+				name: data.tokenDetails.name,
+				documentUri: data.tokenDetails.documentUri,
+				decimals: data.tokenDetails.decimals,
+				genesisquantity: data.tokenDetails.genesisQuantity,
+				pausable: data.tokenDetails.pausable,
+				mintable: data.tokenDetails.mintable,
 
-			socket.emit('showtokeninfo', flatJson);
+				/* nested under tokenStats */
+				blockcreatedheight: data.tokenStats.block_created_height,
+				blockcreatedid: data.tokenStats.block_created_id,
+				blocklastactivesend: data.tokenStats.block_last_active_send,
+				blocklastactivemint: data.tokenStats.block_last_active_mint,
+				creationtxid: data.tokenStats.creation_transaction_id,
+				qtyvalidtxnssincegenesis: data.tokenStats.qty_valid_txns_since_genesis,
+				qtyvalidtokenaddresses: data.tokenStats.qty_valid_token_addresses,
+				qtytokenminted: data.tokenStats.qty_token_minted,
+				qtytokenburned: data.tokenStats.qty_token_burned,
+				qtytokencirculatingsupply: data.tokenStats.qty_token_circulating_supply,
+				qtyxqrspent: data.tokenStats.qty_xqr_spent,
+
+			};
+
+			socket.emit('showtokeninfo', tempJson);
 
 		})();
 
 	});
+	// Socket IO gettokeninfo
+
+	socket.on('gettokenmeta', function (input) {
+
+		(async () => {
+
+			var data = await qslpapi.getTokenWithMeta(input.tokenid);
+
+			console.log(data)
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					isdelegate: data[i].isDelegate == true ? '<i class="nav-icon i-Yes font-weight-bold" style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
+					address: data[i].address,
+					balance: data[i].balance
+				};
+				flatJson.push(tempJson);
+			}
+
+			console.log(tempJson)
+			socket.emit('showtokenmeta', tempJson);
+
+		})();
+
+	});
+
 	// Socket IO gettopwallets
 
 	socket.on('gettopwallets', function (input) {
@@ -537,257 +588,6 @@ io.on('connection', function (socket) {
 
 	});
 
-	socket.on('querydatabase', function (input) {
-
-		var sessionid = input.sessionid;
-		var query = input.query;
-
-		let db = new sqlite3.Database('./db/' + sessionid + '.db', (err) => {
-			if (err) {
-				console.error(err.message);
-			}
-			console.log('Connected to the ' + sessionid + ' database.');
-		});
-
-
-		db.all(query, function (err, rows) {
-
-			if (err) {
-				socket.emit('queryResults', err);
-
-			} else {
-
-				socket.emit('queryResults', JSON.stringify(rows));
-
-			}
-
-		});
-
-	});
-
-
-	socket.on('builddatabase', function (input) {
-
-		var sessionid = input.sessionid;
-		var datefrom = input.datefrom + ' 00:00:00';
-		var dateto = input.dateto + ' 23:59:59';
-		var jsonmap = JSON.parse(input.jsonmap);
-		var revjsonmap = JSON.parse(input.revjsonmap);
-		var privkey = input.privkey;
-		var sql = '';
-
-		var keys = qreditjs.crypto.getKeys(privkey);
-		var publickey = keys.publicKey;
-		var privatekey = keys.d.toBuffer().toString("hex");
-		var fromAddress = qreditjs.crypto.getAddress(publickey);
-
-
-		let db = new sqlite3.Database('./db/' + sessionid + '.db', (err) => {
-			if (err) {
-				console.error(err.message);
-			}
-			console.log('Connected to the ' + sessionid + ' database.');
-		});
-
-
-
-
-		sql = "DROP TABLE IF EXISTS databuilder";
-		db.run(sql, [], function (err) {
-			if (err) {
-				console.log("Delete sqlite table");
-				console.log(err.message);
-			}
-		});
-
-		var fields = Object.keys(jsonmap);
-
-		console.log(fields);
-
-		var createfields = fields.join('" TEXT, "');
-		var sql = "CREATE TABLE IF NOT EXISTS databuilder (\"" + createfields + "\" TEXT)";
-
-		console.log(sql);
-
-		db.run(sql, [], function (err) {
-			if (err) {
-				console.log("Create sqlite table");
-				console.log(err.message);
-			}
-		});
-
-		var unixtoepoch = 1490101200;
-
-		var epochfrom = (Date.parse(datefrom) / 1000) - unixtoepoch;
-		var epochto = (Date.parse(dateto) / 1000) - unixtoepoch;
-
-		var page = 1;
-		var limit = 100;
-		var body = {};
-		body.senderId = fromAddress;
-		body.timestamp = {
-			from: epochfrom,
-			to: epochto
-		};
-
-		socket.emit('buildingDatabaseMessage', 'Starting Build...');
-
-		(async () => {
-
-			var result = await qapi.searchTransactions(page, limit, body);
-
-			if (result.data) {
-
-				var pagecount = result.meta.pageCount;
-
-				await whilstScanTransactions(result.data, db, revjsonmap, fields);
-
-				if (pagecount > 1) {
-
-					for (let i = 2; i <= pagecount; i++) {
-
-						result = await qapi.searchTransactions(i, limit, body);
-						await whilstScanTransactions(result.data, db, revjsonmap, fields);
-
-					}
-
-				}
-
-				sql = "SELECT count(*) AS totcount FROM databuilder";
-				db.get(sql, [], (lerr, lrow) => {
-
-
-					if (lrow) {
-						var insertcount = lrow.totcount;
-					} else {
-						var insertcount = 0;
-					}
-
-					socket.emit('buildingDatabaseMessage', 'Inserted ' + insertcount + ' records');
-					socket.emit('buildingDatabaseReset', true);
-					socket.emit('datasetCanQuery', true);
-
-				});
-
-
-			} else {
-
-				socket.emit('buildingDatabaseMessage', 'Error:  No transactions in date range');
-				socket.emit('buildingDatabaseReset', true);
-
-			}
-
-		})();
-
-	});
-
 });
 
-
-async function whilstScanTransactions(data, db, revjsonmap, fields) {
-
-	var count = 0;
-	var max = data.length;
-	var sql = '';
-
-	return new Promise((resolve) => {
-
-		asyncv3.whilst(
-			function test(cb) {
-				cb(null, count < max)
-			},
-			function iter(callback) {
-
-				var item = data[count];
-
-				count++;
-
-				(async () => {
-
-					try {
-
-						var vendorJsonRaw = JSON.parse(item.vendorField);
-
-						var vendorJson = vendorJsonRaw['QDS'];
-
-						console.log(vendorJson);
-
-						var revjsonkeys = Object.keys(revjsonmap);
-						var vendorjsonkeys = Object.keys(vendorJson);
-
-						console.log(revjsonkeys);
-						console.log(vendorjsonkeys);
-
-
-						if (revjsonkeys.length == vendorjsonkeys.length && vendorjsonkeys.length > 0) {
-
-							// Ok.. Continue
-
-							console.log('OK - CONTINUE');
-
-							let insertfields = fields.join('", "');
-
-							let qmarks = [];
-							let ldata = [];
-							for (let i = 0; i < revjsonkeys.length; i++) {
-								qmarks.push('?');
-
-								let jkeyname = revjsonkeys[i];
-
-								ldata.push(vendorJson[jkeyname])
-							}
-							let insertqmarks = qmarks.join(',');
-
-							sql = "INSERT INTO databuilder (\"" + insertfields + "\") VALUES (" + insertqmarks + ")";
-
-							console.log(sql);
-							console.log(ldata);
-
-							db.run(sql, ldata, function (err) {
-								if (err) {
-									console.log("Sqlite Insert Error");
-									console.log(err.message);
-									callback(null, count);
-								} else {
-									console.log('SQL INSERTED');
-									callback(null, count);
-								}
-
-							});
-
-
-
-						} else {
-
-							console.log('headers no match');
-							callback(null, count);
-
-						}
-
-					} catch (e) {
-
-						// skip record
-						console.log('skipping record');
-						callback(null, count);
-
-					}
-
-				})();
-
-			},
-			function (err, n) {
-
-				(async () => {
-
-					resolve(true);
-
-				})();
-
-			}
-
-		);
-
-	});
-
-}
 
