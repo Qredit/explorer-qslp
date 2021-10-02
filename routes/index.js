@@ -79,6 +79,14 @@ router.get("/token/:tokenid", function (req, res, next) {
   });
 });
 
+router.get("/tokenmeta/:tokenid", function (req, res, next) {
+  res.render("tokenmeta", {
+    title: "Token Details",
+    routename: "tokenmeta",
+    tokenid: req.params.tokenid,
+    csrfToken: req.csrfToken()
+  });
+});
 
 
 
