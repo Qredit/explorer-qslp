@@ -329,18 +329,18 @@ io.on('connection', function (socket) {
 
 			var response = await qapi.getTopWallets();
 			var data = response.data;
-
+			console.log(response.data)
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
 					rank: data[i].rank,
-					isdelegate: data[i].isDelegate == true ? '<i class="nav-icon i-Yes font-weight-bold" style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
+					isdelegate: data[i].isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
 					address: data[i].address,
 					balance: data[i].balance
 				};
 				flatJson.push(tempJson);
 			}
-			console.log(flatJson)
+
 			socket.emit('showtopwallets', flatJson);
 
 		})();

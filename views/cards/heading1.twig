@@ -84,7 +84,7 @@
         var socket = io();
         socket.emit('getlastblock', {});
         socket.on('showlastblock', function (data) {
-
+            console.log(data)
             $('#getlastblockheight').html(data.getlastblockheight);
             $('#getlastforgedusername').html(data.getlastforgedusername);
 
