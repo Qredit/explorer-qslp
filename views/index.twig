@@ -20,8 +20,8 @@
 								<th>Timestamp</th>
 								<th>Sender</th>
 								<th>Recipient</th>
-								<th>Smartbridge</th>
 								<th>Amount</th>
+								<th>Smartbridge</th>
 							</tr>
 						</thead>
 						<tbody id='transactions'></tbody>
@@ -30,7 +30,6 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 {% include '/cards/footer.twig' %}
 
@@ -47,12 +46,9 @@
 
 		socket.emit('gettransactions', {});
 
-
 		socket.on('showtransactions', function (data) {
 
-
 			var mainTable = document.getElementById("transactions");
-
 
 			var tr,
 				td;
@@ -83,11 +79,11 @@
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = row.smartbridge;
+				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' <img alt="xqr" style="margin-top:-5px!important;" src="/img/favicon-16x16.png">';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' <img alt="xqr" style="margin-top:-5px!important;" src="/img/favicon-16x16.png">';
+				td.innerHTML = row.smartbridge;
 				tr.appendChild(td);
 
 				transactions.appendChild(tr);

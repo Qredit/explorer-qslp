@@ -100,6 +100,7 @@
     @include transition(none);
 }
 .content {
+    min-height: 250px;
     padding: ($default-gutter-width / 2) $default-gutter-width 0px $default-gutter-width;
     margin-right: auto;
     margin-left: auto;

@@ -44053,5 +44053,53 @@ img.online {
 
 /*# sourceMappingURL=style.css.map */
 
+/* custom */
 
+.ribbon-success {
+  background-color: #34c38f;
+}
 
+.ribbon-danger {
+  background-color: #fd3c52;
+}
+
+.ribbon-warning {
+  background-color: #ffcc6a;
+}
+
+.badge-success {
+  background-color: #34c38f;
+}
+
+.badge-danger {
+  background-color: #fd3c52;
+}
+
+.badge-warning {
+  background-color: #ffcc6a;
+}
+
+.badge-primary {
+  background-color: #5d69e9;
+  color: #fff;
+}
+
+.badge-secondary {
+  background-color: #e4e6ef;
+  color: #000;
+}
+
+.badge-info {
+  background-color: #6789fe;
+  color: #ffffff;
+}
+
+.badge-light {
+  background-color: #e4e6ef;
+  color: #131031;
+}
+
+.badge-dark {
+  background-color: #131031;
+  color: #ffffff;
+}

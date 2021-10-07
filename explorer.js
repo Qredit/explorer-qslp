@@ -83,126 +83,16 @@ app.use(function (err, req, res, next) {
 
 
 ////
-// Socket IO gettokenlist
 
 io.on('connection', function (socket) {
 
+	/************************************************************************
+	  ___ ___   _   ___  ___ _  _   ___ _   _ _  _  ___ _____ ___ ___  _  _
+	 / __| __| /_\ | _ \/ __| || | | __| | | | \| |/ __|_   _|_ _/ _ \| \| |
+	 \__ \ _| / _ \|   / (__| __ | | _|| |_| | .` | (__  | |  | | (_) | .` |
+	 |___/___/_/ \_\_|_\\___|_||_| |_|  \___/|_|\_|\___| |_| |___\___/|_|\_|
 
-	socket.on('gettokenlist', function (input) {
-
-		var page = input.page;
-		var limit = input.limit;
-
-		(async () => {
-
-			var data = await qslpapi.listTokens(100, 1);
-
-			var flatJson = [];
-
-			for (let i = 0; i < data.length; i++) {
-				let tempJson = {
-					version: data[i].type,
-					name: data[i].tokenDetails.name,
-					symbol: data[i].tokenDetails.symbol,
-					owneraddress: data[i].tokenDetails.ownerAddress,
-					tokenid: data[i].tokenDetails.tokenIdHex,
-					circsupply: (data[i].tokenStats.qty_token_circulating_supply),
-					pausable: data[i].tokenDetails.pausable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">',
-					mintable: data[i].tokenDetails.mintable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">'
-				};
-				flatJson.push(tempJson);
-			}
-
-			socket.emit('qslptokenlist', flatJson);
-
-		})();
-
-	});
-
-
-
-	// Socket IO getdelegates
-
-	socket.on('getdelegates', function (input) {
-
-		(async () => {
-
-			var response = await qapi.listDelegates(1, 51);
-			var data = response.data;
-
-			var flatJson = [];
-			for (let i = 0; i < data.length; i++) {
-				let tempJson = {
-					rank: data[i].rank,
-					address: data[i].address,
-					username: data[i].username,
-					blocks: data[i].blocks.produced,
-					timestamp: data[i].blocks.last.timestamp.human,
-					approval: data[i].production.approval
-				};
-				flatJson.push(tempJson);
-			}
-
-			socket.emit('showdelegates', flatJson);
-
-		})();
-
-	});
-
-	// Socket IO getblocks
-
-	socket.on('getblocks', function (input) {
-
-		(async () => {
-
-			var response = await qapi.listBlocks(1, 50);
-			var data = response.data;
-			var flatJson = [];
-			for (let i = 0; i < data.length; i++) {
-				let tempJson = {
-
-					id: data[i].id,
-					height: data[i].height,
-					timestamp: data[i].timestamp.human,
-					rewardtotal: data[i].forged.total,
-					transactionsforged: data[i].transactions,
-					lastforgedusername: data[i].generator.username,
-					address: data[i].generator.address,
-
-				};
-				flatJson.push(tempJson);
-			}
-			socket.emit('showblocks', flatJson);
-
-		})();
-
-	});
-
-	// Socket IO getpeers
-
-	socket.on('getpeers', function (input) {
-
-		(async () => {
-
-			var response = await qapi.getPeers();
-			var data = response.data;
-
-			var flatJson = [];
-			for (let i = 0; i < data.length; i++) {
-				let tempJson = {
-					peerip: data[i].ip,
-					p2pport: data[i].port,
-					version: data[i].version,
-					height: data[i].height,
-					latency: data[i].latency
-				};
-				flatJson.push(tempJson);
-			}
-
-			socket.emit('showpeers', flatJson);
-		})();
-
-	});
+	 ************************************************************************/
 
 	socket.on('search', function (input) {
 
@@ -254,6 +144,135 @@ io.on('connection', function (socket) {
 		})();
 	});
 
+	/*********************************************************************
+
+	  _  _  ___  ___  ___    ___  ___ ___ ___ ___ _____     _   ___ ___
+	 | \| |/ _ \|   \| __|  / _ \| _ \ __|   \_ _|_   _|   /_\ | _ \_ _|
+	 | .` | (_) | |) | _|  | (_) |   / _|| |) | |  | |    / _ \|  _/| |
+	 |_|\_|\___/|___/|___|  \__\_\_|_\___|___/___| |_|   /_/ \_\_| |___|
+
+
+	 ********************************************************************/
+
+	/*
+
+	1. getdelegates  // done
+	2. getlastblock  // done
+	3. getblocks  // done
+	4. getpeers  // done
+	5. gettransactions  // done
+	6. getwallet  // done
+	7. gettopwallets  // done
+	8. getwallettransactions  // done
+	9. gettransactiondetails  // done
+	10. getdelegatebyid  // done
+
+	*/
+
+	// Socket IO getdelegates
+
+	socket.on('getdelegates', function (input) {
+
+		(async () => {
+
+			var response = await qapi.listDelegates(1, 51);
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					address: data[i].address,
+					username: data[i].username,
+					blocks: data[i].blocks.produced,
+					timestamp: data[i].blocks.last.timestamp.human,
+					approval: data[i].production.approval
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showdelegates', flatJson);
+
+		})();
+
+	});
+	// Socket IO getblocks
+
+	socket.on('getlastblock', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getLastBlock();
+			var data = response.data;
+			var flatJson = [];
+
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('showlastblock', flatJson);
+			/*console.log(flatJson)*/
+		})();
+
+	});
+
+
+	// Socket IO getblocks
+
+	socket.on('getblocks', function (input) {
+
+		(async () => {
+
+			var response = await qapi.listBlocks(1, 50);
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+
+					id: data[i].id,
+					height: data[i].height,
+					timestamp: data[i].timestamp.human,
+					rewardtotal: data[i].forged.total,
+					transactionsforged: data[i].transactions,
+					lastforgedusername: data[i].generator.username,
+					address: data[i].generator.address,
+
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('showblocks', flatJson);
+		})();
+
+	});
+
+	// Socket IO getpeers
+
+	socket.on('getpeers', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getPeers();
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					peerip: data[i].ip,
+					p2pport: data[i].port,
+					version: data[i].version,
+					height: data[i].height,
+					latency: data[i].latency
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showpeers', flatJson);
+		})();
+
+	});
+
 	// Socket IO gettransactions
 
 	socket.on('gettransactions', function (input) {
@@ -290,29 +309,21 @@ io.on('connection', function (socket) {
 
 			response = await qapi.getWalletByID(input.walletId);
 
-
-			var qslpdata = await qslpapi.getTokensByOwner(input.walletId);
-			console.log(qslpdata)
-			/*		if (qslpdata) {
-						response.data.qslp = qslpdata[0];
-					} */
-
-			var data = flatten(response.data);
-			var tempJson = {
+			var data = (response.data);
+			var flatJson = {
 				address: data.address,
 				publickey: data.publicKey,
-				nonce: data.nonce,
-				balance: data.balance,
-				username: data.username
+				balance: (parseFloat(data.balance) / 100000000).toFixed(8) + ' XQR',
+				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
 			};
-			console.log(tempJson)
-			socket.emit('showwallet', tempJson);
 
+			socket.emit('showwallet', flatJson);
+			console.log(flatJson)
 		})();
 
 	});
 
-
+	/* gettopwallets */
 
 	socket.on('gettopwallets', function (input) {
 
@@ -331,7 +342,7 @@ io.on('connection', function (socket) {
 				};
 				flatJson.push(tempJson);
 			}
-
+			console.log(flatJson)
 			socket.emit('showtopwallets', flatJson);
 
 		})();
@@ -378,9 +389,7 @@ io.on('connection', function (socket) {
 			if (qslpdata) {
 				response.data.qslp = qslpdata[0];
 			}
-			console.log(qslpdata)
 			var data = (response.data);
-			console.log(response.data)
 			var flatJson = {
 				txid: data.id,
 				blockid: data.blockId,
@@ -395,22 +404,7 @@ io.on('connection', function (socket) {
 				timestamp: data.timestamp.human,
 				nonce: data.nonce,
 				signature: data.signature,
-
-				/* summary section */
-				/*
-								amountsummary: data.amount,
-								blockheight: data['qslp.blockHeight'],
-								qslptransaction: data['qslp.valid'] == true ? '<i class="nav-icon i-Yes font-weight-bold"style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
-								'QSLP Invalid Reason': data['qslp.invalidReason'],
-								'QSLP Transaction Type': data['qslp.transactionDetails.transactionType'],
-								'QSLP Token ID': data['qslp.transactionDetails.tokenIdHex'],
-								'QSLP Token Symbol': data['qslp.transactionDetails.symbol'],
-								'QSLP Token Name': data['qslp.transactionDetails.name'],
-								'QSLP Document URL': data['qslp.transactionDetails.documentUri'],
-								'QSLP Decimals': data['qslp.transactionDetails.decimals'],*/
-				/*'QSLP Amount': Big(data['qslp.transactionDetails.sendOutput.amount']).div(Big(10).pow(data['qslp.transactionDetails.decimals'])).toFixed(data['qslp.transactionDetails.decimals'])*/
 			};
-
 
 			socket.emit('showtransactiondetails', flatJson);
 			console.log(flatJson)
@@ -418,7 +412,117 @@ io.on('connection', function (socket) {
 
 	});
 
+	// Socket IO getdelegatebyid 
 
+	socket.on('getdelegatebyid', function (input) {
+
+		(async () => {
+
+			response = await qapi.getDelegate(input.walletId);
+
+			var data = (response.data);
+
+			var flatJson = {
+				username: data.username,
+
+				votes: (parseFloat(data.votes) / 100000000).toFixed(0) + ' XQR',
+				rank: data.rank,
+				blocksproduced: data.blocks.produced,
+				lastproducedblock: data.blocks.last.id,
+				approval: data.production.approval + '%',
+				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+			socket.emit('showdelegatebyid', flatJson);
+			console.log(flatJson)
+		})();
+
+	});
+
+	/**************************************************************
+																		
+	  _  _  ___  ___  ___    ___  ___ _    ___     _   ___ ___
+	 | \| |/ _ \|   \| __|  / _ \/ __| |  | _ \   /_\ | _ \_ _|
+	 | .` | (_) | |) | _|  | (_) \__ \ |__|  _/  / _ \|  _/| |
+	 |_|\_|\___/|___/|___|  \__\_\___/____|_|   /_/ \_\_| |___|
+
+	 
+	 **************************************************************/
+
+	/* 
+
+	1. gettokenlist  // done
+	2. getwallettokens  // done
+	3. gettokeninfo  // done
+	4. gettokenmeta  // done
+
+	*/
+
+
+	/* gettokenlist */
+
+	socket.on('gettokenlist', function (input) {
+
+		var page = input.page;
+		var limit = input.limit;
+
+		(async () => {
+
+			var data = await qslpapi.listTokens(100, 1);
+
+			var flatJson = [];
+
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					version: data[i].type,
+					name: data[i].tokenDetails.name,
+					symbol: data[i].tokenDetails.symbol,
+					owneraddress: data[i].tokenDetails.ownerAddress,
+					tokenid: data[i].tokenDetails.tokenIdHex,
+					circsupply: (data[i].tokenStats.qty_token_circulating_supply),
+					pausable: data[i].tokenDetails.pausable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">',
+					mintable: data[i].tokenDetails.mintable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">'
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('qslptokenlist', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getwallettokens
+
+	socket.on('getwallettokens', function (input) {
+
+		(async () => {
+
+			var response = await qslpapi.getTokensByOwner(input.walletId);
+			var data = response;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					type: data[i].type,
+					owneraddress: data[i].tokenDetails.ownerAddress,
+					tokenid: data[i].tokenDetails.tokenIdHex,
+					name: data[i].tokenDetails.name,
+					symbol: data[i].tokenDetails.symbol,
+					genesisquantity: (data[i].tokenDetails.genesisQuantity == undefined ? '<span class="badge badge-success">NFT (1)</span>' : data[i].tokenDetails.genesisQuantity),
+					circsupply: (data[i].tokenStats.qty_token_circulating_supply == undefined ? '<span class="badge badge-success">NFT (1)</span>' : data[i].tokenStats.qty_token_circulating_supply),
+					pausable: data[i].tokenDetails.pausable == true ? '<span class="badge badge-success">True</span>' : '<span class="badge badge-danger">False</span>',
+					mintable: data[i].tokenDetails.mintable == true ? '<span class="badge badge-success">True</span>' : '<span class="badge badge-danger">False</span>',
+					tokenowners: data[i].tokenStats.qty_valid_token_addresses
+
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showwallettokens', flatJson);
+
+		})();
+
+	});
 
 	// Socket IO gettokeninfo
 
@@ -464,11 +568,11 @@ io.on('connection', function (socket) {
 			};
 
 			socket.emit('showtokeninfo', tempJson);
-			console.log(tempJson)
 		})();
 
 	});
-	// Socket IO gettokeninfo
+
+	// Socket IO gettokenmeta
 
 	socket.on('gettokenmeta', function (input) {
 
@@ -491,37 +595,43 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 			socket.emit('showtokenmeta', flatJson);
-			console.log(flatJson)
 		})();
 
 	});
 
-	// Socket IO gettopwallets
+	/**************************************************************************
 
-	socket.on('gettopwallets', function (input) {
+	  _  _  ___  ___  ___   ___ ___ ___  ___  ___  _  _   _       _   ___ ___
+	 | \| |/ _ \|   \| __| | _ \ __| _ \/ __|/ _ \| \| | /_\     /_\ | _ \_ _|
+	 | .` | (_) | |) | _|  |  _/ _||   /\__ \ (_) | .` |/ _ \   / _ \|  _/| |
+	 |_|\_|\___/|___/|___| |_| |___|_|_\|___/\___/|_|\_/_/ \_\ /_/ \_\_| |___|
 
-		(async () => {
 
-			var response = await qapi.getTopWallets();
-			var data = response.data;
+	 *************************************************************************/
 
-			var flatJson = [];
-			for (let i = 0; i < data.length; i++) {
-				let tempJson = {
-					rank: data[i].rank,
-					isdelegate: data[i].isDelegate == true ? '<i class="nav-icon i-Yes font-weight-bold" style="color:green;"></i>' : '<i class="nav-icon i-Close-Window font-weight-bold" style="color:red;"></i>',
-					address: data[i].address,
-					balance: data[i].balance
-				};
-				flatJson.push(tempJson);
-			}
+	/*
 
-			socket.emit('showtopwallets', flatJson);
+	1. getprofile  // doto
 
-		})();
+	*/
 
-	});
 
+	/**************************************************************************
+
+	  _  _  ___  ___  ___    ___  ___  ___     _   ___ ___
+	 | \| |/ _ \|   \| __|  / _ \|   \/ __|   /_\ | _ \_ _|
+	 | .` | (_) | |) | _|  | (_) | |) \__ \  / _ \|  _/| |
+	 |_|\_|\___/|___/|___|  \__\_\___/|___/ /_/ \_\_| |___|
+
+
+	 *************************************************************************/
+
+	/*
+
+	1. getapifields  // doto
+	2. getapidata  // doto
+
+	*/
 
 	// Socket IO getapifields
 	socket.on('getapifields', function (input) {

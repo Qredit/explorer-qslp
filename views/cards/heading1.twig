@@ -28,7 +28,8 @@
                                 </div>
                                 <div class="text-center">
                                     <h3 class="no-margin text-bold mb-10">Block Height</h3>
-                                    <p class="no-margin fw-600"><span id='height' class="text-warning"></span></p>
+                                    <p class="no-margin fw-600"><span id='currentheight' class="text-warning"></span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -80,11 +81,10 @@
     $(document).ready(function () {
 
         var socket = io();
+        socket.emit('getlastblock', {});
+        socket.on('showlastblock', function (data) {
 
-        socket.emit('getblocks');
-        socket.on('showblocks', function (data) {
-
-            $('#height').html(data.height);
+            $('#currentheight').html(data.currentheight);
             $('#lastforgedusername').html(data.lastforgedusername);
 
         });

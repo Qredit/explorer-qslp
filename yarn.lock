@@ -2150,6 +2150,13 @@ node-pre-gyp@^0.11.0:
     semver "^5.3.0"
     tar "^4"
 
+"nodePersonaApi@git+https://github.com/Qredit/nodepersonaapi.git":
+  version "0.0.1"
+  resolved "git+https://github.com/Qredit/nodepersonaapi.git#30f8aa0065473850ab6e72e03ed16b03110a9227"
+  dependencies:
+    big.js "^5.2.2"
+    request "^2.88.0"
+
 "nodeQreditApi@git+https://github.com/Qredit/nodeqreditapi.git":
   version "0.0.1"
   resolved "git+https://github.com/Qredit/nodeqreditapi.git#7ddadf62d002ff2deb69509f6c63f63ec56ef1c2"
