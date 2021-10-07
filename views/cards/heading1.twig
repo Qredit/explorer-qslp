@@ -28,7 +28,8 @@
                                 </div>
                                 <div class="text-center">
                                     <h3 class="no-margin text-bold mb-10">Block Height</h3>
-                                    <p class="no-margin fw-600"><span id='currentheight' class="text-warning"></span>
+                                    <p class="no-margin fw-600"><span id='getlastblockheight'
+                                            class="text-warning"></span>
                                     </p>
                                 </div>
                             </div>
@@ -45,7 +46,7 @@
                                 <div class="text-center">
                                     <h3 class="no-margin text-bold mb-10">Last Forged</h3>
                                     <p class="no-margin fw-600">
-                                        <span id='lastforgedusername' class="text-warning"></span>
+                                        <span id='getlastforgedusername' class="text-warning"></span>
                                     </p>
                                 </div>
                             </div>
@@ -84,8 +85,8 @@
         socket.emit('getlastblock', {});
         socket.on('showlastblock', function (data) {
 
-            $('#currentheight').html(data.currentheight);
-            $('#lastforgedusername').html(data.lastforgedusername);
+            $('#getlastblockheight').html(data.getlastblockheight);
+            $('#getlastforgedusername').html(data.getlastforgedusername);
 
         });
 

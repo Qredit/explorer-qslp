@@ -166,6 +166,7 @@ io.on('connection', function (socket) {
 	8. getwallettransactions  // done
 	9. gettransactiondetails  // done
 	10. getdelegatebyid  // done
+	11. getnodeconfig  // done
 
 	*/
 
@@ -196,6 +197,7 @@ io.on('connection', function (socket) {
 		})();
 
 	});
+
 	// Socket IO getblocks
 
 	socket.on('getlastblock', function (input) {
@@ -203,21 +205,17 @@ io.on('connection', function (socket) {
 		(async () => {
 
 			var response = await qapi.getLastBlock();
-			var data = response.data;
-			var flatJson = [];
+			var data = (response.data);
+			var flatJson = {
+				getlastblockheight: data.height,
+				getlastforgedusername: data.generator.username
+			};
 
-			for (let i = 0; i < data.length; i++) {
-				let tempJson = {
-
-				};
-				flatJson.push(tempJson);
-			}
 			socket.emit('showlastblock', flatJson);
-			/*console.log(flatJson)*/
+
 		})();
 
 	});
-
 
 	// Socket IO getblocks
 
@@ -437,6 +435,26 @@ io.on('connection', function (socket) {
 		})();
 
 	});
+
+	// Socket IO getnodeconfig
+
+	socket.on('getnodeconfig', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getNodeConfig();
+			console.log(response.data)
+			var data = (response.data);
+			var flatJson = {
+
+			};
+
+			socket.emit('shownodeconfig', flatJson);
+
+		})();
+
+	});
+
 
 	/**************************************************************
 																		

@@ -50,6 +50,14 @@ router.get("/delegatemonitor", function (req, res, next) {
   });
 });
 
+router.get("/nodeconfig", function (req, res, next) {
+  res.render("nodeconfig", {
+    title: "Node Configuration",
+    routename: "nodeconfig",
+    csrfToken: req.csrfToken()
+  });
+});
+
 /* Explorer URL Parameter routes*/
 
 router.get("/transaction/:transactionId", function (req, res, next) {
