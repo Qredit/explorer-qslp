@@ -118,11 +118,11 @@
 		var elapsed = (current - previous) / 1000;
 
 		if (elapsed < (16 * 60)) {
-			return '<img alt="ok" src="/img/ok-24.png">';
+			return '<span class="badge badge-success">Forging</span>';
 		} else if (elapsed < (24 * 60)) {
-			return '<img alt="ok" src="/img/missed-24.png">';
+			return '<span class="badge badge-warning">Missed Block</span>';
 		} else {
-			return '<img alt="ok" src="/img/offline-24.png">';
+			return '<span class="badge badge-danger">Not Forging</span>';
 		}
 
 	}</script>{% endblock %}
