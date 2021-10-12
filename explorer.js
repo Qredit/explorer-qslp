@@ -14,16 +14,18 @@ const { promisify } = require('util');
 const sqlite3 = require('sqlite3');
 const asyncv3 = require('async');
 
-// Qredit Libs
+// libs
 const qreditjs = require("qreditjs");
 const qreditApi = require("nodeQreditApi");
 const qslpApi = require("nodeQslpApi");
+const personaApi = require("nodePersonaApi");
 
 const qapi = new qreditApi.default();
 const qslpapi = new qslpApi.default();
+const papi = new personaApi.default();
 
 var indexRouter = require('./routes/index');
-const { paused } = require('browser-sync');
+// const { paused } = require('browser-sync');
 
 var serverPort = 5200;
 
@@ -140,7 +142,7 @@ io.on('connection', function (socket) {
 			}
 
 			socket.emit('showsearch', returnValue);
-			console.log(returnValue)
+
 		})();
 	});
 
@@ -272,7 +274,6 @@ io.on('connection', function (socket) {
 	});
 
 	// Socket IO gettransactions
-
 	socket.on('gettransactions', function (input) {
 
 		(async () => {
@@ -316,7 +317,7 @@ io.on('connection', function (socket) {
 			};
 
 			socket.emit('showwallet', flatJson);
-			console.log(flatJson)
+
 		})();
 
 	});
@@ -329,7 +330,6 @@ io.on('connection', function (socket) {
 
 			var response = await qapi.getTopWallets();
 			var data = response.data;
-			console.log(response.data)
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
@@ -405,7 +405,6 @@ io.on('connection', function (socket) {
 			};
 
 			socket.emit('showtransactiondetails', flatJson);
-			console.log(flatJson)
 		})();
 
 	});
@@ -421,8 +420,7 @@ io.on('connection', function (socket) {
 			var data = (response.data);
 
 			var flatJson = {
-				username: data.username,
-
+				username: data.username == null ? '<span>Not a delegate</span>' : data.username,
 				votes: (parseFloat(data.votes) / 100000000).toFixed(0) + ' XQR',
 				rank: data.rank,
 				blocksproduced: data.blocks.produced,
@@ -431,7 +429,7 @@ io.on('connection', function (socket) {
 				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
 			};
 			socket.emit('showdelegatebyid', flatJson);
-			console.log(flatJson)
+
 		})();
 
 	});
@@ -443,7 +441,7 @@ io.on('connection', function (socket) {
 		(async () => {
 
 			var response = await qapi.getNodeConfig();
-			console.log(response.data)
+
 			var data = (response.data);
 			var flatJson = {
 
@@ -629,10 +627,107 @@ io.on('connection', function (socket) {
 
 	/*
 
-	1. getprofile  // doto
+	1. getpassport  // doto
 
 	*/
 
+	// Socket IO getpassport
+
+	socket.on('getpassport', function (input) {
+
+		(async () => {
+			var response = await papi.getPersonaPassport(input.personaAsset, input.walletId);
+			var data = response.data;
+			console.log(data)
+			var flatJson = [];
+			var flatJson = {
+				/* isMotionAdddress */
+				authismotionaddress: data.isMotionAddress.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				dataismotionaddress: data.isMotionAddress.data == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+
+				/* hasAccountBlocked */
+				authhasaccountblocked: data.hasAccountBlocked.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasaccountblocked: data.hasAccountBlocked.data == true ? '<span class="badge badge-danger">Account Blocked</span>' : '<span class="badge badge-success">Not Blocked</span>',
+
+				/* profileBanner */
+				authprofilebanner: data.profileBanner.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				dataprofilebanner: data.profileBanner.data == null ? '<span class="badge badge-danger">Unavailable</span>' : false ? '<span class="badge badge-danger">Unavailable</span>' : '<img style="max-height:75px;" src="' + data.profileBanner.data + '"></a>',
+
+				/* alternateProfilePicture */
+				authalternateprofilepicture: data.alternateProfilePicture.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				dataalternateprofilepicture: data.alternateProfilePicture.data == null ? '<span class="badge badge-danger">Unavailable</span>' : false ? '<span class="badge badge-danger">Unavailable</span>' : '<img style="max-height:75px;" src="' + data.profileBanner.data + '"></a>',
+
+				/* isKycVerified */
+				authiskycverified: data.isKycVerified.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				dataiskycverified: data.isKycVerified.data == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+
+				/* kycValidTill */
+				authkycvalidtill: data.kycValidTill.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datakycvalidtill: data.kycValidTill.data == null ? '<span class="badge badge-danger">Unknown</span>' : data.kycValidTill.data,
+
+				/* hasThisManyContacts */
+				authhasthismanycontacts: data.hasThisManyContacts.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasthismanycontacts: data.hasThisManyContacts.data == null ? '<span class="badge badge-danger">Unknown</span>' : data.hasThisManyContacts.data + ' Contacts',
+
+				/* alias */
+				authalias: data.alias.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				dataalias: data.alias.data == null ? '<span class="badge badge-danger">Unknown</span>' : data.alias.data,
+
+				/* accountCreated */
+				authaccountcreated: data.accountCreated.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				/*dataaccountcreated: data.accountCreated.data == null ? '<span class="badge badge-danger">Unknown</span>' : data.accountCreated.data,*/
+
+				/* lastLogin */
+				authlastlogin: data.lastLogin.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datalastlogin: data.lastLogin.data == null ? '<span class="badge badge-danger">Unknown</span>' : data.lastLogin.data,
+
+				/* hasThisAmountOfFiatValue */
+				authhasthisamountoffiatvalue: data.hasThisAmountOfFiatValue.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasthisamountoffiatvalue: data.hasThisAmountOfFiatValue.data == null ? '<span class="badge badge-danger">Unknown</span>' : (parseFloat(data.hasThisAmountOfFiatValue.data)).toFixed(2) + ' USD',
+
+				/* hasThisAmountOfCryptoValue */
+				authhasthisamountofcryptovalue: data.hasThisAmountOfCryptoValue.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasthisamountofcryptovalue: data.hasThisAmountOfCryptoValue.data == null ? '<span class="badge badge-danger">Unknown</span>' : (parseFloat(data.hasThisAmountOfCryptoValue.data)).toFixed(2) + ' USD',
+
+				/* hasThisAmountOfAverageMonthlyCryptoValueInWallet */
+				authaveragemonthlycryptovalue: data.hasThisAmountOfAverageMonthlyCryptoValueInWallet.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				dataaveragemonthlycryptovalue: data.hasThisAmountOfAverageMonthlyCryptoValueInWallet.data == null ? '<span class="badge badge-danger">Unknown</span>' : (parseFloat(data.hasThisAmountOfAverageMonthlyCryptoValueInWallet.data)).toFixed(2) + ' USD',
+
+				/* hasAddressVerified */
+				authhasaddressverified: data.hasAddressVerified.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasaddressverified: data.hasAddressVerified.data == false ? '<span class="badge badge-danger">No</span>' : data.hasAddressVerified.data,
+
+				/* thisTypeOfUser */
+				auththistypeofuser: data.thisTypeOfUser.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datathistypeofuser: data.thisTypeOfUser.data == null ? '<span class="badge badge-danger">Unknown</span>' : data.thisTypeOfUser.data,
+
+				/* hasPhoneVerified */
+				authhasphoneverified: data.hasPhoneVerified.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasphoneverified: data.hasPhoneVerified.data == true ? '<span class="badge badge-success">Yes</span>' : data.hasPhoneVerified.data,
+
+				/* profileRating */
+				authprofilerating: data.profileRating.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				dataprofilerating: data.profileRating.data == null ? '<span class="badge badge-danger">Unknown</span>' : data.profileRating.data + ' / 10',
+
+				/* hasEmailVerified */
+				authhasemailverified: data.hasEmailVerified.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasemailverified: data.hasEmailVerified.data == false ? '<span class="badge badge-danger">No</span>' : data.hasEmailVerified.data,
+
+				/* hasFacebookConnected */
+				authhasfacebookconnected: data.hasFacebookConnected.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahasfacebookconnected: data.hasFacebookConnected.data == false ? '<span class="badge badge-danger">Unknown</span>' : data.hasFacebookConnected.data,
+
+				/* hasLinkedInConnected */
+				authhaslinkedinconnected: data.hasLinkedInConnected.auth == true ? '<span class="badge badge-success">Allowed</span>' : '<span class="badge badge-danger">Denied</span>',
+				datahaslinkedinconnected: data.hasLinkedInConnected.data == false ? '<span class="badge badge-danger">Unknown</span>' : data.hasLinkedInConnected.data,
+
+			};
+
+			socket.emit('showpassport', flatJson);
+			console.log(flatJson)
+		})();
+
+	});
 
 	/**************************************************************************
 

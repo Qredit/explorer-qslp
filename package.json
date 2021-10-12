@@ -3,7 +3,8 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "start": "node explorer.js"
+    "start": "node explorer.js",
+    "reinstallqredit": "rm -rf yarn.lock && cd node_modules && rm -rf nodePersonaApi && rm -rf nodeQreditApi && rm -rf nodeQslpApi && cd .. && yarn install"
   },
   "dependencies": {
     "async": "^3.1.0",

@@ -107,7 +107,7 @@
 
 <div class="container mh" style="margin-top: 25px;">
 	<div class="col-lg-12 col-12">
-		<div class="box box-slided-up">
+		<div class="box box-slided-down">
 			<div class="box-header with-border">
 				<h4 class="box-title">Persona Passport</h4>
 				<ul class="box-controls pull-right">
@@ -139,122 +139,112 @@
 					</p>
 				</div><br>
 
-				<div class="box-body" style="border:1px solid black;">
-					<h5><strong>Badge Description</strong></h5>
-					<ul>
-						<li><strong>False:</strong> The code returned an error or the wallet might not be linked as a
-							Qredit
-							Motion
-							address.</li>
-						<li><strong>Unknown:</strong> The owner of this wallet has not provided any details.</li>
-						<li><strong>Private:</strong> The owner of this wallet has decided not to share any details.
-						</li>
-					</ul>
-				</div>
-
 				<div class="table-responsive">
 					<table class="table no-margin table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Request</th>
+								<th scope="col">Authentication</th>
+								<th scope="col">Response</th>
+							</tr>
+						</thead>
 						<tbody>
 							<tr>
-								<td>Is a Qredit Motion Wallet?</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Is Motion Address?</td>
+								<td id='authismotionaddress'></td>
+								<td id='dataismotionaddress'></td>
 							</tr>
 							<tr>
-								<td>KYC Verified in Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Has Account Blocked</td>
+								<td id='authhasaccountblocked'></td>
+								<td id='datahasaccountblocked'></td>
 							</tr>
 							<tr>
-								<td>Has Verified Contacts</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Profile Banner</td>
+								<td id='authprofilebanner'></td>
+								<td id='dataprofilebanner'></td>
+							</tr>
+							<tr>
+								<td>Profile Picture</td>
+								<td id='authalternateprofilepicture'></td>
+								<td id='dataalternateprofilepicture'></td>
+							</tr>
+							<tr>
+								<td>KYC Verified</td>
+								<td id='authiskycverified'></td>
+								<td id='dataiskycverified'></td>
+							</tr>
+							<tr>
+								<td>KYC Valid Till</td>
+								<td id='authkycvalidtill'></td>
+								<td id='datakycvalidtill'></td>
+							</tr>
+							<tr>
+								<td>Contacts</td>
+								<td id='authhasthismanycontacts'></td>
+								<td id='datahasthismanycontacts'></td>
 							</tr>
 							<tr>
 								<td>Alias</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td id='authalias'></td>
+								<td id='dataalias'></td>
 							</tr>
 							<tr>
-								<td>Account Creation</td>
-								<td><span class="badge badge-danger">False</span></td>>
+								<td>Last Login (Qredit Motion)</td>
+								<td id='authlastlogin'></td>
+								<td id='datalastlogin'></td>
 							</tr>
 							<tr>
-								<td>KYC Verification Date</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Fiat Value In Qredit Motion Wallet</td>
+								<td id='authhasthisamountoffiatvalue'></td>
+								<td id='datahasthisamountoffiatvalue'></td>
 							</tr>
 							<tr>
-								<td>KYC Valid Until</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Qredit Motion Plan</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Qredit Motion Last Login</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Fiat Value in Qredit Motion Wallet</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Crypto Value in Qredit Motion Wallet</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Crypto Value In Qredit Motion Wallet</td>
+								<td id='authhasthisamountofcryptovalue'></td>
+								<td id='datahasthisamountofcryptovalue'></td>
 							</tr>
 							<tr>
 								<td>Average Monthly Crypto Value</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td id='authaveragemonthlycryptovalue'></td>
+								<td id='dataaveragemonthlycryptovalue'></td>
 							</tr>
 							<tr>
-								<td>Average Monthly Fiat Value</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Home Address Verified</td>
+								<td id='authhasaddressverified'></td>
+								<td id='datahasaddressverified'></td>
 							</tr>
 							<tr>
-								<td>Average Monthly Fiat Volume</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Type of Account</td>
+								<td id='auththistypeofuser'></td>
+								<td id='datathistypeofuser'></td>
 							</tr>
 							<tr>
-								<td>Average Monthly Crypto Volume</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Profile Rating</td>
+								<td id='authprofilerating'></td>
+								<td id='dataprofilerating'></td>
 							</tr>
 							<tr>
-								<td>Has Address Verified in Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Phone Verified</td>
+								<td id='authhasphoneverified'></td>
+								<td id='datahasphoneverified'></td>
 							</tr>
 							<tr>
-								<td>Qredit Motion Account Type</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Email Verified</td>
+								<td id='authhasemailverified'></td>
+								<td id='datahasemailverified'></td>
 							</tr>
 							<tr>
-								<td>Has Phone Verified in Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>Facebook Connected</td>
+								<td id='authhasfacebookconnected'></td>
+								<td id='datahasfacebookconnected'></td>
 							</tr>
 							<tr>
-								<td>KYC Reputation Report</td>
-								<td><span class="badge badge-danger">False</span></td>
+								<td>LinkedIn Connected</td>
+								<td id='authhaslinkedinconnected'></td>
+								<td id='datahaslinkedinconnected'></td>
 							</tr>
-							<tr>
-								<td>Has Email Verified In Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Has Account Blocked in Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Has Account Suspended in Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Has Facebook Connected in Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Has Linkedin Connected in Qredit Motion</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
-							<tr>
-								<td>Profile Comments (Provided by Persona Verified Users)</td>
-								<td><span class="badge badge-danger">False</span></td>
-							</tr>
+
 						</tbody>
 					</table>
 				</div>
@@ -381,8 +371,6 @@
 	</div>
 </div>
 
-
-
 <div class="container mh">
 	<div class="col-lg-12 col-12">
 		<div class="box box-slided-up">
@@ -418,6 +406,75 @@
 {% include '/cards/footer.twig' %}
 {% endblock %}
 {% block javascripts %}
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('getpassport', { personaAsset: 'XQR', walletId: '{{ walletId }}' });
+		socket.on('showpassport', function (data) {
+
+			$('#authismotionaddress').html(data.authismotionaddress);
+			$('#dataismotionaddress').html(data.dataismotionaddress);
+
+			$('#authhasaccountblocked').html(data.authhasaccountblocked);
+			$('#datahasaccountblocked').html(data.datahasaccountblocked);
+
+			$('#authprofilebanner').html(data.authprofilebanner);
+			$('#dataprofilebanner').html(data.dataprofilebanner);
+
+			$('#authalternateprofilepicture').html(data.authalternateprofilepicture);
+			$('#dataalternateprofilepicture').html(data.dataalternateprofilepicture);
+
+			$('#authiskycverified').html(data.authiskycverified);
+			$('#dataiskycverified').html(data.dataiskycverified);
+
+			$('#authkycvalidtill').html(data.authkycvalidtill);
+			$('#datakycvalidtill').html(data.datakycvalidtill);
+
+			$('#authhasthismanycontacts').html(data.authhasthismanycontacts);
+			$('#datahasthismanycontacts').html(data.datahasthismanycontacts);
+
+			$('#authalias').html(data.authalias);
+			$('#dataalias').html(data.dataalias);
+
+			$('#authlastlogin').html(data.authlastlogin);
+			$('#datalastlogin').html(data.datalastlogin);
+
+			$('#authhasthisamountoffiatvalue').html(data.authhasthisamountoffiatvalue);
+			$('#datahasthisamountoffiatvalue').html(data.datahasthisamountoffiatvalue);
+
+			$('#authhasthisamountofcryptovalue').html(data.authhasthisamountofcryptovalue);
+			$('#datahasthisamountofcryptovalue').html(data.datahasthisamountofcryptovalue);
+
+			$('#authaveragemonthlycryptovalue').html(data.authaveragemonthlycryptovalue);
+			$('#dataaveragemonthlycryptovalue').html(data.dataaveragemonthlycryptovalue);
+
+			$('#authhasaddressverified').html(data.authhasaddressverified);
+			$('#datahasaddressverified').html(data.datahasaddressverified);
+
+			$('#auththistypeofuser').html(data.auththistypeofuser);
+			$('#datathistypeofuser').html(data.datathistypeofuser);
+
+			$('#authhasphoneverified').html(data.authhasphoneverified);
+			$('#datahasphoneverified').html(data.datahasphoneverified);
+
+			$('#authprofilerating').html(data.authprofilerating);
+			$('#dataprofilerating').html(data.dataprofilerating);
+
+			$('#authhasemailverified').html(data.authhasemailverified);
+			$('#datahasemailverified').html(data.datahasemailverified);
+
+			$('#authhasfacebookconnected').html(data.authhasfacebookconnected);
+			$('#datahasfacebookconnected').html(data.datahasfacebookconnected);
+
+			$('#authhaslinkedinconnected').html(data.authhaslinkedinconnected);
+			$('#datahaslinkedinconnected').html(data.datahaslinkedinconnected);
+
+		});
+	});
+</script>
 
 <script type="text/javascript">
 
@@ -650,5 +707,7 @@
 
 	});
 </script>
+
+
 
 {% endblock %}
