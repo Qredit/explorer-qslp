@@ -156,6 +156,52 @@ io.on('connection', function (socket) {
 		})();
 	});
 
+	/* ark */
+	socket.on('arksearch', function (input) {
+
+		(async () => {
+			var blockResults = await bapi.getBlockByID(input)
+			var walletResults = await bapi.getWalletByID(input)
+			var transactionsResult = await bapi.getTransactionByID(input)
+			var delegateResult = await bapi.getDelegate(input)
+
+			var blockParsed = null
+			if (blockResults.data) {
+				blockParsed = blockResults.data;
+
+				if (blockResults.data.length > 1)
+					blockParsed = blockResults.data[0]
+			}
+
+			var walletParsed = null
+			if (walletResults.data)
+				walletParsed = walletResults.data;
+
+			var transactionParsed = null
+			var tokenTransactions = null
+			if (transactionsResult.data) {
+				if (transactionsResult.data.vendorField.toString().includes('qslp1'))
+					tokenTransactions = transactionsResult.data
+				else
+					transactionParsed = transactionsResult.data;
+			}
+
+			var delegateParsed = null
+			if (delegateResult.data)
+				delegateParsed = delegateResult.data;
+
+			var returnValue = {
+				blocks: blockParsed,
+				wallets: walletParsed,
+				transactions: transactionParsed,
+				delegates: delegateParsed,
+			}
+
+			socket.emit('arkshowsearch', returnValue);
+
+		})();
+	});
+
 	/* blockpool */
 	socket.on('blockpoolsearch', function (input) {
 
@@ -204,11 +250,7 @@ io.on('connection', function (socket) {
 
 	/*********************************************************************
 
-	  _  _  ___  ___  ___    ___  ___ ___ ___ ___ _____     _   ___ ___
-	 | \| |/ _ \|   \| __|  / _ \| _ \ __|   \_ _|_   _|   /_\ | _ \_ _|
-	 | .` | (_) | |) | _|  | (_) |   / _|| |) | |  | |    / _ \|  _/| |
-	 |_|\_|\___/|___/|___|  \__\_\_|_\___|___/___| |_|   /_/ \_\_| |___|
-
+		qredit
 
 	 ********************************************************************/
 
@@ -504,6 +546,309 @@ io.on('connection', function (socket) {
 			};
 
 			socket.emit('shownodeconfig', flatJson);
+
+		})();
+
+	});
+
+	/*********************************************************************
+
+	ark
+
+ ********************************************************************/
+
+	/*
+
+	1. getdelegates  // done
+	2. getlastblock  // done
+	3. getblocks  // done
+	4. getpeers  // done
+	5. gettransactions  // done
+	6. getwallet  // done
+	7. gettopwallets  // done
+	8. getwallettransactions  // done
+	9. gettransactiondetails  // done
+	10. getdelegatebyid  // done
+	11. getnodeconfig  // done
+
+	*/
+
+	// Socket IO getdelegates
+
+	socket.on('arkgetdelegates', function (input) {
+
+		(async () => {
+
+			var response = await aapi.listDelegates(1, 51);
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					address: data[i].address,
+					username: data[i].username,
+					blocks: data[i].blocks.produced,
+					timestamp: data[i].blocks.last.timestamp.human,
+					approval: data[i].production.approval
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('arkshowdelegates', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('arkgetlastblock', function (input) {
+
+		(async () => {
+
+			var response = await aapi.getLastBlock();
+			var data = (response.data);
+			var flatJson = {
+				getlastblockheight: data.height,
+				getlastforgedusername: data.generator.username
+			};
+
+			socket.emit('arkshowlastblock', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('arkgetblocks', function (input) {
+
+		(async () => {
+
+			var response = await aapi.listBlocks(1, 50);
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+
+					id: data[i].id,
+					height: data[i].height,
+					timestamp: data[i].timestamp.human,
+					rewardtotal: data[i].forged.total,
+					transactionsforged: data[i].transactions,
+					lastforgedusername: data[i].generator.username,
+					address: data[i].generator.address,
+
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('arkshowblocks', flatJson);
+		})();
+
+	});
+
+	// Socket IO getpeers
+
+	socket.on('arkgetpeers', function (input) {
+
+		(async () => {
+
+			var response = await aapi.getPeers();
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					peerip: data[i].ip,
+					p2pport: data[i].port,
+					version: data[i].version,
+					height: data[i].height,
+					latency: data[i].latency
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('arkshowpeers', flatJson);
+		})();
+
+	});
+
+	// Socket IO gettransactions
+	socket.on('arkgettransactions', function (input) {
+
+		(async () => {
+
+			var response = await aapi.listTransactions();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					confirmations: data[i].confirmations,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					smartbridge: data[i].vendorField,
+					amount: data[i].amount,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('arkshowtransactions', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getwallet 
+
+	socket.on('arkgetwallet', function (input) {
+
+		(async () => {
+
+			response = await aapi.getWalletByID(input.walletId);
+
+			var data = (response.data);
+			var flatJson = {
+				address: data.address,
+				publickey: data.publicKey,
+				balance: (parseFloat(data.balance) / 100000000).toFixed(8),
+				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+
+			socket.emit('arkshowwallet', flatJson);
+
+		})();
+
+	});
+
+	/* gettopwallets */
+
+	socket.on('arkgettopwallets', function (input) {
+
+		(async () => {
+
+			var response = await aapi.getTopWallets();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					isdelegate: data[i].isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+					address: data[i].address,
+					balance: data[i].balance
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('arkshowtopwallets', flatJson);
+
+		})();
+
+	});
+	// Socket IO getwallettransactions
+
+	socket.on('arkgetwallettransactions', function (input) {
+
+		(async () => {
+
+			response = await aapi.getWalletTransactions(input.walletId);
+			var data = (response.data);
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					amount: data[i].amount,
+					smartbridge: data[i].vendorField,
+					confirmations: data[i].confirmations,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('arkshowwallettransactions', flatJson);
+		})();
+
+	});
+
+
+	// Socket IO gettransactiondetails
+
+	socket.on('arkgettransactiondetails', function (input) {
+
+		(async () => {
+
+			response = await aapi.getTransactionByID(input.transactionId);
+
+			/*	var qslpdata = await qslpapi.getTransaction(input.transactionId);
+	
+				if (qslpdata) {
+					response.data.qslp = qslpdata[0];
+				}*/
+			var data = (response.data);
+			var flatJson = {
+				txid: data.id,
+				blockid: data.blockId,
+				id: data.id,
+				amount: data.amount,
+				fee: data.fee,
+				sender: data.sender,
+				publickey: data.senderPublicKey,
+				recipient: data.recipient,
+				smartbridge: data.vendorField,
+				confirmations: data.confirmations,
+				timestamp: data.timestamp.human,
+				nonce: data.nonce,
+				signature: data.signature,
+			};
+
+			socket.emit('arkshowtransactiondetails', flatJson);
+		})();
+
+	});
+
+	// Socket IO getdelegatebyid 
+
+	socket.on('arkgetdelegatebyid', function (input) {
+
+		(async () => {
+
+			response = await aapi.getDelegate(input.walletId);
+
+			var data = (response.data);
+
+			var flatJson = {
+				username: data.username == null ? '<span>Not a delegate</span>' : data.username,
+				votes: (parseFloat(data.votes) / 100000000).toFixed(0) + ' ARK',
+				rank: data.rank,
+				blocksproduced: data.blocks.produced,
+				lastproducedblock: data.blocks.last.id,
+				approval: data.production.approval + '%',
+				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+			socket.emit('arkshowdelegatebyid', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getnodeconfig
+
+	socket.on('arkgetnodeconfig', function (input) {
+
+		(async () => {
+
+			var response = await aapi.getNodeConfig();
+
+			var data = (response.data);
+			var flatJson = {
+
+			};
+
+			socket.emit('arkshownodeconfig', flatJson);
 
 		})();
 

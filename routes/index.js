@@ -4,11 +4,102 @@ var router = express.Router();
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", {
-    title: "Qredit",
+    title: "Explorer.sh",
     routename: "home",
     csrfToken: req.csrfToken()
   });
 });
+
+
+
+
+
+
+
+/* GET ark pages. */
+router.get("/ark/transactions", function (req, res, next) {
+  res.render("ark/transactions", {
+    title: "Ark",
+    routename: "ark/transactions",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/ark/tokenlist", function (req, res, next) {
+  res.render("ark/tokenlist", {
+    title: "Token List",
+    routename: "ark/tokenlist",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/ark/latestblocks", function (req, res, next) {
+  res.render("ark/latestblocks", {
+    title: "Latest Blocks",
+    routename: "ark/latestblocks",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/ark/peers", function (req, res, next) {
+  res.render("ark/peers", {
+    title: "Peers",
+    routename: "ark/peers",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/ark/topwallets", function (req, res, next) {
+  res.render("ark/topwallets", {
+    title: "Top Wallets",
+    routename: "ark/topwallets",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/ark/delegatemonitor", function (req, res, next) {
+  res.render("ark/delegatemonitor", {
+    title: "Delegate Monitor",
+    routename: "ark/delegatemonitor",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/ark/nodeconfig", function (req, res, next) {
+  res.render("ark/nodeconfig", {
+    title: "Node Configuration",
+    routename: "ark/nodeconfig",
+    csrfToken: req.csrfToken()
+  });
+});
+
+/* Explorer URL Parameter routes*/
+
+router.get("/ark/transaction/:transactionId", function (req, res, next) {
+  res.render("ark/transaction", {
+    title: "Transaction Details",
+    routename: "ark/transaction",
+    transactionId: req.params.transactionId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/ark/wallet/:walletId", function (req, res, next) {
+  res.render("ark/wallet", {
+    title: "Wallet Details",
+    routename: "sender",
+    walletId: req.params.walletId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/ark/token/:tokenid", function (req, res, next) {
+  res.render("ark/token", {
+    title: "Token Details",
+    routename: "ark/token",
+    tokenid: req.params.tokenid,
+    csrfToken: req.csrfToken()
+  });
+});
+
+
 
 
 /* GET qredit pages. */
@@ -93,6 +184,9 @@ router.get("/qredit/token/:tokenid", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
+
+
+
 
 
 

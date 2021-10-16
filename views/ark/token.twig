@@ -1,0 +1,272 @@
+{% extends '/blocks/arksubmain.twig' %}
+
+{% block body %}
+{% include '/blocks/arksubmenu.twig' %}
+
+
+
+<div class="container-full" style="margin-top:25px;">
+	<div class="container">
+		<section class="content">
+			<div class="row">
+				<div class="col-lg-12 col-12">
+					<div class="box">
+						<div class="box-header with-border">
+							<h4 class="box-title">Document</h4>
+						</div>
+						<div class="box-body">
+							<span id='documenturi'></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div class="container">
+		<section class="content">
+			<div class="row">
+				<div class="col-lg-12 col-12">
+					<div class="box">
+						<div class="box-header with-border">
+							<h4 class="box-title">Summary</h4>
+						</div>
+						<div class="box-body">
+							<div class="table-responsive">
+								<table class="table table-striped table-hover no-margin">
+									<tbody>
+										<tr>
+											<td>Token Type</td>
+											<td id='type'></td>
+										</tr>
+										<tr>
+											<td>Paused</td>
+											<td id='paused'></td>
+										</tr>
+										<tr>
+											<td>Last Updated Block</td>
+											<td id='lastupdatedblock'></td>
+										</tr>
+										<tr>
+											<td>Owner Address</td>
+											<td id='owneraddress'></td>
+										</tr>
+										<tr>
+											<td>Token ID</td>
+											<td id='tokenidhex'></td>
+										</tr>
+										<tr>
+											<td>Timestamp</td>
+											<td id='timestamp'></td>
+										</tr>
+										<tr>
+											<td>Symbol</td>
+											<td id='symbol'></td>
+										</tr>
+										<tr>
+											<td>Name</td>
+											<td id='name'></td>
+										</tr>
+										<tr>
+											<td>Decimals</td>
+											<td id='decimals'></td>
+										</tr>
+										<tr>
+											<td>Genesis Quantity</td>
+											<td id='genesisquantity'></td>
+										</tr>
+										<tr>
+											<td>Pausable</td>
+											<td id='pausable'></td>
+										</tr>
+										<tr>
+											<td>Mintable</td>
+											<td id='mintable'></td>
+										</tr>
+										<tr>
+											<td>Block Created Height</td>
+											<td id='blockcreatedheight'></td>
+										</tr>
+										<tr>
+											<td>Block Created ID</td>
+											<td id='blockcreatedid'></td>
+										</tr>
+										<tr>
+											<td>Block Last Active Send</td>
+											<td id='blocklastactivesend'></td>
+										</tr>
+										<tr>
+											<td>Block Last Active Mint</td>
+											<td id='blocklastactivemint'></td>
+										</tr>
+										<tr>
+											<td>Creation Transaction ID</td>
+											<td id='creationtxid'></td>
+										</tr>
+										<tr>
+											<td>Valid Transactions Since Genesis</td>
+											<td id='qtyvalidtxnssincegenesis'></td>
+										</tr>
+										<tr>
+											<td>Valid Token Addresses</td>
+											<td id='qtyvalidtokenaddresses'></td>
+										</tr>
+										<tr>
+											<td>Tokens Minted</td>
+											<td id='qtytokenminted'></td>
+										</tr>
+										<tr>
+											<td>Tokens Burned</td>
+											<td id='qtytokenburned'></td>
+										</tr>
+										<tr>
+											<td>Circulating Supply</td>
+											<td id='qtytokencirculatingsupply'></td>
+										</tr>
+										<tr>
+											<td>Quantity ARK spent</td>
+											<td id='qtyxqrspent'></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div class="container mh">
+		<div class="col-lg-12 col-12">
+			<div class="box">
+				<div class="box-header with-border">
+					<h4 class="box-title">Meta Details</h4>
+				</div>
+				<div class="box-body">
+					<div class="table-responsive">
+						<table class="table no-margin table-hover">
+							<thead>
+								<tr>
+									<th scope="col">TX ID</th>
+									<th scope="col">Block ID</th>
+									<th scope="col">Block Height</th>
+									<th scope="col">Poster Address</th>
+									<th scope="col">Timestamp</th>
+									<th scope="col">MetaName</th>
+									<th scope="col">MetaData</th>
+									<th scope="col">Chunk</th>
+									<th scope="col">Void</th>
+								</tr>
+							</thead>
+							<tbody id='metadetails'></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %} {% block javascripts %}
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('arkgettokeninfo', { tokenid: '{{ tokenid }}' });
+		socket.on('arkshowtokeninfo', function (data) {
+
+			$('#documenturi').html('<img class="documenturi" src="' + data.documenturi + '"></img>');
+
+			$('#type').html(data.type);
+			$('#paused').html(data.paused);
+			$('#lastupdatedblock').html('<a href="/ark/block/' + data.lastupdatedblock + '">' + data.lastupdatedblock + '</a>');
+			$('#owneraddress').html('<a href="/ark/wallet/' + data.owneraddress + '">' + data.owneraddress + '</a>');
+			$('#tokenidhex').html('<a href="/ark/token/' + data.tokenidhex + '">' + data.tokenidhex + '</a>');
+			$('#timestamp').html(data.timestamp);
+			$('#qslpversion').html(data.qslpversion);
+			$('#symbol').html(data.symbol);
+			$('#name').html(data.name);
+			$('#decimals').html(data.decimals);
+			$('#genesisquantity').html(data.genesisquantity);
+			$('#pausable').html(data.pausable);
+			$('#mintable').html(data.mintable);
+			$('#blockcreatedheight').html(data.blockcreatedheight);
+			$('#blockcreatedid').html('<a href="/ark/block/' + data.blockcreatedid + '">' + data.blockcreatedid + '</a>');
+			$('#blocklastactivesend').html(data.blocklastactivesend);
+			$('#blocklastactivemint').html(data.blocklastactivemint);
+			$('#creationtxid').html('<a href="/ark/transaction/' + data.creationtxid + '">' + data.creationtxid + '</a>');
+			$('#qtyvalidtxnssincegenesis').html(data.qtyvalidtxnssincegenesis);
+			$('#qtyvalidtokenaddresses').html(data.qtyvalidtokenaddresses);
+			$('#qtytokenminted').html(data.qtytokenminted);
+			$('#qtytokenburned').html(data.qtytokenburned);
+			$('#qtytokencirculatingsupply').html(data.qtytokencirculatingsupply);
+			$('#qtyxqrspent').html(data.qtyxqrspent);
+		});
+	});
+</script>
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('arkgettokenmeta', { tokenid: '{{ tokenid }}' });
+		socket.on('arkshowtokenmeta', function (data) {
+
+			var mainTable = document.getElementById("metadetails");
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/ark/transaction/' + row.metatxid + '">' + row.metatxid.substr(0, 4) + '...' + row.metatxid.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/ark/block/' + row.metablockid + '">' + row.metablockid.substr(0, 4) + '...' + row.metablockid.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metablockheight;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/ark/wallet/' + row.posteraddress + '">' + row.posteraddress.substr(0, 4) + '...' + row.posteraddress.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.timestamp;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metaname;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metadata;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metachunk;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.void;
+				tr.appendChild(td);
+
+				metadetails.appendChild(tr);
+
+			});
+		});
+	});
+</script>
+
+
+{% endblock %}
