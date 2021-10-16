@@ -1,7 +1,7 @@
 {% extends '/blocks/submain.twig' %}
 
 {% block body %}
-{% include '/blocks/qreditsubmenu.twig' %}
+{% include '/blocks/blockpoolsubmenu.twig' %}
 
 <div class="container mh mt-25">
 	<div class="col-lg-12 col-12">
@@ -45,10 +45,11 @@
 			<div class="box-body ribbon-box">
 				<div class="box-body" style="border:1px solid black;">
 					<h5><strong>Description</strong></h5>
-					<p>The Qredit Blockchain is a blockchain with a native Cryptoasset called Qredit (XQR). It
+					<p>The Blockpool Blockchain is a blockchain with a native Cryptoasset called Blockpool (BPL). It
 						is based on the
 						<a href="https://ark.dev/docs/desktop-wallet/introduction-to-ark-rewards" target="_blank"> Ark
-							Codebase </a> with the Delegated-Proof-of-Stake (DPoS) consensus mechanism and has 51 active
+							Codebase </a> with the Delegated-Proof-of-Stake (DPoS) consensus mechanism and has 201
+						active
 						Delegates (Validators) who secure the network. Click here to learn more about how Ark's DPoS
 						consensus mechanism works.
 					</p>
@@ -104,7 +105,7 @@
 		</div>
 	</div>
 </div>
-
+<!--
 <div class="container mh" style="margin-top: 25px;">
 	<div class="col-lg-12 col-12">
 		<div class="box box-slided-up">
@@ -335,42 +336,7 @@
 		</div>
 	</div>
 </div>
-
-<div class="container mh">
-	<div class="col-lg-12 col-12">
-		<div class="box box-slided-up">
-			<div class="box-header with-border">
-				<h4 class="box-title">QSLP Tokens</h4>
-				<ul class="box-controls pull-right">
-					<li><a class="box-btn-slide" href="#"></a></li>
-					<li><a class="box-btn-fullscreen" href="#"></a></li>
-				</ul>
-			</div>
-			<div class="box-body">
-				<div class="table-responsive">
-					<table class="table no-margin table-hover">
-						<thead>
-							<tr>
-								<th scope="col">Version</th>
-								<th scope="col">Creator Address</th>
-								<th scope="col">Token ID</th>
-								<th scope="col">Name</th>
-								<th scope="col">Symbol</th>
-								<th scope="col">Genesis QTY</th>
-								<th scope="col">Circulation</th>
-								<th scope="col">Pausable</th>
-								<th scope="col">Mintable</th>
-								<th scope="col">QTY Owners</th>
-							</tr>
-						</thead>
-						<tbody id='wallettokens'></tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
+-->
 <div class="container mh">
 	<div class="col-lg-12 col-12">
 		<div class="box box-slided-up">
@@ -412,7 +378,7 @@
 
 		var socket = io();
 
-		socket.emit('getpassport', { personaAsset: 'XQR', walletId: '{{ walletId }}' });
+		socket.emit('getpassport', { personaAsset: 'BPL', walletId: '{{ walletId }}' });
 		socket.on('showpassport', function (data) {
 
 			$('#authismotionaddress').html(data.authismotionaddress);
@@ -482,9 +448,9 @@
 
 		var socket = io();
 
-		socket.emit('getwallettransactions', { walletId: '{{ walletId }}' });
+		socket.emit('blockpoolgetwallettransactions', { walletId: '{{ walletId }}' });
 
-		socket.on('showwallettransactions', function (data) {
+		socket.on('blockpoolshowwallettransactions', function (data) {
 
 			var mainTable = document.getElementById("wallettransactions");
 			var tr,
@@ -496,7 +462,7 @@
 
 
 				td = document.createElement("td");
-				td.innerHTML = '<a href="/qredit/transaction/' + row.id + '">' + row.id.substr(0, 4) + '...' + row.id.substr(-4) + '</a>';
+				td.innerHTML = '<a href="/blockpool/transaction/' + row.id + '">' + row.id.substr(0, 4) + '...' + row.id.substr(-4) + '</a>';
 				tr.appendChild(td);
 
 
@@ -505,15 +471,15 @@
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = '<a href="/qredit/wallet/' + row.sender + '">' + row.sender.substr(0, 5) + '...' + row.sender.substr(-5) + '</a>';
+				td.innerHTML = '<a href="/blockpool/wallet/' + row.sender + '">' + row.sender.substr(0, 5) + '...' + row.sender.substr(-5) + '</a>';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = '<a href="/qredit/wallet/' + row.recipient + '">' + row.recipient.substr(0, 5) + '...' + row.recipient.substr(-5) + '</a>';
+				td.innerHTML = '<a href="/blockpool/wallet/' + row.recipient + '">' + row.recipient.substr(0, 5) + '...' + row.recipient.substr(-5) + '</a>';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' XQR';
+				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' BPL';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
@@ -600,91 +566,7 @@
 		}
 	}
 </script>
-<script type="text/javascript">
 
-	$(document).ready(function () {
-
-		var socket = io();
-
-		socket.emit('getwallettokens', { walletId: '{{ walletId }}' });
-
-		socket.on('showwallettokens', function (data) {
-
-			var mainTable = document.getElementById("wallettokens");
-
-			var tr,
-				td;
-
-			data.forEach(function (row) {
-
-				tr = document.createElement("tr");
-
-				td = document.createElement("td");
-				td.innerHTML = row.type;
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = '<a href="/wallet/' + row.owneraddress + '">' + row.owneraddress.substr(0, 5) + '...' + row.owneraddress.substr(-5) + '</a>';
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.tokenid.substr(0, 5) + '...' + row.tokenid.substr(-5) + '</a>';
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = row.name;
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = row.symbol;
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = row.genesisquantity;
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = (parseFloat(row.circsupply) / 100000000).toFixed(0);
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = row.pausable;
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = row.mintable;
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.innerHTML = row.tokenowners;
-				tr.appendChild(td);
-
-				wallettokens.appendChild(tr);
-
-			});
-
-		});
-
-	});
-</script>
-<script type="text/javascript">
-
-	$(document).ready(function () {
-
-		var socket = io();
-
-		socket.emit('getwallet', { walletId: '{{ walletId }}' });
-		socket.on('showwallet', function (data) {
-
-			$('#address').html(data.address);
-			$('#publickey').html(data.publickey);
-			$('#balance').html(data.balance + 'XQR');
-			$('#isdelegate').html(data.isdelegate);
-
-		});
-
-	});
-</script>
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -704,15 +586,14 @@
 	});
 </script>
 
-
 <script type="text/javascript">
 
 	$(document).ready(function () {
 
 		var socket = io();
 
-		socket.emit('getdelegatebyid', { walletId: '{{ walletId }}' });
-		socket.on('showdelegatebyid', function (data) {
+		socket.emit('blockpoolgetdelegatebyid', { walletId: '{{ walletId }}' });
+		socket.on('blockpoolshowdelegatebyid', function (data) {
 
 			$('#username').html(data.username);
 			$('#votes').html(data.votes);

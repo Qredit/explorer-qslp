@@ -1,9 +1,9 @@
 {% extends '/blocks/main.twig' %}
 
 {% block body %}
-{% include '/blocks/qreditmenu.twig' %}
+{% include '/blocks/blockpoolmenu.twig' %}
 
-{% include '/cards/headingqredit.twig' %}
+{% include '/cards/headingblockpool.twig' %}
 
 
 
@@ -38,9 +38,9 @@
 
 		var socket = io();
 
-		socket.emit('getdelegates', {});
+		socket.emit('blockpoolgetdelegates', {});
 
-		socket.on('showdelegates', function (data) {
+		socket.on('blockpoolshowdelegates', function (data) {
 
 			var mainTable = document.getElementById("delegates");
 
@@ -56,7 +56,7 @@
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = '<a href="/qredit/wallet/' + row.address + '">' + row.username + '</a>';
+				td.innerHTML = '<a href="/blockpool/wallet/' + row.address + '">' + row.username + '</a>';
 				tr.appendChild(td);
 
 
@@ -119,9 +119,9 @@
 
 		var elapsed = (current - previous) / 1000;
 
-		if (elapsed < (16 * 60)) {
+		if (elapsed < (60 * 60)) {
 			return '<span class="badge badge-success">Forging</span>';
-		} else if (elapsed < (24 * 60)) {
+		} else if (elapsed < (96 * 60)) {
 			return '<span class="badge badge-warning">Missed Block</span>';
 		} else {
 			return '<span class="badge badge-danger">Not Forging</span>';

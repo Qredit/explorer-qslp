@@ -489,7 +489,7 @@ io.on('connection', function (socket) {
 
 		(async () => {
 
-			var response = await bapi.listDelegates(1, 51);
+			var response = await bapi.listDelegates(1, 100);
 			var data = response.data;
 
 			var flatJson = [];
@@ -693,11 +693,6 @@ io.on('connection', function (socket) {
 
 			response = await bapi.getTransactionByID(input.transactionId);
 
-			/*	var qslpdata = await qslpapi.getTransaction(input.transactionId);*/
-
-			/*	if (qslpdata) {
-					response.data.qslp = qslpdata[0];
-				}*/
 			var data = (response.data);
 			var flatJson = {
 				txid: data.id,

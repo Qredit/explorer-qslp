@@ -2,7 +2,7 @@
 
 {% block body %}
 {% include '/blocks/qreditmenu.twig' %}
-{% include '/cards/headingqredit.twig' %}
+{% include '/cards/headingblockpool.twig' %}
 
 <div class="container mh">
 	<div class="col-lg-12 col-12">
@@ -50,11 +50,11 @@
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = '<a href="/qredit/wallet/' + row.address + '">' + row.address + '</a>';
+				td.innerHTML = '<a href="/blockpool/wallet/' + row.address + '">' + row.address + '</a>';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = (parseFloat(row.balance) / 100000000).toFixed(0) + ' XQR';
+				td.innerHTML = (parseFloat(row.balance) / 100000000).toFixed(0) + ' BPL';
 				tr.appendChild(td);
 
 				topwallet.appendChild(tr);

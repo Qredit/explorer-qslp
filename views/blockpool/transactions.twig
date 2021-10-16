@@ -1,26 +1,27 @@
 {% extends '/blocks/main.twig' %}
 
 {% block body %}
-{% include '/blocks/qreditmenu.twig' %}
-{% include '/cards/headingqredit.twig' %}
+{% include '/blocks/blockpoolmenu.twig' %}
+{% include '/cards/headingblockpool.twig' %}
 
 <div class="container mh">
 	<div class="col-lg-12 col-12">
 		<div class="box">
 			<div class="box-header with-border">
-				<h4 class="box-title">Latest Blocks</h4>
+				<h4 class="box-title">Latest Transactions</h4>
 			</div>
 			<div class="box-body">
 				<div class="table-responsive">
 					<table class="table no-margin table-hover">
 						<thead>
 							<tr>
-								<th>Block ID</th>
-								<th>Height</th>
-								<th>Forged By</th>
+								<th>Transaction ID</th>
+								<th>Confirms</th>
 								<th>Timestamp</th>
-								<th>Transactions</th>
-								<th>Reward Total</th>
+								<th>Sender</th>
+								<th>Recipient</th>
+								<th>Amount</th>
+								<th>Smartbridge</th>
 							</tr>
 						</thead>
 						<tbody id='transactions'></tbody>
@@ -29,7 +30,6 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 {% include '/cards/footer.twig' %}
 
@@ -37,20 +37,18 @@
 
 
 {% block javascripts %}
+
 <script>
 
 	$(document).ready(function () {
 
 		var socket = io();
 
-		socket.emit('getblocks', {});
+		socket.emit('blockpoolgettransactions', {});
 
-
-		socket.on('showblocks', function (data) {
-
+		socket.on('blockpoolshowtransactions', function (data) {
 
 			var mainTable = document.getElementById("transactions");
-
 
 			var tr,
 				td;
@@ -60,27 +58,32 @@
 				tr = document.createElement("tr");
 
 				td = document.createElement("td");
-				td.innerHTML = '<a href="/qredit/block/' + row.id + '">' + row.id.substr(0, 5) + '...' + row.id.substr(-5) + '</a>';
+				td.innerHTML = '<a href="/blockpool/transaction/' + row.id + '">' + row.id.substr(0, 5) + '...' + row.id.substr(-5) + '</a>';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = row.height;
+				td.innerHTML = row.confirmations;
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = '<a href="/qredit/wallet/' + row.address + '">' + row.lastforgedusername + '</a>';
+				td.classList.add("text-success");
+				td.innerHTML = timeDifference(row.timestamp);
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = row.timestamp;
+				td.innerHTML = '<a href="/blockpool/wallet/' + row.sender + '">' + row.sender.substr(0, 5) + '...' + row.sender.substr(-5) + '</a>';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = row.transactionsforged;
+				td.innerHTML = '<a href="/blockpool/wallet/' + row.recipient + '">' + row.recipient.substr(0, 5) + '...' + row.recipient.substr(-5) + '</a>';
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = (parseFloat(row.rewardtotal) / 100000000).toFixed(0) + ' <img alt="xqr" style="margin-top:-5px!important;" src="/img/favicon-16x16.png">';
+				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' BPL';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.smartbridge;
 				tr.appendChild(td);
 
 				transactions.appendChild(tr);
