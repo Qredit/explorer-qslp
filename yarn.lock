@@ -2062,8 +2062,8 @@ morgan@~1.9.1:
     on-headers "~1.0.1"
 
 "motion-sdk@git+https://github.com/Qredit/motion-sdk.git":
-  version "0.0.3"
-  resolved "git+https://github.com/Qredit/motion-sdk.git#a7723bf50a3451fd7795782acdc053335be689bc"
+  version "0.0.4"
+  resolved "git+https://github.com/Qredit/motion-sdk.git#4909c6d5654d597d31bdfecbc9e6fc20ea9c7c40"
   dependencies:
     big.js "^5.2.2"
     qreditjs "git+https://github.com/Qredit/qredit-js.git"

@@ -16,6 +16,90 @@ router.get("/", function (req, res, next) {
 
 
 
+/* GET ark devnet (dark) pages. */
+router.get("/dark/transactions", function (req, res, next) {
+  res.render("dark/transactions", {
+    title: "dark",
+    routename: "dark/transactions",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dark/tokenlist", function (req, res, next) {
+  res.render("dark/tokenlist", {
+    title: "Token List",
+    routename: "dark/tokenlist",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dark/latestblocks", function (req, res, next) {
+  res.render("dark/latestblocks", {
+    title: "Latest Blocks",
+    routename: "dark/latestblocks",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dark/peers", function (req, res, next) {
+  res.render("dark/peers", {
+    title: "Peers",
+    routename: "dark/peers",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dark/topwallets", function (req, res, next) {
+  res.render("dark/topwallets", {
+    title: "Top Wallets",
+    routename: "dark/topwallets",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dark/delegatemonitor", function (req, res, next) {
+  res.render("dark/delegatemonitor", {
+    title: "Delegate Monitor",
+    routename: "dark/delegatemonitor",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dark/nodeconfig", function (req, res, next) {
+  res.render("dark/nodeconfig", {
+    title: "Node Configuration",
+    routename: "dark/nodeconfig",
+    csrfToken: req.csrfToken()
+  });
+});
+
+/* Explorer URL Parameter routes*/
+
+router.get("/dark/transaction/:transactionId", function (req, res, next) {
+  res.render("dark/transaction", {
+    title: "Transaction Details",
+    routename: "dark/transaction",
+    transactionId: req.params.transactionId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dark/wallet/:walletId", function (req, res, next) {
+  res.render("dark/wallet", {
+    title: "Wallet Details",
+    routename: "sender",
+    walletId: req.params.walletId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dark/token/:tokenid", function (req, res, next) {
+  res.render("dark/token", {
+    title: "Token Details",
+    routename: "dark/token",
+    tokenid: req.params.tokenid,
+    csrfToken: req.csrfToken()
+  });
+});
+
+
 /* GET ark pages. */
 router.get("/ark/transactions", function (req, res, next) {
   res.render("ark/transactions", {
@@ -98,8 +182,6 @@ router.get("/ark/token/:tokenid", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
-
 
 
 /* GET qredit pages. */
