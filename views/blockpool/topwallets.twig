@@ -33,9 +33,9 @@
 
 		var socket = io();
 
-		socket.emit('gettopwallets', {});
+		socket.emit('blockpoolgettopwallets', {});
 
-		socket.on('showtopwallets', function (data) {
+		socket.on('blockpoolshowtopwallets', function (data) {
 
 			var mainTable = document.getElementById("topwallet");
 			var tr,

@@ -137,9 +137,9 @@
 		var title = document.createElement("h1")
 		var urlToRedirect = '';
 		switch (tableType) {
-			case 'block': urlToRedirect = '/block/';
+			case 'block': urlToRedirect = '/blockpool/block/';
 				break;
-			case 'wallet': urlToRedirect = '/qredit/wallet';
+			case 'wallet': urlToRedirect = '/blockpool/wallet';
 				break;
 		}
 
@@ -161,7 +161,7 @@
 
 	var socket = io();
 
-	socket.on('showsearch', function (data) {
+	socket.on('blockpoolshowsearch', function (data) {
 		const results = document.getElementById("aftersearch");
 		results.textContent = '';
 
@@ -230,6 +230,6 @@
 	searchinput.oninput = function () {
 		var searchString = searchinput.value;
 
-		socket.emit('search', searchString);
+		socket.emit('blockpoolsearch', searchString);
 	}
 </script>
