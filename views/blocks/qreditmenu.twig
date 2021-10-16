@@ -81,13 +81,13 @@
 				<div class="row"
 					style="padding-right: calc(var(--bs-gutter-x) / 2);padding-left: calc(var(--bs-gutter-x) / 2);">
 					<ul class="sm sm-blue" style="justify-content: center!important;">
-						<li class="nav-item"><a class="nav-link" href="/">Transactions</a></li>
-						<li class="nav-item"><a class="nav-link" href="/latestblocks">Latest Blocks</a></li>
-						<li class="nav-item"><a class="nav-link" href="/topwallets">Top Wallets</a></li>
-						<li class="nav-item"><a class="nav-link" href="/peers">Peers</a></li>
-						<li class="nav-item"><a class="nav-link" href="/tokenlist">Tokens</a></li>
-						<li class="nav-item"><a class="nav-link" href="/delegatemonitor">Delegates</a></li>
-						<li class="nav-item"><a class="nav-link" href="/nodeconfig">Node Configuration</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/transactions">Transactions</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/latestblocks">Latest Blocks</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/topwallets">Top Wallets</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/peers">Peers</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/tokenlist">Tokens</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/delegatemonitor">Delegates</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/nodeconfig">Node Configuration</a></li>
 					</ul>
 				</div>
 			</section>
@@ -137,7 +137,7 @@
 		switch (tableType) {
 			case 'block': urlToRedirect = '/block/';
 				break;
-			case 'wallet': urlToRedirect = '/wallet';
+			case 'wallet': urlToRedirect = '/qredit/wallet';
 				break;
 		}
 

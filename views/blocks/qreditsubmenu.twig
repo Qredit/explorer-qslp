@@ -11,8 +11,10 @@
 						<a href="/" class="logo">
 							<!-- logo-->
 							<div class="logo-lg">
-								<span class="light-logo"><img src="img/header/logo-navbar-dark.png" alt="logo"></span>
-								<span class="dark-logo"><img src="img/header/logo-navbar-light.png" alt="logo"></span>
+								<span class="light-logo"><img src="../../img/header/logo-navbar-dark.png"
+										alt="logo"></span>
+								<span class="dark-logo"><img src="../../img/header/logo-navbar-light.png"
+										alt="logo"></span>
 							</div>
 						</a>
 					</div>
@@ -47,15 +49,16 @@
 						</div>
 						<ul>
 							<li class="btn-group d-md-inline-flex d-none">
-								<a href="javascript:void(0)" title="Change Theme"
+								<a href="javascript:void(0)" title="skin Change"
 									class="waves-effect skin-toggle waves-light">
 									<label class="switch">
 										<input type="checkbox" data-mainsidebarskin="toggle"
-											id="toggle_left_sidebar_skin" name="theme">
+											id="toggle_left_sidebar_skin">
 										<span class="switch-on"><i class="mdi mdi-lightbulb-on"></i></span>
 										<span class="switch-off"><i class="mdi mdi-lightbulb"></i></span>
 									</label>
 								</a>
+
 							</li>
 
 							<li class="btn-group d-lg-inline-flex d-none">
@@ -70,29 +73,29 @@
 				</div>
 			</div>
 		</header>
-
 		<div class="container search-title" id="aftersearch"></div>
 	</div>
-
 	<div class="container">
 		<div class="container-full">
 			<section>
 				<div class="row"
 					style="padding-right: calc(var(--bs-gutter-x) / 2);padding-left: calc(var(--bs-gutter-x) / 2);">
 					<ul class="sm sm-blue" style="justify-content: center!important;">
-						<li class="nav-item"><a class="nav-link" href="/">Transactions</a></li>
-						<li class="nav-item"><a class="nav-link" href="/latestblocks">Latest Blocks</a></li>
-						<li class="nav-item"><a class="nav-link" href="/topwallets">Top Wallets</a></li>
-						<li class="nav-item"><a class="nav-link" href="/peers">Peers</a></li>
-						<li class="nav-item"><a class="nav-link" href="/tokenlist">Tokens</a></li>
-						<li class="nav-item"><a class="nav-link" href="/delegatemonitor">Delegates</a></li>
-						<li class="nav-item"><a class="nav-link" href="/nodeconfig">Node Configuration</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/transactions">Transactions</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/latestblocks">Latest Blocks</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/topwallets">Top Wallets</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/peers">Peers</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/tokenlist">Tokens</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/delegatemonitor">Delegates</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit/nodeconfig">Node Configuration</a></li>
 					</ul>
 				</div>
 			</section>
 		</div>
 
 	</div>
+
+
 
 
 </body>
@@ -134,7 +137,7 @@
 		switch (tableType) {
 			case 'block': urlToRedirect = '/block/';
 				break;
-			case 'wallet': urlToRedirect = '/wallet';
+			case 'wallet': urlToRedirect = '/qredit/wallet';
 				break;
 		}
 
@@ -217,6 +220,7 @@
 				'type', 'lastUpdatedBlock'
 			], ['Type', 'Last Block']))
 		}
+
 
 	}
 	);

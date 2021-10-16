@@ -12,65 +12,72 @@ router.get("/", function (req, res, next) {
 
 
 /* GET explorer page. */
+router.get("/qredit/transactions", function (req, res, next) {
+  res.render("qredit/transactions", {
+    title: "Qredit",
+    routename: "qredit/transactions",
+    csrfToken: req.csrfToken()
+  });
+});
 
-router.get("/tokenlist", function (req, res, next) {
-  res.render("tokenlist", {
+router.get("/qredit/tokenlist", function (req, res, next) {
+  res.render("qredit/tokenlist", {
     title: "Token List",
-    routename: "tokenlist",
+    routename: "qredit/tokenlist",
     csrfToken: req.csrfToken()
   });
 });
 
-router.get("/latestblocks", function (req, res, next) {
-  res.render("latestblocks", {
+router.get("/qredit/latestblocks", function (req, res, next) {
+  res.render("qredit/latestblocks", {
     title: "Latest Blocks",
-    routename: "latestblocks",
+    routename: "qredit/latestblocks",
     csrfToken: req.csrfToken()
   });
 });
-router.get("/peers", function (req, res, next) {
-  res.render("peers", {
+router.get("/qredit/peers", function (req, res, next) {
+  res.render("qredit/peers", {
     title: "Peers",
-    routename: "peers",
+    routename: "qredit/peers",
     csrfToken: req.csrfToken()
   });
 });
-router.get("/topwallets", function (req, res, next) {
-  res.render("topwallets", {
+router.get("/qredit/topwallets", function (req, res, next) {
+  res.render("qredit/topwallets", {
     title: "Top Wallets",
-    routename: "topwallets",
+    routename: "qredit/topwallets",
     csrfToken: req.csrfToken()
   });
 });
-router.get("/delegatemonitor", function (req, res, next) {
-  res.render("delegatemonitor", {
+router.get("/qredit/delegatemonitor", function (req, res, next) {
+  res.render("qredit/delegatemonitor", {
     title: "Delegate Monitor",
-    routename: "delegatemonitor",
+    routename: "qredit/delegatemonitor",
     csrfToken: req.csrfToken()
   });
 });
 
-router.get("/nodeconfig", function (req, res, next) {
-  res.render("nodeconfig", {
+router.get("/qredit/nodeconfig", function (req, res, next) {
+  res.render("qredit/nodeconfig", {
     title: "Node Configuration",
-    routename: "nodeconfig",
+    routename: "qredit/nodeconfig",
     csrfToken: req.csrfToken()
   });
 });
 
 /* Explorer URL Parameter routes*/
 
-router.get("/transaction/:transactionId", function (req, res, next) {
-  res.render("transaction", {
+router.get("/qredit/transaction/:transactionId", function (req, res, next) {
+  res.render("qredit/transaction", {
     title: "Transaction Details",
-    routename: "transaction",
+    routename: "qredit/transaction",
     transactionId: req.params.transactionId,
     csrfToken: req.csrfToken()
   });
 });
 
-router.get("/wallet/:walletId", function (req, res, next) {
-  res.render("wallet", {
+router.get("/qredit/wallet/:walletId", function (req, res, next) {
+  res.render("qredit/wallet", {
     title: "Wallet Details",
     routename: "sender",
     walletId: req.params.walletId,
@@ -78,10 +85,10 @@ router.get("/wallet/:walletId", function (req, res, next) {
   });
 });
 
-router.get("/token/:tokenid", function (req, res, next) {
-  res.render("token", {
+router.get("/qredit/token/:tokenid", function (req, res, next) {
+  res.render("qredit/token", {
     title: "Token Details",
-    routename: "token",
+    routename: "qredit/token",
     tokenid: req.params.tokenid,
     csrfToken: req.csrfToken()
   });
