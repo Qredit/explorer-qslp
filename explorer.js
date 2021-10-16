@@ -15,14 +15,22 @@ const sqlite3 = require('sqlite3');
 const asyncv3 = require('async');
 
 // libs
-const qreditjs = require("qreditjs");
-const qreditApi = require("nodeQreditApi");
-const qslpApi = require("nodeQslpApi");
-const personaApi = require("nodePersonaApi");
+
+var motionsdk = require("motion-sdk");
+const qreditApi = motionsdk.qreditApi;
+const blockpoolApi = motionsdk.blockpoolApi;
+const arkApi = motionsdk.arkApi;
+const personaApi = motionsdk.personaApi;
+const qslpApi = motionsdk.qslpApi;
 
 const qapi = new qreditApi.default();
 const qslpapi = new qslpApi.default();
 const papi = new personaApi.default();
+const aapi = new arkApi.default();
+const bapi = new blockpoolApi.default();
+
+const qreditjs = require("qreditjs");
+
 
 var indexRouter = require('./routes/index');
 // const { paused } = require('browser-sync');
@@ -312,7 +320,7 @@ io.on('connection', function (socket) {
 			var flatJson = {
 				address: data.address,
 				publickey: data.publicKey,
-				balance: (parseFloat(data.balance) / 100000000).toFixed(8) + ' XQR',
+				balance: (parseFloat(data.balance) / 100000000).toFixed(8),
 				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
 			};
 
@@ -448,6 +456,309 @@ io.on('connection', function (socket) {
 			};
 
 			socket.emit('shownodeconfig', flatJson);
+
+		})();
+
+	});
+
+	/*********************************************************************
+
+		BLOCKPOOL
+
+	 ********************************************************************/
+
+	/*
+
+	1. getdelegates  // done
+	2. getlastblock  // done
+	3. getblocks  // done
+	4. getpeers  // done
+	5. gettransactions  // done
+	6. getwallet  // done
+	7. gettopwallets  // done
+	8. getwallettransactions  // done
+	9. gettransactiondetails  // done
+	10. getdelegatebyid  // done
+	11. getnodeconfig  // done
+
+	*/
+
+	// Socket IO getdelegates
+
+	socket.on('blockpoolgetdelegates', function (input) {
+
+		(async () => {
+
+			var response = await bapi.listDelegates(1, 51);
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					address: data[i].address,
+					username: data[i].username,
+					blocks: data[i].blocks.produced,
+					timestamp: data[i].blocks.last.timestamp.human,
+					approval: data[i].production.approval
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('blockpoolshowdelegates', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('blockpoolgetlastblock', function (input) {
+
+		(async () => {
+
+			var response = await bapi.getLastBlock();
+			var data = (response.data);
+			var flatJson = {
+				getlastblockheight: data.height,
+				getlastforgedusername: data.generator.username
+			};
+
+			socket.emit('blockpoolshowlastblock', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('blockpoolgetblocks', function (input) {
+
+		(async () => {
+
+			var response = await bapi.listBlocks(1, 50);
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+
+					id: data[i].id,
+					height: data[i].height,
+					timestamp: data[i].timestamp.human,
+					rewardtotal: data[i].forged.total,
+					transactionsforged: data[i].transactions,
+					lastforgedusername: data[i].generator.username,
+					address: data[i].generator.address,
+
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('blockpoolshowblocks', flatJson);
+		})();
+
+	});
+
+	// Socket IO getpeers
+
+	socket.on('blockpoolgetpeers', function (input) {
+
+		(async () => {
+
+			var response = await bapi.getPeers();
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					peerip: data[i].ip,
+					p2pport: data[i].port,
+					version: data[i].version,
+					height: data[i].height,
+					latency: data[i].latency
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('blockpoolshowpeers', flatJson);
+		})();
+
+	});
+
+	// Socket IO gettransactions
+	socket.on('blockpoolgettransactions', function (input) {
+
+		(async () => {
+
+			var response = await bapi.listTransactions();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					confirmations: data[i].confirmations,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					smartbridge: data[i].vendorField,
+					amount: data[i].amount,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('blockpoolshowtransactions', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getwallet 
+
+	socket.on('blockpoolgetwallet', function (input) {
+
+		(async () => {
+
+			response = await bapi.getWalletByID(input.walletId);
+
+			var data = (response.data);
+			var flatJson = {
+				address: data.address,
+				publickey: data.publicKey,
+				balance: (parseFloat(data.balance) / 100000000).toFixed(8),
+				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+
+			socket.emit('blockpoolshowwallet', flatJson);
+
+		})();
+
+	});
+
+	/* gettopwallets */
+
+	socket.on('blockpoolgettopwallets', function (input) {
+
+		(async () => {
+
+			var response = await bapi.getTopWallets();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					isdelegate: data[i].isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+					address: data[i].address,
+					balance: data[i].balance
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('blockpoolshowtopwallets', flatJson);
+
+		})();
+
+	});
+	// Socket IO getwallettransactions
+
+	socket.on('blockpoolgetwallettransactions', function (input) {
+
+		(async () => {
+
+			response = await bapi.getWalletTransactions(input.walletId);
+			var data = (response.data);
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					amount: data[i].amount,
+					smartbridge: data[i].vendorField,
+					confirmations: data[i].confirmations,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('blockpoolshowwallettransactions', flatJson);
+		})();
+
+	});
+
+
+	// Socket IO gettransactiondetails
+
+	socket.on('blockpoolgettransactiondetails', function (input) {
+
+		(async () => {
+
+			response = await bapi.getTransactionByID(input.transactionId);
+
+			/*	var qslpdata = await qslpapi.getTransaction(input.transactionId);*/
+
+			/*	if (qslpdata) {
+					response.data.qslp = qslpdata[0];
+				}*/
+			var data = (response.data);
+			var flatJson = {
+				txid: data.id,
+				blockid: data.blockId,
+				id: data.id,
+				amount: data.amount,
+				fee: data.fee,
+				sender: data.sender,
+				publickey: data.senderPublicKey,
+				recipient: data.recipient,
+				smartbridge: data.vendorField,
+				confirmations: data.confirmations,
+				timestamp: data.timestamp.human,
+				nonce: data.nonce,
+				signature: data.signature,
+			};
+
+			socket.emit('blockpoolshowtransactiondetails', flatJson);
+		})();
+
+	});
+
+	// Socket IO getdelegatebyid 
+
+	socket.on('blockpoolgetdelegatebyid', function (input) {
+
+		(async () => {
+
+			response = await bapi.getDelegate(input.walletId);
+
+			var data = (response.data);
+
+			var flatJson = {
+				username: data.username == null ? '<span>Not a delegate</span>' : data.username,
+				votes: (parseFloat(data.votes) / 100000000).toFixed(0) + ' BPL',
+				rank: data.rank,
+				blocksproduced: data.blocks.produced,
+				lastproducedblock: data.blocks.last.id,
+				approval: data.production.approval + '%',
+				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+			socket.emit('blockpoolshowdelegatebyid', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getnodeconfig
+
+	socket.on('blockpoolgetnodeconfig', function (input) {
+
+		(async () => {
+
+			var response = await bapi.getNodeConfig();
+
+			var data = (response.data);
+			var flatJson = {
+
+			};
+
+			socket.emit('blockpoolshownodeconfig', flatJson);
 
 		})();
 

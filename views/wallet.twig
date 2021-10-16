@@ -390,12 +390,13 @@
 								<th scope="col">Timestamp</th>
 								<th scope="col">Sender</th>
 								<th scope="col">Recipient</th>
-								<th scope="col">Amount (XQR)</th>
+								<th scope="col">Amount</th>
 								<th scope="col">Confirmations</th>
 								<th scope="col">Smartbridge</th>
 							</tr>
 						</thead>
 						<tbody id='wallettransactions'></tbody>
+						<tbody id='blockpoolwallettransactions'></tbody>
 					</table>
 				</div>
 			</div>
@@ -475,7 +476,93 @@
 		});
 	});
 </script>
+<!-- Blockpool -->
+<script type="text/javascript">
 
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('blockpoolgetwallettransactions', { walletId: '{{ walletId }}' });
+
+		socket.on('blockpoolshowwallettransactions', function (data) {
+
+			var mainTable = document.getElementById("blockpoolwallettransactions");
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/transaction/' + row.id + '">' + row.id.substr(0, 4) + '...' + row.id.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+
+				td = document.createElement("td");
+				td.innerHTML = timeDifference(row.timestamp);
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.sender + '">' + row.sender.substr(0, 5) + '...' + row.sender.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.recipient + '">' + row.recipient.substr(0, 5) + '...' + row.recipient.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' BPL';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.confirmations;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.smartbridge;
+				tr.appendChild(td);
+
+				blockpoolwallettransactions.appendChild(tr);
+
+			});
+
+		});
+
+	});
+	function timeDifference(datetime) {
+
+		var d = new Date();
+		var current = d.getTime();
+		var previous = Date.parse(datetime);
+
+		var msPerMinute = 60 * 1000;
+		var msPerHour = msPerMinute * 60;
+		var msPerDay = msPerHour * 24;
+		var msPerMonth = msPerDay * 30;
+		var msPerYear = msPerDay * 365;
+
+		var elapsed = current - previous;
+
+		if (elapsed < msPerMinute) {
+			return Math.round(elapsed / 1000) + ' seconds ago';
+		} else if (elapsed < msPerHour) {
+			return Math.round(elapsed / msPerMinute) + ' minutes ago';
+		} else if (elapsed < msPerDay) {
+			return Math.round(elapsed / msPerHour) + ' hours ago';
+		} else if (elapsed < msPerMonth) {
+			return '± ' + Math.round(elapsed / msPerDay) + ' days ago';
+		} else if (elapsed < msPerYear) {
+			return '± ' + Math.round(elapsed / msPerMonth) + ' months ago';
+		} else {
+			return '± ' + Math.round(elapsed / msPerYear) + ' years ago';
+		}
+	}
+
+</script>
+<!-- Qredit -->
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -678,13 +765,32 @@
 
 			$('#address').html(data.address);
 			$('#publickey').html(data.publickey);
-			$('#balance').html(data.balance);
+			$('#balance').html(data.balance + 'XQR');
 			$('#isdelegate').html(data.isdelegate);
 
 		});
 
 	});
 </script>
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('blockpoolgetwallet', { walletId: '{{ walletId }}' });
+		socket.on('blockpoolshowwallet', function (data) {
+
+			$('#address').html(data.address);
+			$('#publickey').html(data.publickey);
+			$('#balance').html(data.balance + ' BPL');
+			$('#isdelegate').html(data.isdelegate);
+
+		});
+
+	});
+</script>
+
 
 <script type="text/javascript">
 
