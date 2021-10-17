@@ -2059,7 +2059,7 @@ io.on('connection', function (socket) {
 				};
 				flatJson.push(tempJson);
 			}
-
+			console.log(flatJson)
 			socket.emit('arkshowtokenlist', flatJson);
 
 		})();
