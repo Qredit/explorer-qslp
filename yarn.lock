@@ -2084,7 +2084,7 @@ morgan@~1.9.1:
 
 "motion-sdk@git+https://github.com/Qredit/motion-sdk.git":
   version "0.0.6"
-  resolved "git+https://github.com/Qredit/motion-sdk.git#bc1988cc0c3dcca0f8689fc175f74d8908b61c2b"
+  resolved "git+https://github.com/Qredit/motion-sdk.git#de0f9ef6e55dc70622aa55bebf8363214ac400f2"
   dependencies:
     arkjs "git+https://github.com/Qredit/qredit-js.git#ark"
     big.js "^5.2.2"
