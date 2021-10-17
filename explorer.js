@@ -299,6 +299,51 @@ io.on('connection', function (socket) {
 		})();
 	});
 
+	/* radians */
+	socket.on('radianssearch', function (input) {
+
+		(async () => {
+			var blockResults = await bapi.getBlockByID(input)
+			var walletResults = await bapi.getWalletByID(input)
+			var transactionsResult = await bapi.getTransactionByID(input)
+			var delegateResult = await bapi.getDelegate(input)
+
+			var blockParsed = null
+			if (blockResults.data) {
+				blockParsed = blockResults.data;
+
+				if (blockResults.data.length > 1)
+					blockParsed = blockResults.data[0]
+			}
+
+			var walletParsed = null
+			if (walletResults.data)
+				walletParsed = walletResults.data;
+
+			var transactionParsed = null
+			var tokenTransactions = null
+			if (transactionsResult.data) {
+				if (transactionsResult.data.vendorField.toString().includes('qslp1'))
+					tokenTransactions = transactionsResult.data
+				else
+					transactionParsed = transactionsResult.data;
+			}
+
+			var delegateParsed = null
+			if (delegateResult.data)
+				delegateParsed = delegateResult.data;
+
+			var returnValue = {
+				blocks: blockParsed,
+				wallets: walletParsed,
+				transactions: transactionParsed,
+				delegates: delegateParsed,
+			}
+
+			socket.emit('radiansshowsearch', returnValue);
+
+		})();
+	});
 	/*********************************************************************
 
 		qredit
