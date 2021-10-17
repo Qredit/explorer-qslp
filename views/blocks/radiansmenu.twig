@@ -49,7 +49,6 @@
 								</li>
 							</ul>
 						</div>
-
 						<ul>
 							<li class="btn-group d-md-inline-flex d-none">
 								<a href="javascript:void(0)" title="skin Change"
@@ -84,12 +83,12 @@
 				<div class="row"
 					style="padding-right: calc(var(--bs-gutter-x) / 2);padding-left: calc(var(--bs-gutter-x) / 2);">
 					<ul class="sm sm-blue" style="justify-content: center!important;">
-						<li class="nav-item"><a class="nav-link" href="/blockpool/transactions">Transactions</a></li>
-						<li class="nav-item"><a class="nav-link" href="/blockpool/latestblocks">Latest Blocks</a></li>
-						<li class="nav-item"><a class="nav-link" href="/blockpool/topwallets">Top Wallets</a></li>
-						<li class="nav-item"><a class="nav-link" href="/blockpool/peers">Peers</a></li>
-						<li class="nav-item"><a class="nav-link" href="/blockpool/delegatemonitor">Delegates</a></li>
-						<li class="nav-item"><a class="nav-link" href="/blockpool/nodeconfig">Node Configuration</a>
+						<li class="nav-item"><a class="nav-link" href="/radians/transactions">Transactions</a></li>
+						<li class="nav-item"><a class="nav-link" href="/radians/latestblocks">Latest Blocks</a></li>
+						<li class="nav-item"><a class="nav-link" href="/radians/topwallets">Top Wallets</a></li>
+						<li class="nav-item"><a class="nav-link" href="/radians/peers">Peers</a></li>
+						<li class="nav-item"><a class="nav-link" href="/radians/delegatemonitor">Delegates</a></li>
+						<li class="nav-item"><a class="nav-link" href="/radians/nodeconfig">Node Configuration</a>
 						</li>
 					</ul>
 				</div>
@@ -138,9 +137,9 @@
 		var title = document.createElement("h1")
 		var urlToRedirect = '';
 		switch (tableType) {
-			case 'block': urlToRedirect = '/blockpool/block/';
+			case 'block': urlToRedirect = '/radians/block/';
 				break;
-			case 'wallet': urlToRedirect = '/blockpool/wallet';
+			case 'wallet': urlToRedirect = '/radians/wallet';
 				break;
 		}
 
@@ -162,7 +161,7 @@
 
 	var socket = io();
 
-	socket.on('blockpoolshowsearch', function (data) {
+	socket.on('radiansshowsearch', function (data) {
 		const results = document.getElementById("aftersearch");
 		results.textContent = '';
 
@@ -231,6 +230,6 @@
 	searchinput.oninput = function () {
 		var searchString = searchinput.value;
 
-		socket.emit('blockpoolsearch', searchString);
+		socket.emit('radianssearch', searchString);
 	}
 </script>

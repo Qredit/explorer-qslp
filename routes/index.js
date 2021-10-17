@@ -341,4 +341,71 @@ router.get("/blockpool/wallet/:walletId", function (req, res, next) {
 });
 
 
+
+/* GET radians pages. */
+router.get("/radians/transactions", function (req, res, next) {
+  res.render("radians/transactions", {
+    title: "Radians",
+    routename: "radians/transactions",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/radians/latestblocks", function (req, res, next) {
+  res.render("radians/latestblocks", {
+    title: "Latest Blocks",
+    routename: "radians/latestblocks",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/radians/peers", function (req, res, next) {
+  res.render("radians/peers", {
+    title: "Peers",
+    routename: "radians/peers",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/radians/topwallets", function (req, res, next) {
+  res.render("radians/topwallets", {
+    title: "Top Wallets",
+    routename: "radians/topwallets",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/radians/delegatemonitor", function (req, res, next) {
+  res.render("radians/delegatemonitor", {
+    title: "Delegate Monitor",
+    routename: "radians/delegatemonitor",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/radians/nodeconfig", function (req, res, next) {
+  res.render("radians/nodeconfig", {
+    title: "Node Configuration",
+    routename: "radians/nodeconfig",
+    csrfToken: req.csrfToken()
+  });
+});
+
+/* Explorer URL Parameter routes*/
+
+router.get("/radians/transaction/:transactionId", function (req, res, next) {
+  res.render("radians/transaction", {
+    title: "Transaction Details",
+    routename: "radians/transaction",
+    transactionId: req.params.transactionId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/radians/wallet/:walletId", function (req, res, next) {
+  res.render("radians/wallet", {
+    title: "Wallet Details",
+    routename: "sender",
+    walletId: req.params.walletId,
+    csrfToken: req.csrfToken()
+  });
+});
+
 module.exports = router;

@@ -23,6 +23,7 @@ const arkApi = motionsdk.arkApi;
 const darkApi = motionsdk.darkApi;
 const personaApi = motionsdk.personaApi;
 const qslpApi = motionsdk.qslpApi;
+const radiansApi = motionsdk.radiansApi;
 
 const qapi = new qreditApi.default();
 const qslpapi = new qslpApi.default();
@@ -30,8 +31,10 @@ const papi = new personaApi.default();
 const aapi = new arkApi.default();
 const daapi = new darkApi.default();
 const bapi = new blockpoolApi.default();
+const rapi = new radiansApi.default();
 
 const qreditjs = require("qreditjs");
+const arkjs = require("arkjs");
 
 
 var indexRouter = require('./routes/index');
@@ -1503,7 +1506,308 @@ io.on('connection', function (socket) {
 
 	});
 
+	/*********************************************************************
 
+		RADIANS
+
+	*********************************************************************/
+
+	/*
+
+	1. getdelegates  // done
+	2. getlastblock  // done
+	3. getblocks  // done
+	4. getpeers  // done
+	5. gettransactions  // done
+	6. getwallet  // done
+	7. gettopwallets  // done
+	8. getwallettransactions  // done
+	9. gettransactiondetails  // done
+	10. getdelegatebyid  // done
+	11. getnodeconfig  // done
+
+	*/
+
+	// Socket IO getdelegates
+
+	socket.on('radiansgetdelegates', function (input) {
+
+		(async () => {
+
+			var response = await rapi.listDelegates(1, 100);
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					address: data[i].address,
+					username: data[i].username,
+					blocks: data[i].blocks.produced,
+					timestamp: data[i].blocks.last.timestamp.human,
+					approval: data[i].production.approval
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('radiansshowdelegates', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('radiansgetlastblock', function (input) {
+
+		(async () => {
+
+			var response = await rapi.getLastBlock();
+			var data = (response.data);
+			var flatJson = {
+				getlastblockheight: data.height,
+				getlastforgedusername: data.generator.username
+			};
+
+			socket.emit('radiansshowlastblock', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('radiansgetblocks', function (input) {
+
+		(async () => {
+
+			var response = await rapi.listBlocks(1, 50);
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+
+					id: data[i].id,
+					height: data[i].height,
+					timestamp: data[i].timestamp.human,
+					rewardtotal: data[i].forged.total,
+					transactionsforged: data[i].transactions,
+					lastforgedusername: data[i].generator.username,
+					address: data[i].generator.address,
+
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('radiansshowblocks', flatJson);
+		})();
+
+	});
+
+	// Socket IO getpeers
+
+	socket.on('radiansgetpeers', function (input) {
+
+		(async () => {
+
+			var response = await rapi.getPeers();
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					peerip: data[i].ip,
+					p2pport: data[i].port,
+					version: data[i].version,
+					height: data[i].height,
+					latency: data[i].latency
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('radiansshowpeers', flatJson);
+		})();
+
+	});
+
+	// Socket IO gettransactions
+	socket.on('radiansgettransactions', function (input) {
+
+		(async () => {
+
+			var response = await rapi.listTransactions();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					confirmations: data[i].confirmations,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					smartbridge: data[i].vendorField,
+					amount: data[i].amount,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('radiansshowtransactions', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getwallet 
+
+	socket.on('radiansgetwallet', function (input) {
+
+		(async () => {
+
+			response = await rapi.getWalletByID(input.walletId);
+
+			var data = (response.data);
+			console.log(data)
+			var flatJson = {
+				address: data.address,
+				publickey: data.publicKey,
+				balance: (parseFloat(data.balance) / 100000000).toFixed(8),
+				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+				isloggedin: data.attributes.isLoggedIn == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+				character: data.attributes.character.name,
+				avatar: data.attributes.character.classId
+			};
+
+			socket.emit('radiansshowwallet', flatJson);
+			console.log(flatJson)
+
+		})();
+
+	});
+
+	/* gettopwallets */
+
+	socket.on('radiansgettopwallets', function (input) {
+
+		(async () => {
+
+			var response = await rapi.getTopWallets();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					isdelegate: data[i].isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+					address: data[i].address,
+					balance: data[i].balance
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('radiansshowtopwallets', flatJson);
+
+		})();
+
+	});
+	// Socket IO getwallettransactions
+
+	socket.on('radiansgetwallettransactions', function (input) {
+
+		(async () => {
+
+			response = await rapi.getWalletTransactions(input.walletId);
+			var data = (response.data);
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					amount: data[i].amount,
+					smartbridge: data[i].vendorField,
+					confirmations: data[i].confirmations,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('radiansshowwallettransactions', flatJson);
+		})();
+
+	});
+
+
+	// Socket IO gettransactiondetails
+
+	socket.on('radiansgettransactiondetails', function (input) {
+
+		(async () => {
+
+			response = await rapi.getTransactionByID(input.transactionId);
+
+			var data = (response.data);
+			var flatJson = {
+				txid: data.id,
+				blockid: data.blockId,
+				id: data.id,
+				amount: data.amount,
+				fee: data.fee,
+				sender: data.sender,
+				publickey: data.senderPublicKey,
+				recipient: data.recipient,
+				smartbridge: data.vendorField,
+				confirmations: data.confirmations,
+				timestamp: data.timestamp.human,
+				nonce: data.nonce,
+				signature: data.signature,
+			};
+
+			socket.emit('radiansshowtransactiondetails', flatJson);
+		})();
+
+	});
+
+	// Socket IO getdelegatebyid 
+
+	socket.on('radiansgetdelegatebyid', function (input) {
+
+		(async () => {
+
+			response = await rapi.getDelegate(input.walletId);
+
+			var data = (response.data);
+
+			var flatJson = {
+				username: data.username == null ? '<span>Not a delegate</span>' : data.username,
+				votes: (parseFloat(data.votes) / 100000000).toFixed(0) + ' R',
+				rank: data.rank,
+				blocksproduced: data.blocks.produced,
+				lastproducedblock: data.blocks.last.id,
+				approval: data.production.approval + '%',
+				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+			socket.emit('blockpoolshowdelegatebyid', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getnodeconfig
+
+	socket.on('radiansgetnodeconfig', function (input) {
+
+		(async () => {
+
+			var response = await bapi.getNodeConfig();
+
+			var data = (response.data);
+			var flatJson = {
+
+			};
+
+			socket.emit('radiansshownodeconfig', flatJson);
+
+		})();
+
+	});
 	/**************************************************************
 																		
 	  _  _  ___  ___  ___    ___  ___ _    ___     _   ___ ___
