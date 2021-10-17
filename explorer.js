@@ -23,10 +23,12 @@ const arkApi = motionsdk.arkApi;
 const darkApi = motionsdk.darkApi;
 const personaApi = motionsdk.personaApi;
 const qslpApi = motionsdk.qslpApi;
+const aslpApi = motionsdk.aslpApi;
 const radiansApi = motionsdk.radiansApi;
 
 const qapi = new qreditApi.default();
 const qslpapi = new qslpApi.default();
+const aslpapi = new aslpApi.default();
 const papi = new personaApi.default();
 const aapi = new arkApi.default();
 const daapi = new darkApi.default();
@@ -185,7 +187,7 @@ io.on('connection', function (socket) {
 			var transactionParsed = null
 			var tokenTransactions = null
 			if (transactionsResult.data) {
-				if (transactionsResult.data.vendorField.toString().includes('qslp1'))
+				if (transactionsResult.data.vendorField.toString().includes('aslp1'))
 					tokenTransactions = transactionsResult.data
 				else
 					transactionParsed = transactionsResult.data;
@@ -879,11 +881,11 @@ io.on('connection', function (socket) {
 
 			response = await aapi.getTransactionByID(input.transactionId);
 
-			/*	var qslpdata = await qslpapi.getTransaction(input.transactionId);
-	
-				if (qslpdata) {
-					response.data.qslp = qslpdata[0];
-				}*/
+			var aslpdata = await aslpapi.getTransaction(input.transactionId);
+
+			if (aslpdata) {
+				response.data.aslp = aslpdata[0];
+			}
 			var data = (response.data);
 			var flatJson = {
 				txid: data.id,
@@ -2014,6 +2016,163 @@ io.on('connection', function (socket) {
 
 	});
 
+
+	/**************************************************************
+																		
+	 aslp - ark simple ledger protocol
+	 
+	 **************************************************************/
+
+	/* 
+
+	1. gettokenlist  // done
+	2. getwallettokens  // done
+	3. gettokeninfo  // done
+	4. gettokenmeta  // done
+
+	*/
+
+
+	/* gettokenlist */
+
+	socket.on('arkgettokenlist', function (input) {
+
+		var page = input.page;
+		var limit = input.limit;
+
+		(async () => {
+
+			var data = await aslpapi.listTokens(100, 1);
+
+			var flatJson = [];
+
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					version: data[i].type,
+					name: data[i].tokenDetails.name,
+					symbol: data[i].tokenDetails.symbol,
+					owneraddress: data[i].tokenDetails.ownerAddress,
+					tokenid: data[i].tokenDetails.tokenIdHex,
+					circsupply: (data[i].tokenStats.qty_token_circulating_supply),
+					pausable: data[i].tokenDetails.pausable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">',
+					mintable: data[i].tokenDetails.mintable == true ? '<img alt="ok" src="/img/ok-24.png">' : '<img alt="ok" src="/img/offline-24.png">'
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('arkshowtokenlist', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getwallettokens
+
+	socket.on('arkgetwallettokens', function (input) {
+
+		(async () => {
+
+			var response = await aslpapi.getTokensByOwner(input.walletId);
+			var data = response;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					type: data[i].type,
+					owneraddress: data[i].tokenDetails.ownerAddress,
+					tokenid: data[i].tokenDetails.tokenIdHex,
+					name: data[i].tokenDetails.name,
+					symbol: data[i].tokenDetails.symbol,
+					genesisquantity: (data[i].tokenDetails.genesisQuantity == undefined ? '<span class="badge badge-success">NFT (1)</span>' : data[i].tokenDetails.genesisQuantity),
+					circsupply: (data[i].tokenStats.qty_token_circulating_supply == undefined ? '<span class="badge badge-success">NFT (1)</span>' : data[i].tokenStats.qty_token_circulating_supply),
+					pausable: data[i].tokenDetails.pausable == true ? '<span class="badge badge-success">True</span>' : '<span class="badge badge-danger">False</span>',
+					mintable: data[i].tokenDetails.mintable == true ? '<span class="badge badge-success">True</span>' : '<span class="badge badge-danger">False</span>',
+					tokenowners: data[i].tokenStats.qty_valid_token_addresses
+
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('arkshowwallettokens', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO gettokeninfo
+
+	socket.on('arkgettokeninfo', function (input) {
+
+		(async () => {
+
+			var data = await aslpapi.getToken(input.tokenid);
+			var data = (data);
+			var tempJson = {
+
+				/* first */
+				type: data.type,
+				paused: data.paused,
+				lastupdatedblock: data.lastUpdatedBlock,
+
+				/* nested under tokenDetails */
+				owneraddress: data.tokenDetails.ownerAddress,
+				tokenidhex: data.tokenDetails.tokenIdHex,
+				timestamp: data.tokenDetails.genesis_timestamp,
+				aslpversion: data.tokenDetails.versionType,
+				symbol: data.tokenDetails.symbol,
+				name: data.tokenDetails.name,
+				documenturi: data.tokenDetails.documentUri,
+				decimals: data.tokenDetails.decimals,
+				genesisquantity: data.tokenDetails.genesisQuantity,
+				pausable: data.tokenDetails.pausable,
+				mintable: data.tokenDetails.mintable,
+
+				/* nested under tokenStats */
+				blockcreatedheight: data.tokenStats.block_created_height,
+				blockcreatedid: data.tokenStats.block_created_id,
+				blocklastactivesend: data.tokenStats.block_last_active_send,
+				blocklastactivemint: data.tokenStats.block_last_active_mint,
+				creationtxid: data.tokenStats.creation_transaction_id,
+				qtyvalidtxnssincegenesis: data.tokenStats.qty_valid_txns_since_genesis,
+				qtyvalidtokenaddresses: data.tokenStats.qty_valid_token_addresses,
+				qtytokenminted: data.tokenStats.qty_token_minted,
+				qtytokenburned: data.tokenStats.qty_token_burned,
+				qtytokencirculatingsupply: data.tokenStats.qty_token_circulating_supply,
+				qtyxqrspent: data.tokenStats.qty_xqr_spent,
+
+			};
+
+			socket.emit('arkshowtokeninfo', tempJson);
+		})();
+
+	});
+
+	// Socket IO gettokenmeta
+
+	socket.on('arkgettokenmeta', function (input) {
+
+		(async () => {
+			var data = await aslpapi.getTokenWithMeta(input.tokenid);
+			var flatJson = [];
+			var data = (data.metadata)
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					metatxid: data[i].txid,
+					metablockid: data[i].blockId,
+					metablockheight: data[i].blockHeight,
+					posteraddress: data[i].metaDetails.posterAddress,
+					timestamp: data[i].metaDetails.timestamp,
+					metaname: data[i].metaDetails.metaName,
+					metachunk: data[i].metaDetails.metaChunk,
+					metadata: data[i].metaDetails.metaData,
+					void: data[i].void,
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('arkshowtokenmeta', flatJson);
+		})();
+
+	});
 	/**************************************************************************
 
 	  _  _  ___  ___  ___   ___ ___ ___  ___  ___  _  _   _       _   ___ ___
