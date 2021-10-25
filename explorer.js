@@ -365,6 +365,7 @@ io.on('connection', function (socket) {
 	9. gettransactiondetails  // done
 	10. getdelegatebyid  // done
 	11. getnodeconfig  // done
+	12. getblockbyid
 
 	*/
 
@@ -376,7 +377,7 @@ io.on('connection', function (socket) {
 
 			var response = await qapi.listDelegates(1, 51);
 			var data = response.data;
-
+			console.log(data)
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
@@ -385,11 +386,12 @@ io.on('connection', function (socket) {
 					username: data[i].username,
 					blocks: data[i].blocks.produced,
 					timestamp: data[i].blocks.last.timestamp.human,
-					approval: data[i].production.approval
+					approval: data[i].production.approval,
+					votes: (parseFloat(data[i].votes) / 100000000).toFixed(0)
 				};
 				flatJson.push(tempJson);
 			}
-
+			//console.log(flatJson)
 			socket.emit('showdelegates', flatJson);
 
 		})();
@@ -649,6 +651,27 @@ io.on('connection', function (socket) {
 
 	});
 
+	socket.on('getblockbyid', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getBlockByID(input.blockId);
+			var data = response.data;
+			console.log(data)
+			var flatJson = [];
+
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showblockbyid', flatJson);
+			console.log(flatJson)
+		})();
+
+	});
 	/*********************************************************************
 
 	ark mainnet

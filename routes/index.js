@@ -24,7 +24,13 @@ router.get("/dark/transactions", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/dark/block", function (req, res, next) {
+  res.render("dark/block", {
+    title: "Block",
+    routename: "dark/block",
+    csrfToken: req.csrfToken()
+  });
+});
 router.get("/dark/tokenlist", function (req, res, next) {
   res.render("dark/tokenlist", {
     title: "Token List",
@@ -98,7 +104,14 @@ router.get("/dark/token/:tokenid", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/dark/block/:blockId", function (req, res, next) {
+  res.render("dark/block", {
+    title: "Block Details",
+    routename: "sender",
+    walletId: req.params.blockId,
+    csrfToken: req.csrfToken()
+  });
+});
 
 /* GET ark pages. */
 router.get("/ark/transactions", function (req, res, next) {
@@ -108,7 +121,13 @@ router.get("/ark/transactions", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/ark/block", function (req, res, next) {
+  res.render("ark/block", {
+    title: "Blocks",
+    routename: "ark/block",
+    csrfToken: req.csrfToken()
+  });
+});
 router.get("/ark/tokenlist", function (req, res, next) {
   res.render("ark/tokenlist", {
     title: "Token List",
@@ -182,7 +201,14 @@ router.get("/ark/token/:tokenid", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/ark/block/:blockId", function (req, res, next) {
+  res.render("ark/block", {
+    title: "Block Details",
+    routename: "sender",
+    walletId: req.params.blockId,
+    csrfToken: req.csrfToken()
+  });
+});
 
 /* GET qredit pages. */
 router.get("/qredit/transactions", function (req, res, next) {
@@ -192,7 +218,13 @@ router.get("/qredit/transactions", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/qredit/block", function (req, res, next) {
+  res.render("qredit/block", {
+    title: "Block",
+    routename: "qredit/block",
+    csrfToken: req.csrfToken()
+  });
+});
 router.get("/qredit/tokenlist", function (req, res, next) {
   res.render("qredit/tokenlist", {
     title: "Token List",
@@ -266,7 +298,14 @@ router.get("/qredit/token/:tokenid", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/qredit/block/:blockId", function (req, res, next) {
+  res.render("qredit/block", {
+    title: "Block Details",
+    routename: "sender",
+    walletId: req.params.blockId,
+    csrfToken: req.csrfToken()
+  });
+});
 
 
 
@@ -282,7 +321,13 @@ router.get("/blockpool/transactions", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/blockpool/block", function (req, res, next) {
+  res.render("blockpool/block", {
+    title: "Block",
+    routename: "blockpool/block",
+    csrfToken: req.csrfToken()
+  });
+});
 router.get("/blockpool/latestblocks", function (req, res, next) {
   res.render("blockpool/latestblocks", {
     title: "Latest Blocks",
@@ -339,7 +384,14 @@ router.get("/blockpool/wallet/:walletId", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/blockpool/block/:blockId", function (req, res, next) {
+  res.render("blockpool/block", {
+    title: "Block Details",
+    routename: "sender",
+    walletId: req.params.blockId,
+    csrfToken: req.csrfToken()
+  });
+});
 
 
 /* GET radians pages. */
@@ -350,7 +402,13 @@ router.get("/radians/transactions", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-
+router.get("/radians/block", function (req, res, next) {
+  res.render("radians/block", {
+    title: "Block",
+    routename: "radians/block",
+    csrfToken: req.csrfToken()
+  });
+});
 router.get("/radians/latestblocks", function (req, res, next) {
   res.render("radians/latestblocks", {
     title: "Latest Blocks",
@@ -404,6 +462,15 @@ router.get("/radians/wallet/:walletId", function (req, res, next) {
     title: "Wallet Details",
     routename: "sender",
     walletId: req.params.walletId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/radians/block/:blockId", function (req, res, next) {
+  res.render("radians/block", {
+    title: "Block Details",
+    routename: "sender",
+    walletId: req.params.blockId,
     csrfToken: req.csrfToken()
   });
 });
