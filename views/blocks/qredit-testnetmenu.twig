@@ -1,0 +1,237 @@
+<body class="layout-top-nav dark-skin theme-primary fixed">
+
+	<div class="wrapper">
+		<div id="loader"></div>
+
+		<header class="main-header" style="margin-top:25px;margin-bottom:25px;">
+			<div class="container">
+				<div class="inside-header">
+					<div class="d-flex align-items-center logo-box justify-content-start">
+						<!-- Logo -->
+						<a href="/" class="logo">
+							<!-- logo-->
+							<div class="logo-lg">
+								<span class="light-logo"><img src="../img/header/logo-navbar-dark.png"
+										style="max-height:50px;" alt="logo"></span>
+								<span class="dark-logo"><img src="../img/header/logo-navbar-dark.png"
+										style="max-height:50px;" alt="logo"></span> TESTNET
+							</div>
+						</a>
+					</div>
+					<!-- Header Navbar -->
+
+
+					<div class="mt-auto"></div>
+
+					<nav class="navbar navbar-static-top">
+						<!-- Sidebar toggle button-->
+						<div class="">
+							<ul class="header-megamenu nav">
+								<li class="btn-group d-lg-inline-flex d-none">
+									<div class="app-menu">
+										<div class="search-bx mx-5">
+											<form id="domain-search-header">
+												<div class="input-group">
+													<input type="search" class="form-control"
+														placeholder="Search blocks, transactions, wallets..                                     |"
+														aria-label="Search" aria-describedby="button-addon2"
+														id="searchinput" name="domains">
+													<div class="input-group-append">
+														<button class="btn" type="submit" id="button-addon3"><i
+																data-feather="search"></i></button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<ul>
+							<li class="btn-group d-md-inline-flex d-none">
+								<a href="javascript:void(0)" title="skin Change"
+									class="waves-effect skin-toggle waves-light">
+									<label class="switch">
+										<input type="checkbox" data-mainsidebarskin="toggle"
+											id="toggle_left_sidebar_skin">
+										<span class="switch-on"><i class="mdi mdi-lightbulb-on"></i></span>
+										<span class="switch-off"><i class="mdi mdi-lightbulb"></i></span>
+									</label>
+								</a>
+
+							</li>
+
+							<li class="btn-group d-lg-inline-flex d-none">
+								<a href="#" data-provide="fullscreen"
+									class="waves-effect waves-light full-screen btn-warning-light" title="Full Screen">
+									<i data-feather="maximize"></i>
+								</a>
+							</li>
+						</ul>
+					</nav>
+
+				</div>
+			</div>
+		</header>
+		<div class="container search-title" id="aftersearch"></div>
+	</div>
+	<div class="container">
+		<div class="container-full">
+			<section>
+				<div class="row"
+					style="padding-right: calc(var(--bs-gutter-x) / 2);padding-left: calc(var(--bs-gutter-x) / 2);">
+					<ul class="sm sm-blue" style="justify-content: center!important;">
+						<li class="nav-item"><a class="nav-link" href="/qredit-testnet/transactions">Transactions</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="/qredit-testnet/latestblocks">Latest Blocks</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="/qredit-testnet/topwallets">Top Wallets</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit-testnet/peers">Peers</a></li>
+						<li class="nav-item"><a class="nav-link" href="/qredit-testnet/delegatemonitor">Delegates</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="/qredit-testnet/nodeconfig">Node
+								Configuration</a>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+
+	</div>
+
+
+
+
+</body>
+
+
+
+
+
+<div class="mt-auto header-top-height-explorer"></div>
+
+
+
+<script>
+	function createHref(url, param, title) {
+		var a = document.createElement('a');
+		var link = document.createTextNode(title);
+		a.appendChild(link);
+		a.title = title;
+		a.href = url + "/" + param;
+		return a;
+	}
+
+	function createTable(tableType, objectArray, fields, fieldTitles) {
+		let tbl = document.createElement('table');
+		tbl.setAttribute("class", "table")
+		let thead = document.createElement('thead');
+		let thr = document.createElement('tr');
+
+		fieldTitles.forEach((fieldTitle) => {
+			let th = document.createElement('th');
+			th.appendChild(document.createTextNode(fieldTitle));
+			thr.appendChild(th);
+		});
+		thead.appendChild(thr);
+		tbl.appendChild(thead);
+
+		var title = document.createElement("h1")
+		var urlToRedirect = '';
+		switch (tableType) {
+			case 'block': urlToRedirect = '/blockpool/block/';
+				break;
+			case 'wallet': urlToRedirect = '/blockpool/wallet';
+				break;
+		}
+
+		tbl.before(title)
+
+		let tbdy = document.createElement('tbody');
+
+		let tr = document.createElement('tr');
+		fields.forEach((field) => {
+			var td = document.createElement('td');
+			td.appendChild(createHref(urlToRedirect, objectArray[field], objectArray[field]));
+			tr.appendChild(td);
+		});
+		tbdy.appendChild(tr);
+
+		tbl.appendChild(tbdy);
+		return tbl;
+	}
+
+	var socket = io();
+
+	socket.on('blockpoolshowsearch', function (data) {
+		const results = document.getElementById("aftersearch");
+		results.textContent = '';
+
+		if (data.blocks) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: block:"));
+			results.appendChild(title);
+			results.appendChild(createTable('block', data.blocks, [
+				'id', 'height'
+			], ['Id', 'Height']))
+		}
+
+		if (data.wallets) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: wallet:"));
+
+			results.appendChild(title);
+			results.appendChild(createTable('wallet', data.wallets, [
+				'address'
+			], ['Address']))
+		}
+
+		if (data.transactions) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: transaction:"));
+
+			results.appendChild(title);
+			results.appendChild(createTable('transaction', data.transactions, [
+				'sender', 'recipient', 'vendorField'
+			], ['From', 'To', 'Smartbridge']))
+		}
+
+		if (data.tokenTransactions) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: token transaction : "));
+			results.appendChild(title)
+			results.appendChild(createTable('tokentransaction', data.tokenTransactions, [
+				'sender', 'recipient', 'vendorField'
+			], ['From', 'To', 'Token Transfer Data']))
+		}
+
+		if (data.delegates) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: delegate:"));
+
+			results.appendChild(title)
+			results.appendChild(createTable('delegate', data.delegates, [
+				'address'
+			], ['Address']))
+		}
+
+		if (data.tokens) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: token:"));
+
+			results.appendChild(title)
+			results.appendChild(createTable('token', data.tokens, [
+				'type', 'lastUpdatedBlock'
+			], ['Type', 'Last Block']))
+		}
+
+
+	}
+	);
+
+	searchinput.oninput = function () {
+		var searchString = searchinput.value;
+
+		socket.emit('blockpoolsearch', searchString);
+	}
+</script>

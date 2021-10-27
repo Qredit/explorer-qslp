@@ -18,6 +18,7 @@ const asyncv3 = require('async');
 
 var motionsdk = require("motion-sdk");
 const qreditApi = motionsdk.qreditApi;
+const testnetQreditApi = motionsdk.testnetQreditApi;
 const blockpoolApi = motionsdk.blockpoolApi;
 const arkApi = motionsdk.arkApi;
 const darkApi = motionsdk.darkApi;
@@ -27,6 +28,7 @@ const aslpApi = motionsdk.aslpApi;
 const radiansApi = motionsdk.radiansApi;
 
 const qapi = new qreditApi.default();
+const qtapi = new testnetQreditApi.default();
 const qslpapi = new qslpApi.default();
 const aslpapi = new aslpApi.default();
 const papi = new personaApi.default();
@@ -162,6 +164,48 @@ io.on('connection', function (socket) {
 
 		})();
 	});
+
+	/* qredit-testnet */
+	socket.on('qredit-testnetsearch', function (input) {
+
+		(async () => {
+			var blockResults = await qtapi.getBlockByID(input)
+			var walletResults = await qtapi.getWalletByID(input)
+			var transactionsResult = await qtapi.getTransactionByID(input)
+			var delegateResult = await qtapi.getDelegate(input)
+
+			var blockParsed = null
+			if (blockResults.data) {
+				blockParsed = blockResults.data;
+
+				if (blockResults.data.length > 1)
+					blockParsed = blockResults.data[0]
+			}
+
+			var walletParsed = null
+			if (walletResults.data)
+				walletParsed = walletResults.data;
+
+			var transactionParsed = null
+			var tokenTransactions = null
+
+			var delegateParsed = null
+			if (delegateResult.data)
+				delegateParsed = delegateResult.data;
+
+			var returnValue = {
+				blocks: blockParsed,
+				wallets: walletParsed,
+				transactions: transactionParsed,
+				tokenTransactions: tokenTransactions,
+				delegates: delegateParsed,
+			}
+
+			socket.emit('qredit-testnetshowsearch', returnValue);
+
+		})();
+	});
+
 
 	/* ark */
 	socket.on('arksearch', function (input) {
@@ -1571,6 +1615,303 @@ io.on('connection', function (socket) {
 			};
 
 			socket.emit('blockpoolshownodeconfig', flatJson);
+
+		})();
+
+	});
+	/*********************************************************************
+
+		Qredit Testnet
+
+	*********************************************************************/
+
+	/*
+
+	1. getdelegates  // done
+	2. getlastblock  // done
+	3. getblocks  // done
+	4. getpeers  // done
+	5. gettransactions  // done
+	6. getwallet  // done
+	7. gettopwallets  // done
+	8. getwallettransactions  // done
+	9. gettransactiondetails  // done
+	10. getdelegatebyid  // done
+	11. getnodeconfig  // done
+
+	*/
+
+	// Socket IO getdelegates
+
+	socket.on('qredit-testnetgetdelegates', function (input) {
+
+		(async () => {
+
+			var response = await qtapi.listDelegates(1, 100);
+			var data = response.data;
+
+			var flatJson = [];
+			console.log(data)
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					address: data[i].address,
+					username: data[i].username,
+					blocks: data[i].blocks.produced,
+					approval: data[i].production.approval
+				};
+				flatJson.push(tempJson);
+			}
+			console.log(flatJson)
+			socket.emit('qredit-testnetshowdelegates', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('qredit-testnetgetlastblock', function (input) {
+
+		(async () => {
+
+			var response = await qtapi.getLastBlock();
+			var data = (response.data);
+			var flatJson = {
+				getlastblockheight: data.height,
+				getlastforgedusername: data.generator.username
+			};
+
+			socket.emit('qredit-testnetshowlastblock', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('qredit-testnetgetblocks', function (input) {
+
+		(async () => {
+
+			var response = await qtapi.listBlocks(1, 50);
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+
+					id: data[i].id,
+					height: data[i].height,
+					timestamp: data[i].timestamp.human,
+					rewardtotal: data[i].forged.total,
+					transactionsforged: data[i].transactions,
+					lastforgedusername: data[i].generator.username,
+					address: data[i].generator.address,
+
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('qredit-testnetshowblocks', flatJson);
+		})();
+
+	});
+
+	// Socket IO getpeers
+
+	socket.on('qredit-testnetgetpeers', function (input) {
+
+		(async () => {
+
+			var response = await qtapi.getPeers();
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					peerip: data[i].ip,
+					p2pport: data[i].port,
+					version: data[i].version,
+					height: data[i].height,
+					latency: data[i].latency
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('qredit-testnetshowpeers', flatJson);
+		})();
+
+	});
+
+	// Socket IO gettransactions
+	socket.on('qredit-testnetgettransactions', function (input) {
+
+		(async () => {
+
+			var response = await qtapi.listTransactions();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					confirmations: data[i].confirmations,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					smartbridge: data[i].vendorField,
+					amount: data[i].amount,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('qredit-testnetshowtransactions', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getwallet 
+
+	socket.on('qredit-testnetgetwallet', function (input) {
+
+		(async () => {
+
+			response = await qtapi.getWalletByID(input.walletId);
+
+			var data = (response.data);
+			var flatJson = {
+				address: data.address,
+				publickey: data.publicKey,
+				balance: (parseFloat(data.balance) / 100000000).toFixed(8),
+				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+
+			socket.emit('qredit-testnetshowwallet', flatJson);
+
+		})();
+
+	});
+
+	/* gettopwallets */
+
+	socket.on('qredit-testnetgettopwallets', function (input) {
+
+		(async () => {
+
+			var response = await qtapi.getTopWallets();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					isdelegate: data[i].isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+					address: data[i].address,
+					balance: data[i].balance
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('qredit-testnetshowtopwallets', flatJson);
+
+		})();
+
+	});
+	// Socket IO getwallettransactions
+
+	socket.on('qredit-testnetgetwallettransactions', function (input) {
+
+		(async () => {
+
+			response = await qtapi.getWalletTransactions(input.walletId);
+			var data = (response.data);
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					amount: data[i].amount,
+					smartbridge: data[i].vendorField,
+					confirmations: data[i].confirmations,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('qredit-testnetshowwallettransactions', flatJson);
+		})();
+
+	});
+
+
+	// Socket IO gettransactiondetails
+
+	socket.on('qredit-testnetgettransactiondetails', function (input) {
+
+		(async () => {
+
+			response = await qtapi.getTransactionByID(input.transactionId);
+
+			var data = (response.data);
+			var flatJson = {
+				txid: data.id,
+				blockid: data.blockId,
+				id: data.id,
+				amount: data.amount,
+				fee: data.fee,
+				sender: data.sender,
+				publickey: data.senderPublicKey,
+				recipient: data.recipient,
+				smartbridge: data.vendorField,
+				confirmations: data.confirmations,
+				timestamp: data.timestamp.human,
+				nonce: data.nonce,
+				signature: data.signature,
+			};
+
+			socket.emit('qredit-testnetshowtransactiondetails', flatJson);
+		})();
+
+	});
+
+	// Socket IO getdelegatebyid 
+
+	socket.on('qredit-testnetgetdelegatebyid', function (input) {
+
+		(async () => {
+
+			response = await qtapi.getDelegate(input.walletId);
+
+			var data = (response.data);
+
+			var flatJson = {
+				username: data.username == null ? '<span>Not a delegate</span>' : data.username,
+				votes: (parseFloat(data.votes) / 100000000).toFixed(0) + ' dXQR',
+				rank: data.rank,
+				blocksproduced: data.blocks.produced,
+				lastproducedblock: data.blocks.last.id,
+				approval: data.production.approval + '%',
+				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+			socket.emit('qredit-testnetshowdelegatebyid', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getnodeconfig
+
+	socket.on('qredit-testnetgetnodeconfig', function (input) {
+
+		(async () => {
+
+			var response = await bapi.getNodeConfig();
+
+			var data = (response.data);
+			var flatJson = {
+
+			};
+
+			socket.emit('qredit-testnetshownodeconfig', flatJson);
 
 		})();
 

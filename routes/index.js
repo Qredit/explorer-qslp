@@ -10,6 +10,54 @@ router.get("/", function (req, res, next) {
   });
 });
 
+/* GET home page qredit mainnet. */
+router.get("/qredit", function (req, res, next) {
+  res.render("qredit/transactions", {
+    title: "Explorer.sh",
+    routename: "qredit",
+    csrfToken: req.csrfToken()
+  });
+});
+/* GET home page qredit testnet. */
+router.get("/qredit-testnet", function (req, res, next) {
+  res.render("qredit-testnet/transactions", {
+    title: "Explorer.sh",
+    routename: "qredit",
+    csrfToken: req.csrfToken()
+  });
+});
+/* GET home page blockpool mainnet. */
+router.get("/blockpool", function (req, res, next) {
+  res.render("blockpool/transactions", {
+    title: "Explorer.sh",
+    routename: "blockpool",
+    csrfToken: req.csrfToken()
+  });
+});
+/* GET home page ark mainnet. */
+router.get("/ark", function (req, res, next) {
+  res.render("ark/transactions", {
+    title: "Explorer.sh",
+    routename: "ark",
+    csrfToken: req.csrfToken()
+  });
+});
+/* GET home page ark devnet. */
+router.get("/dark", function (req, res, next) {
+  res.render("dark/transactions", {
+    title: "Explorer.sh",
+    routename: "dark",
+    csrfToken: req.csrfToken()
+  });
+});
+/* GET home radians testnet. */
+router.get("/radians", function (req, res, next) {
+  res.render("radians/transactions", {
+    title: "Explorer.sh",
+    routename: "radians",
+    csrfToken: req.csrfToken()
+  });
+});
 
 
 
@@ -474,5 +522,89 @@ router.get("/radians/block/:blockId", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
+
+
+
+/* GET qredit-testnet pages. */
+router.get("/qredit-testnet/transactions", function (req, res, next) {
+  res.render("qredit-testnet/transactions", {
+    title: "qredit-testnet",
+    routename: "qredit-testnet/transactions",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/qredit-testnet/block", function (req, res, next) {
+  res.render("qredit-testnet/block", {
+    title: "Block",
+    routename: "qredit-testnet/block",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/qredit-testnet/latestblocks", function (req, res, next) {
+  res.render("qredit-testnet/latestblocks", {
+    title: "Latest Blocks",
+    routename: "qredit-testnet/latestblocks",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/qredit-testnet/peers", function (req, res, next) {
+  res.render("qredit-testnet/peers", {
+    title: "Peers",
+    routename: "qredit-testnet/peers",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/qredit-testnet/topwallets", function (req, res, next) {
+  res.render("qredit-testnet/topwallets", {
+    title: "Top Wallets",
+    routename: "qredit-testnet/topwallets",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/qredit-testnet/delegatemonitor", function (req, res, next) {
+  res.render("qredit-testnet/delegatemonitor", {
+    title: "Delegate Monitor",
+    routename: "qredit-testnet/delegatemonitor",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/qredit-testnet/nodeconfig", function (req, res, next) {
+  res.render("qredit-testnet/nodeconfig", {
+    title: "Node Configuration",
+    routename: "qredit-testnet/nodeconfig",
+    csrfToken: req.csrfToken()
+  });
+});
+
+/* Explorer URL Parameter routes*/
+
+router.get("/qredit-testnet/transaction/:transactionId", function (req, res, next) {
+  res.render("qredit-testnet/transaction", {
+    title: "Transaction Details",
+    routename: "qredit-testnet/transaction",
+    transactionId: req.params.transactionId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/qredit-testnet/wallet/:walletId", function (req, res, next) {
+  res.render("qredit-testnet/wallet", {
+    title: "Wallet Details",
+    routename: "sender",
+    walletId: req.params.walletId,
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/qredit-testnet/block/:blockId", function (req, res, next) {
+  res.render("qredit-testnet/block", {
+    title: "Block Details",
+    routename: "sender",
+    walletId: req.params.blockId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+
 
 module.exports = router;
