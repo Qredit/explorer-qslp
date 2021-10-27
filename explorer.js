@@ -1658,7 +1658,8 @@ io.on('connection', function (socket) {
 					username: data[i].username,
 					blocks: data[i].blocks.produced,
 					timestamp: data[i].blocks.last.timestamp.human,
-					approval: data[i].production.approval
+					approval: data[i].production.approval,
+					votes: (parseFloat(data[i].votes) / 100000000).toFixed(0)
 				};
 				flatJson.push(tempJson);
 			}

@@ -22,6 +22,8 @@
 								<th scope="col">Username</th>
 								<th scope="col">Status</th>
 								<th scope="col">Last Forged</th>
+								<th scope="col">Approval</th>
+								<th scope="col">Votes</th>
 							</tr>
 						</thead>
 						<tbody id='delegates'></tbody>
@@ -68,6 +70,15 @@
 				td.innerHTML = timeDifference(row.timestamp);
 				tr.appendChild(td);
 				delegates.appendChild(tr);
+
+
+				td = document.createElement("td");
+				td.innerHTML = row.approval + ' %';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.votes + ' dXQR';
+				tr.appendChild(td);
 
 			});
 
