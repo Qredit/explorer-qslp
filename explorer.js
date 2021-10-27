@@ -1647,22 +1647,22 @@ io.on('connection', function (socket) {
 
 		(async () => {
 
-			var response = await qtapi.listDelegates(1, 100);
+			var response = await qtapi.listDelegates(1, 51);
 			var data = response.data;
 
 			var flatJson = [];
-			console.log(data)
 			for (let i = 0; i < data.length; i++) {
 				let tempJson = {
 					rank: data[i].rank,
 					address: data[i].address,
 					username: data[i].username,
 					blocks: data[i].blocks.produced,
+					timestamp: data[i].blocks.last.timestamp.human,
 					approval: data[i].production.approval
 				};
 				flatJson.push(tempJson);
 			}
-			console.log(flatJson)
+
 			socket.emit('qredit-testnetshowdelegates', flatJson);
 
 		})();
