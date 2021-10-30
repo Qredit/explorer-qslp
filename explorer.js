@@ -211,10 +211,10 @@ io.on('connection', function (socket) {
 	socket.on('arksearch', function (input) {
 
 		(async () => {
-			var blockResults = await bapi.getBlockByID(input)
-			var walletResults = await bapi.getWalletByID(input)
-			var transactionsResult = await bapi.getTransactionByID(input)
-			var delegateResult = await bapi.getDelegate(input)
+			var blockResults = await aapi.getBlockByID(input)
+			var walletResults = await aapi.getWalletByID(input)
+			var transactionsResult = await aapi.getTransactionByID(input)
+			var delegateResult = await aapi.getDelegate(input)
 
 			var blockParsed = null
 			if (blockResults.data) {
