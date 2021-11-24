@@ -338,7 +338,7 @@
 	<div class="col-lg-12 col-12">
 		<div class="box box-slided-up">
 			<div class="box-header with-border">
-				<h4 class="box-title">ASLP Tokens</h4>
+				<h4 class="box-title">ASLP Token Ownership</h4>
 				<ul class="box-controls pull-right">
 					<li><a class="box-btn-slide" href="#"></a></li>
 					<li><a class="box-btn-fullscreen" href="#"></a></li>
@@ -368,7 +368,34 @@
 		</div>
 	</div>
 </div>
-
+<div class="container mh">
+	<div class="col-lg-12 col-12">
+		<div class="box box-slided-up">
+			<div class="box-header with-border">
+				<h4 class="box-title">ASLP1 Tokens</h4>
+				<ul class="box-controls pull-right">
+					<li><a class="box-btn-slide" href="#"></a></li>
+					<li><a class="box-btn-fullscreen" href="#"></a></li>
+				</ul>
+			</div>
+			<div class="box-body">
+				<div class="table-responsive">
+					<table class="table no-margin table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Document Uri</th>
+								<th scope="col">Token ID</th>
+								<th scope="col">Is Owner</th>
+								<th scope="col">Balance</th>
+							</tr>
+						</thead>
+						<tbody id='tokensbyaddress'></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="container mh">
 	<div class="col-lg-12 col-12">
 		<div class="box box-slided-up">
@@ -671,6 +698,53 @@
 
 		var socket = io();
 
+		socket.emit('arkgettokensbyaddress', { walletId: '{{ walletId }}' });
+		socket.on('arkshowtokensbyaddress', function (data) {
+			console.log(data);
+			
+			var mainTable = document.getElementById("tokensbyaddress");
+
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = '<img alt="token img" style="margin-top:-5px!important;" src="' + row.documentUri + '">';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.tokenIdHex;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.isOwner;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.tokenBalance;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.ownerAddress;
+				tr.appendChild(td);
+
+				tokensbyaddress.appendChild(tr);
+
+			});
+
+		});
+
+	});
+</script>
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
 		socket.emit('arkgetwallet', { walletId: '{{ walletId }}' });
 		socket.on('arkshowwallet', function (data) {
 
@@ -706,7 +780,6 @@
 
 	});
 </script>
-
 
 
 {% endblock %}

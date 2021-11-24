@@ -1,3 +1,4 @@
+const persistent = require('persistent-json-cache');
 const http = require('http');
 const https = require('https');
 const createError = require('http-errors');
@@ -13,7 +14,6 @@ const Big = require('big.js');
 const { promisify } = require('util');
 const sqlite3 = require('sqlite3');
 const asyncv3 = require('async');
-
 // libs
 
 var motionsdk = require("motion-sdk");
@@ -819,13 +819,34 @@ io.on('connection', function (socket) {
 
 		(async () => {
 
+			function emojiFlag(countryCode) {
+				var emojiFlags = require('emoji-flags');
+				return emojiFlags.countryCode(countryCode);
+
+			}
+
 			var response = await aapi.getPeers();
 			var data = response.data;
-
+			var geoip = require('geoip-lite');
+			let cache = await persistent("explorer-cache.json");
+			if (cache.peers == undefined) {
+				cache.peers = {}
+			} 
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
+				var geodata = cache.peers[data[i].ip];
+				console.log(geodata);
+				if (geodata == undefined) {
+					geodata = geoip.lookup(data[i].ip);
+					cache.peers[data[i].ip] =  {country: geodata.country, emoji: emojiFlag(geodata.country).emoji, ll: geodata.ll};
+					geodata = cache.peers[data[i].ip];
+				}
+
 				let tempJson = {
 					peerip: data[i].ip,
+					peercountry: geodata.country,
+					peerflag: geodata.emoji,
+					peerll: geodata.ll,
 					p2pport: data[i].port,
 					version: data[i].version,
 					height: data[i].height,
@@ -833,11 +854,13 @@ io.on('connection', function (socket) {
 				};
 				flatJson.push(tempJson);
 			}
-
+			await persistent.close(cache)
 			socket.emit('arkshowpeers', flatJson);
 		})();
 
 	});
+
+	
 
 	// Socket IO gettransactions
 	socket.on('arkgettransactions', function (input) {
@@ -2538,6 +2561,33 @@ io.on('connection', function (socket) {
 		})();
 
 	});
+
+	// Socket IO gettokenmeta
+
+	socket.on('arkgettokensbyaddress', function (input) {
+
+		(async () => {
+			var data = await aslpapi.getAddress(input.walletId);
+			var flatJson = [];
+			var data = (data);
+			console.log(data.length);
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					tokenIdHex: data[i].tokenIdHex,
+					isOwner: data[i].isOwner,
+					tokenBalance: data[i].tokenBalance,
+					documentUri: data[i].tokenDetails.documentUri,
+				};
+
+				flatJson.push(tempJson);
+			}
+			socket.emit('arkshowtokensbyaddress', flatJson);
+			console.log(flatJson);
+		})();
+
+	});
+
+
 	/**************************************************************************
 
 	  _  _  ___  ___  ___   ___ ___ ___  ___  ___  _  _   _       _   ___ ___
