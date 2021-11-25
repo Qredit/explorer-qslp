@@ -26,6 +26,7 @@ const personaApi = motionsdk.personaApi;
 const qslpApi = motionsdk.qslpApi;
 const aslpApi = motionsdk.aslpApi;
 const radiansApi = motionsdk.radiansApi;
+const dswipeApi = motionsdk.dswipeApi;
 
 const qapi = new qreditApi.default();
 const qtapi = new testnetQreditApi.default();
@@ -36,6 +37,7 @@ const aapi = new arkApi.default();
 const daapi = new darkApi.default();
 const bapi = new blockpoolApi.default();
 const rapi = new radiansApi.default();
+const sdapi = new dswipeApi.default();
 
 const qreditjs = require("qreditjs");
 const arkjs = require("arkjs");
@@ -390,9 +392,10 @@ io.on('connection', function (socket) {
 
 		})();
 	});
-	/*********************************************************************
 
-		qredit
+		/*********************************************************************
+
+		dswipe
 
 	 ********************************************************************/
 
@@ -415,11 +418,11 @@ io.on('connection', function (socket) {
 
 	// Socket IO getdelegates
 
-	socket.on('getdelegates', function (input) {
+	socket.on('dswipegetdelegates', function (input) {
 
 		(async () => {
 
-			var response = await qapi.listDelegates(1, 51);
+			var response = await sdapi.listDelegates(1, 51);
 			var data = response.data;
 			console.log(data)
 			var flatJson = [];
@@ -436,7 +439,7 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 			//console.log(flatJson)
-			socket.emit('showdelegates', flatJson);
+			socket.emit('dswipeshowdelegates', flatJson);
 
 		})();
 
@@ -444,18 +447,18 @@ io.on('connection', function (socket) {
 
 	// Socket IO getblocks
 
-	socket.on('getlastblock', function (input) {
+	socket.on('dswipegetlastblock', function (input) {
 
 		(async () => {
 
-			var response = await qapi.getLastBlock();
+			var response = await sdapi.getLastBlock();
 			var data = (response.data);
 			var flatJson = {
 				getlastblockheight: data.height,
 				getlastforgedusername: data.generator.username
 			};
 
-			socket.emit('showlastblock', flatJson);
+			socket.emit('dswipeshowlastblock', flatJson);
 
 		})();
 
@@ -463,11 +466,11 @@ io.on('connection', function (socket) {
 
 	// Socket IO getblocks
 
-	socket.on('getblocks', function (input) {
+	socket.on('dswipegetblocks', function (input) {
 
 		(async () => {
 
-			var response = await qapi.listBlocks(1, 50);
+			var response = await sdapi.listBlocks(1, 50);
 			var data = response.data;
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
@@ -484,18 +487,18 @@ io.on('connection', function (socket) {
 				};
 				flatJson.push(tempJson);
 			}
-			socket.emit('showblocks', flatJson);
+			socket.emit('dswipeshowblocks', flatJson);
 		})();
 
 	});
 
 	// Socket IO getpeers
 
-	socket.on('getpeers', function (input) {
+	socket.on('dswipegetpeers', function (input) {
 
 		(async () => {
 
-			var response = await qapi.getPeers();
+			var response = await sdapi.getPeers();
 			var data = response.data;
 
 			var flatJson = [];
@@ -510,17 +513,17 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 
-			socket.emit('showpeers', flatJson);
+			socket.emit('dswipeshowpeers', flatJson);
 		})();
 
 	});
 
 	// Socket IO gettransactions
-	socket.on('gettransactions', function (input) {
+	socket.on('dswipegettransactions', function (input) {
 
 		(async () => {
 
-			var response = await qapi.listTransactions();
+			var response = await sdapi.listTransactions();
 			var data = response.data;
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
@@ -536,7 +539,7 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 
-			socket.emit('showtransactions', flatJson);
+			socket.emit('dswipeshowtransactions', flatJson);
 
 		})();
 
@@ -544,11 +547,11 @@ io.on('connection', function (socket) {
 
 	// Socket IO getwallet 
 
-	socket.on('getwallet', function (input) {
+	socket.on('dswipegetwallet', function (input) {
 
 		(async () => {
 
-			response = await qapi.getWalletByID(input.walletId);
+			response = await sdapi.getWalletByID(input.walletId);
 
 			var data = (response.data);
 			var flatJson = {
@@ -558,7 +561,7 @@ io.on('connection', function (socket) {
 				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
 			};
 
-			socket.emit('showwallet', flatJson);
+			socket.emit('dswipeshowwallet', flatJson);
 
 		})();
 
@@ -566,11 +569,11 @@ io.on('connection', function (socket) {
 
 	/* gettopwallets */
 
-	socket.on('gettopwallets', function (input) {
+	socket.on('dswipegettopwallets', function (input) {
 
 		(async () => {
 
-			var response = await qapi.getTopWallets();
+			var response = await sdapi.getTopWallets();
 			var data = response.data;
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
@@ -583,18 +586,18 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 
-			socket.emit('showtopwallets', flatJson);
+			socket.emit('dswipeshowtopwallets', flatJson);
 
 		})();
 
 	});
 	// Socket IO getwallettransactions
 
-	socket.on('getwallettransactions', function (input) {
+	socket.on('dswipegetwallettransactions', function (input) {
 
 		(async () => {
 
-			response = await qapi.getWalletTransactions(input.walletId);
+			response = await sdapi.getWalletTransactions(input.walletId);
 			var data = (response.data);
 			var flatJson = [];
 			for (let i = 0; i < data.length; i++) {
@@ -610,7 +613,7 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 
-			socket.emit('showwallettransactions', flatJson);
+			socket.emit('dswipeshowwallettransactions', flatJson);
 		})();
 
 	});
@@ -618,11 +621,11 @@ io.on('connection', function (socket) {
 
 	// Socket IO gettransactiondetails
 
-	socket.on('gettransactiondetails', function (input) {
+	socket.on('dswipegettransactiondetails', function (input) {
 
 		(async () => {
 
-			response = await qapi.getTransactionByID(input.transactionId);
+			response = await sdapi.getTransactionByID(input.transactionId);
 
 			var qslpdata = await qslpapi.getTransaction(input.transactionId);
 
@@ -646,18 +649,18 @@ io.on('connection', function (socket) {
 				signature: data.signature,
 			};
 
-			socket.emit('showtransactiondetails', flatJson);
+			socket.emit('dswipeshowtransactiondetails', flatJson);
 		})();
 
 	});
 
 	// Socket IO getdelegatebyid 
 
-	socket.on('getdelegatebyid', function (input) {
+	socket.on('dswipegetdelegatebyid', function (input) {
 
 		(async () => {
 
-			response = await qapi.getDelegate(input.walletId);
+			response = await sdapi.getDelegate(input.walletId);
 
 			var data = (response.data);
 
@@ -670,7 +673,7 @@ io.on('connection', function (socket) {
 				approval: data.production.approval + '%',
 				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
 			};
-			socket.emit('showdelegatebyid', flatJson);
+			socket.emit('dswipeshowdelegatebyid', flatJson);
 
 		})();
 
@@ -678,28 +681,28 @@ io.on('connection', function (socket) {
 
 	// Socket IO getnodeconfig
 
-	socket.on('getnodeconfig', function (input) {
+	socket.on('dswipegetnodeconfig', function (input) {
 
 		(async () => {
 
-			var response = await qapi.getNodeConfig();
+			var response = await sdapi.getNodeConfig();
 
 			var data = (response.data);
 			var flatJson = {
 
 			};
 
-			socket.emit('shownodeconfig', flatJson);
+			socket.emit('dswipeshownodeconfig', flatJson);
 
 		})();
 
 	});
 
-	socket.on('getblockbyid', function (input) {
+	socket.on('dswipegetblockbyid', function (input) {
 
 		(async () => {
 
-			var response = await qapi.getBlockByID(input.blockId);
+			var response = await sdapi.getBlockByID(input.blockId);
 			var data = response.data;
 			console.log(data)
 			var flatJson = [];
@@ -711,11 +714,12 @@ io.on('connection', function (socket) {
 				flatJson.push(tempJson);
 			}
 
-			socket.emit('showblockbyid', flatJson);
+			socket.emit('dswipeshowblockbyid', flatJson);
 			console.log(flatJson)
 		})();
 
 	});
+
 	/*********************************************************************
 
 	ark mainnet
@@ -1038,6 +1042,333 @@ io.on('connection', function (socket) {
 
 			socket.emit('arkshownodeconfig', flatJson);
 
+		})();
+
+	});
+
+		/*********************************************************************
+
+		qredit
+
+	 ********************************************************************/
+
+	/*
+
+	1. getdelegates  // done
+	2. getlastblock  // done
+	3. getblocks  // done
+	4. getpeers  // done
+	5. gettransactions  // done
+	6. getwallet  // done
+	7. gettopwallets  // done
+	8. getwallettransactions  // done
+	9. gettransactiondetails  // done
+	10. getdelegatebyid  // done
+	11. getnodeconfig  // done
+	12. getblockbyid
+
+	*/
+
+	// Socket IO getdelegates
+
+	socket.on('getdelegates', function (input) {
+
+		(async () => {
+
+			var response = await qapi.listDelegates(1, 51);
+			var data = response.data;
+			console.log(data)
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					address: data[i].address,
+					username: data[i].username,
+					blocks: data[i].blocks.produced,
+					timestamp: data[i].blocks.last.timestamp.human,
+					approval: data[i].production.approval,
+					votes: (parseFloat(data[i].votes) / 100000000).toFixed(0)
+				};
+				flatJson.push(tempJson);
+			}
+			//console.log(flatJson)
+			socket.emit('showdelegates', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('getlastblock', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getLastBlock();
+			var data = (response.data);
+			var flatJson = {
+				getlastblockheight: data.height,
+				getlastforgedusername: data.generator.username
+			};
+
+			socket.emit('showlastblock', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getblocks
+
+	socket.on('getblocks', function (input) {
+
+		(async () => {
+
+			var response = await qapi.listBlocks(1, 50);
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+
+					id: data[i].id,
+					height: data[i].height,
+					timestamp: data[i].timestamp.human,
+					rewardtotal: data[i].forged.total,
+					transactionsforged: data[i].transactions,
+					lastforgedusername: data[i].generator.username,
+					address: data[i].generator.address,
+
+				};
+				flatJson.push(tempJson);
+			}
+			socket.emit('showblocks', flatJson);
+		})();
+
+	});
+
+	// Socket IO getpeers
+
+	socket.on('getpeers', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getPeers();
+			var data = response.data;
+
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					peerip: data[i].ip,
+					p2pport: data[i].port,
+					version: data[i].version,
+					height: data[i].height,
+					latency: data[i].latency
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showpeers', flatJson);
+		})();
+
+	});
+
+	// Socket IO gettransactions
+	socket.on('gettransactions', function (input) {
+
+		(async () => {
+
+			var response = await qapi.listTransactions();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					confirmations: data[i].confirmations,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					smartbridge: data[i].vendorField,
+					amount: data[i].amount,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showtransactions', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getwallet 
+
+	socket.on('getwallet', function (input) {
+
+		(async () => {
+
+			response = await qapi.getWalletByID(input.walletId);
+
+			var data = (response.data);
+			var flatJson = {
+				address: data.address,
+				publickey: data.publicKey,
+				balance: (parseFloat(data.balance) / 100000000).toFixed(8),
+				isdelegate: data.isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+
+			socket.emit('showwallet', flatJson);
+
+		})();
+
+	});
+
+	/* gettopwallets */
+
+	socket.on('gettopwallets', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getTopWallets();
+			var data = response.data;
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					rank: data[i].rank,
+					isdelegate: data[i].isDelegate == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+					address: data[i].address,
+					balance: data[i].balance
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showtopwallets', flatJson);
+
+		})();
+
+	});
+	// Socket IO getwallettransactions
+
+	socket.on('getwallettransactions', function (input) {
+
+		(async () => {
+
+			response = await qapi.getWalletTransactions(input.walletId);
+			var data = (response.data);
+			var flatJson = [];
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+					timestamp: data[i].timestamp.human,
+					sender: data[i].sender,
+					recipient: data[i].recipient,
+					amount: data[i].amount,
+					smartbridge: data[i].vendorField,
+					confirmations: data[i].confirmations,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showwallettransactions', flatJson);
+		})();
+
+	});
+
+
+	// Socket IO gettransactiondetails
+
+	socket.on('gettransactiondetails', function (input) {
+
+		(async () => {
+
+			response = await qapi.getTransactionByID(input.transactionId);
+
+			var qslpdata = await qslpapi.getTransaction(input.transactionId);
+
+			if (qslpdata) {
+				response.data.qslp = qslpdata[0];
+			}
+			var data = (response.data);
+			var flatJson = {
+				txid: data.id,
+				blockid: data.blockId,
+				id: data.id,
+				amount: data.amount,
+				fee: data.fee,
+				sender: data.sender,
+				publickey: data.senderPublicKey,
+				recipient: data.recipient,
+				smartbridge: data.vendorField,
+				confirmations: data.confirmations,
+				timestamp: data.timestamp.human,
+				nonce: data.nonce,
+				signature: data.signature,
+			};
+
+			socket.emit('showtransactiondetails', flatJson);
+		})();
+
+	});
+
+	// Socket IO getdelegatebyid 
+
+	socket.on('getdelegatebyid', function (input) {
+
+		(async () => {
+
+			response = await qapi.getDelegate(input.walletId);
+
+			var data = (response.data);
+
+			var flatJson = {
+				username: data.username == null ? '<span>Not a delegate</span>' : data.username,
+				votes: (parseFloat(data.votes) / 100000000).toFixed(0) + ' XQR',
+				rank: data.rank,
+				blocksproduced: data.blocks.produced,
+				lastproducedblock: data.blocks.last.id,
+				approval: data.production.approval + '%',
+				isresigned: data.isResigned == true ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>'
+			};
+			socket.emit('showdelegatebyid', flatJson);
+
+		})();
+
+	});
+
+	// Socket IO getnodeconfig
+
+	socket.on('getnodeconfig', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getNodeConfig();
+
+			var data = (response.data);
+			var flatJson = {
+
+			};
+
+			socket.emit('shownodeconfig', flatJson);
+
+		})();
+
+	});
+
+	socket.on('getblockbyid', function (input) {
+
+		(async () => {
+
+			var response = await qapi.getBlockByID(input.blockId);
+			var data = response.data;
+			console.log(data)
+			var flatJson = [];
+
+			for (let i = 0; i < data.length; i++) {
+				let tempJson = {
+					id: data[i].id,
+				};
+				flatJson.push(tempJson);
+			}
+
+			socket.emit('showblockbyid', flatJson);
+			console.log(flatJson)
 		})();
 
 	});

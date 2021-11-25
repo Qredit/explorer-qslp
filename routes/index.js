@@ -59,7 +59,14 @@ router.get("/radians", function (req, res, next) {
   });
 });
 
-
+/* GET home page qredit mainnet. */
+router.get("/dswipe", function (req, res, next) {
+  res.render("dswipe/transactions", {
+    title: "Explorer.sh",
+    routename: "dswipe",
+    csrfToken: req.csrfToken()
+  });
+});
 
 
 
@@ -123,6 +130,105 @@ router.get("/dark/nodeconfig", function (req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
+
+
+/* GET dswipe pages. */
+router.get("/dswipe/transactions", function (req, res, next) {
+  res.render("dswipe/transactions", {
+    title: "Swipe Testnet",
+    routename: "dswipe/transactions",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dswipe/block", function (req, res, next) {
+  res.render("dswipe/block", {
+    title: "Block",
+    routename: "dswipe/block",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dswipe/tokenlist", function (req, res, next) {
+  res.render("dswipe/tokenlist", {
+    title: "Token List",
+    routename: "dswipe/tokenlist",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dswipe/latestblocks", function (req, res, next) {
+  res.render("dswipe/latestblocks", {
+    title: "Latest Blocks",
+    routename: "dswipe/latestblocks",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dswipe/peers", function (req, res, next) {
+  res.render("dswipe/peers", {
+    title: "Peers",
+    routename: "dswipe/peers",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dswipe/topwallets", function (req, res, next) {
+  res.render("dswipe/topwallets", {
+    title: "Top Wallets",
+    routename: "dswipe/topwallets",
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dswipe/delegatemonitor", function (req, res, next) {
+  res.render("dswipe/delegatemonitor", {
+    title: "Delegate Monitor",
+    routename: "dswipe/delegatemonitor",
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dswipe/nodeconfig", function (req, res, next) {
+  res.render("dswipe/nodeconfig", {
+    title: "Node Configuration",
+    routename: "dswipe/nodeconfig",
+    csrfToken: req.csrfToken()
+  });
+});
+
+/* Explorer URL Parameter routes*/
+
+router.get("/dswipe/transaction/:transactionId", function (req, res, next) {
+  res.render("dswipe/transaction", {
+    title: "Transaction Details",
+    routename: "dswipe/transaction",
+    transactionId: req.params.transactionId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dswipe/wallet/:walletId", function (req, res, next) {
+  res.render("dswipe/wallet", {
+    title: "Wallet Details",
+    routename: "sender",
+    walletId: req.params.walletId,
+    csrfToken: req.csrfToken()
+  });
+});
+
+router.get("/dswipe/token/:tokenid", function (req, res, next) {
+  res.render("dswipe/token", {
+    title: "Token Details",
+    routename: "dswipe/token",
+    tokenid: req.params.tokenid,
+    csrfToken: req.csrfToken()
+  });
+});
+router.get("/dswipe/block/:blockId", function (req, res, next) {
+  res.render("dswipe/block", {
+    title: "Block Details",
+    routename: "sender",
+    walletId: req.params.blockId,
+    csrfToken: req.csrfToken()
+  });
+});
+
 
 /* Explorer URL Parameter routes*/
 
