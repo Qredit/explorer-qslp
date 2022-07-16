@@ -57,14 +57,6 @@ router.get("/qredit/delegatemonitor", function(req, res, next) {
     });
 });
 
-router.get("/qredit/nodeconfig", function(req, res, next) {
-    res.render("qredit/nodeconfig", {
-        title: "Node Configuration",
-        routename: "qredit/nodeconfig",
-        csrfToken: req.csrfToken()
-    });
-});
-
 /* Explorer URL Parameter routes*/
 
 router.get("/qredit/transaction/:transactionId", function(req, res, next) {
