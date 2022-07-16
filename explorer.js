@@ -301,7 +301,7 @@ io.on('connection', function(socket) {
                     timestamp: data[i].timestamp.human,
                     sender: data[i].sender,
                     recipient: data[i].recipient,
-                    smartbridge: data[i].vendorField,
+                    smartbridge: data[i].vendorField == undefined ? '<span>-</span>' : data[i].vendorField,
                     amount: data[i].amount,
                 };
                 flatJson.push(tempJson);
