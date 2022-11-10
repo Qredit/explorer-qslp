@@ -201,12 +201,11 @@ io.on('connection', function(socket) {
                     address: data[i].address,
                     username: data[i].username,
                     blocks: data[i].blocks.produced,
-                    timestamp: data[i].blocks.last.timestamp.human,
+                    timestamp: data[i].blocks.last?.timestamp.human,
                     approval: data[i].production.approval
                 };
                 flatJson.push(tempJson);
             }
-
             socket.emit('showdelegates', flatJson);
 
         })();
